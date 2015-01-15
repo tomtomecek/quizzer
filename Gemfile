@@ -3,6 +3,7 @@ ruby '2.1.5'
 
 gem 'rails',              '4.1.8'
 gem 'pg',                 '0.18.1'
+gem 'haml-rails',         '0.5.3'
 gem 'bootstrap-sass',     '3.3.1.0'
 gem 'autoprefixer-rails', '4.0.1.1'
 gem 'sass-rails',         '~> 4.0.3'
