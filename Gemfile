@@ -16,7 +16,10 @@ gem 'sidekiq',            '3.3.0'
 gem 'figaro',             '1.0.0'
 
 group :development do
-  gem 'thin', '1.6.3'
+  gem 'thin',          '1.6.3'
+  gem 'hirb',          '0.7.2'
+  gem 'quiet_assets',  '1.0.3'
+  gem 'letter_opener', '1.3.0'
 end
 
 group :development, :test do
