@@ -15,6 +15,10 @@ gem 'paratrooper',        '2.4.1'
 gem 'sidekiq',            '3.3.0'
 gem 'figaro',             '1.0.0'
 
+group :development do
+  gem 'thin', '1.6.3'
+end
+
 group :development, :test do
   gem 'rspec-rails', '2.99'
 end
