@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails', '3.1.2'
 gem 'turbolinks',   '2.5.3'
 gem 'jbuilder',     '~> 2.0'
+gem 'paratrooper',  '2.4.1'
 
 group :production do
   gem 'rails_12factor', '0.0.3'
