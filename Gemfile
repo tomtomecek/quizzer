@@ -20,4 +20,5 @@ end
 group :production, :staging do
   gem 'rails_12factor', '0.0.3'
   gem 'unicorn',        '4.8.3'
+  gem 'sentry-raven',   '0.12.2'
 end
