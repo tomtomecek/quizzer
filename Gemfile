@@ -31,6 +31,11 @@ group :development, :test do
   gem 'rspec-rails', '2.99'
 end
 
+group :test do
+  gem 'capybara', '2.4.4'
+  gem 'launchy',  '2.4.3'
+end
+
 group :production, :staging do
   gem 'rails_12factor', '0.0.3'
   gem 'unicorn',        '4.8.3'
