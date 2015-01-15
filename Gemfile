@@ -11,6 +11,10 @@ gem 'turbolinks',   '2.5.3'
 gem 'jbuilder',     '~> 2.0'
 gem 'paratrooper',  '2.4.1'
 
-group :production do
+group :development, :test do
+  gem 'rspec-rails', '2.99'
+end
+
+group :production, :staging do
   gem 'rails_12factor', '0.0.3'
 end
