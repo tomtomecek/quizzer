@@ -1,0 +1,2 @@
+Fabricator(:course) do
+end
