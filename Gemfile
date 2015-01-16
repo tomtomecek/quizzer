@@ -17,27 +17,29 @@ gem 'sidekiq',            '3.3.0'
 gem 'figaro',             '1.0.0'
 
 group :development do
-  gem 'thin',          '1.6.3'
-  gem 'hirb',          '0.7.2'
-  gem 'quiet_assets',  '1.0.3'
-  gem 'letter_opener', '1.3.0'
+  gem 'thin',             '1.6.3'
+  gem 'hirb',             '0.7.2'
+  gem 'quiet_assets',     '1.0.3'
+  gem 'letter_opener',    '1.3.0'
 end
 
 group :development, :test do
-  gem 'faker',       '1.4.3'
-  gem 'fabrication', '2.11.3'
-  gem 'pry',         '0.10.1'
-  gem 'pry-nav',     '0.2.4'
-  gem 'rspec-rails', '2.99'
+  gem 'faker',            '1.4.3'
+  gem 'fabrication',      '2.11.3'
+  gem 'pry',              '0.10.1'
+  gem 'pry-nav',          '0.2.4'
+  gem 'rspec-rails',      '2.99'  
 end
 
 group :test do
-  gem 'capybara', '2.4.4'
-  gem 'launchy',  '2.4.3'
+  gem 'capybara',         '2.4.4'
+  gem 'launchy',          '2.4.3'
+  gem 'shoulda-matchers', require: false
+  gem 'database_cleaner', '1.2.0'
 end
 
 group :production, :staging do
-  gem 'rails_12factor', '0.0.3'
-  gem 'unicorn',        '4.8.3'
-  gem 'sentry-raven',   '0.12.2'
+  gem 'rails_12factor',   '0.0.3'
+  gem 'unicorn',          '4.8.3'
+  gem 'sentry-raven',     '0.12.2'
 end
