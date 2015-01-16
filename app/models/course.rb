@@ -13,6 +13,10 @@ class Course < ActiveRecord::Base
     self.slug = the_slug
   end
 
+  def to_param
+    slug
+  end
+  
 private
   
   def slugify(the_slug)
