@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: quizzer_development
+  pool: 5
+  username: <%= ENV['USER'] %>
+  password: YOUR_PASSWORD
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: quizzer_test
+  pool: 5
+  username: <%= ENV['USER'] %>
+  password: YOUR_PASSWORD
