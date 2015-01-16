@@ -1,0 +1,22 @@
+.container.admin-login
+  .col-sm-offset-1
+    %form.form-horizontal
+      %header.col-sm-offset-2
+        %h1 Administrator Login
+      .form-group
+        %label.col-sm-2.control-label(for="inputEmail") Email
+        .col-sm-4
+          %input.form-control#inputEmail(type="email")
+      .form-group
+        %label.col-sm-2.control-label(for="inputPassword") Password
+        .col-sm-4
+          %input.form-control#inputPassword(type="password")
+      .form-group
+        .col-sm-offset-2.col-sm-4
+          .checkbox
+            %label
+              %input(type="checkbox") Remember me
+      .form-group
+        .col-sm-offset-2.col-sm-4
+          %button.btn.btn-default(type="submit") Log In
+          %a(href='') Forgot password?
