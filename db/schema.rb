@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117135315) do
+ActiveRecord::Schema.define(version: 20150117205210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,19 @@ ActiveRecord::Schema.define(version: 20150117135315) do
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "student_answers", array: true
   end
 
   add_index "exams", ["quiz_id"], name: "index_exams_on_quiz_id", using: :btree
   add_index "exams", ["student_id"], name: "index_exams_on_student_id", using: :btree
+
+  create_table "generated_answers", force: true do |t|
+    t.integer "question_id"
+    t.integer "exam_id"
+  end
+
+  add_index "generated_answers", ["exam_id"], name: "index_generated_answers_on_exam_id", using: :btree
+  add_index "generated_answers", ["question_id"], name: "index_generated_answers_on_question_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.integer "quiz_id"
@@ -59,5 +68,15 @@ ActiveRecord::Schema.define(version: 20150117135315) do
 
   add_index "quizzes", ["course_id"], name: "index_quizzes_on_course_id", using: :btree
   add_index "quizzes", ["slug"], name: "index_quizzes_on_slug", using: :btree
+
+  create_table "student_answers", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "exam_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "student_answers", ["exam_id"], name: "index_student_answers_on_exam_id", using: :btree
+  add_index "student_answers", ["question_id"], name: "index_student_answers_on_question_id", using: :btree
 
 end
