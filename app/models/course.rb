@@ -1,8 +1,8 @@
 class Course < ActiveRecord::Base
   before_create :generate_slug  
 
-  has_many :quizzes
-  
+  has_many :quizzes, -> { order(:created_at) }
+
   def generate_slug
     the_slug = title.parameterize
     while Course.where(slug: the_slug).exists?
