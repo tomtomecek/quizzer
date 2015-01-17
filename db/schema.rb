@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 20150117205210) do
   add_index "exams", ["student_id"], name: "index_exams_on_student_id", using: :btree
 
   create_table "generated_answers", force: true do |t|
-    t.integer "answer_id"
-    t.integer "exam_id"
+    t.integer  "answer_id"
+    t.integer  "exam_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "generated_answers", ["answer_id"], name: "index_generated_answers_on_answer_id", using: :btree

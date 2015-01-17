@@ -4,7 +4,7 @@ class CreateGeneratedAnswers < ActiveRecord::Migration
       t.integer :answer_id
       t.integer :exam_id
       
-      t.timestamp
+      t.timestamps
     end
     add_index :generated_answers, :answer_id
     add_index :generated_answers, :exam_id
