@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Course do
+  it { is_expected.to have_many(:quizzes) }
+
   describe "#generate_slug" do
     it "creates course with slug based on title" do
       Fabricate(:course, title: "Introduction to Ruby")
