@@ -6,8 +6,8 @@
         %br
         %p= quiz.description
         %br
-        = link_to '#', class: "btn btn-default btn-lg col-sm-12" do
+        = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
           %span.glyphicon.glyphicon-play-circle
-          "Start Quiz"
+          Start Quiz
         .clearfix
         %hr(style="padding: 5px 0px;")

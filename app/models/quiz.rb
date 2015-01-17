@@ -1,11 +1,11 @@
-class Course < ActiveRecord::Base
-  before_create :generate_slug  
-
-  has_many :quizzes, -> { order(:created_at) }
+class Quiz < ActiveRecord::Base
+  belongs_to :course
+  validates_presence_of :title
+  before_create :generate_slug
 
   def generate_slug
     the_slug = title.parameterize
-    while Course.where(slug: the_slug).exists?
+    while Quiz.where(slug: the_slug).exists?
       if the_slug.split('-').last.to_i != 0
         the_slug = slugify(the_slug)
       else
