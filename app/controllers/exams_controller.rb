@@ -1,6 +1,6 @@
 class ExamsController < ApplicationController
   def new
-    quiz = Quiz.find(params[:quiz_id])
-    @exam = Exam.new(quiz: quiz)
+    @quiz = Quiz.find_by(slug: params[:quiz_id])
+    @exam = Exam.new(quiz: @quiz)
   end
 end
