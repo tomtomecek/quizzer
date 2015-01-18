@@ -1,25 +1,18 @@
 .container
   .col-sm-9
-    %h2 Results for: Week 1 - Procedural Blackjack
+    %h2 Results for: #{@quiz.title}
     %br
-    %form(role="form")
+    - @exam.quiz.questions.each_with_index do |question, index|
       .panel.panel-info
-        .panel-heading 1 - Question 1 - How would you describe a method?
+        .panel-heading= "#{index+1}. #{question.content}"
         .panel-body
           %h4 Correct answer
           %ul.no-bullets
-            %li A container for a chunk of code
+            - question.generated_answers(@exam).each do |generated_answer|
+              - if generated_answer.correct?
+                %li= generated_answer.content
           %br
           %h4 Your answer
           %ul.no-bullets
-            %li.student-correct-answer A container for a chunk of code
-      .panel.panel-info
-        .panel-heading 2 - Question 2 - How would you describe another method?
-        .panel-body
-          %h4 Correct answer
-          %ul.no-bullets
-            %li Another container for a chunk of code
-          %br
-          %h4 Your answer
-          %ul.no-bullets
-            %li.student-incorrect-answer A wrong answer
+            - question.student_answers(@exam).each do |student_answer|
+              %li{class: "student-#{'in' unless student_answer.correct?}correct-answer"}= student.answer.content
