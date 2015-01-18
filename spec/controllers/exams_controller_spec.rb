@@ -69,5 +69,4 @@ describe ExamsController do
     end
   end
 
-
 end

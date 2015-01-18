@@ -6,13 +6,13 @@
       .panel.panel-info
         .panel-heading= "#{index+1}. #{question.content}"
         .panel-body
-          %h4 Correct answer
+          %h4 Correct answers
           %ul.no-bullets
-            - question.generated_answers(@exam).each do |generated_answer|
+            - question.answers_for(@exam) { :generated_answer_ids }.each do |generated_answer|
               - if generated_answer.correct?
                 %li= generated_answer.content
           %br
-          %h4 Your answer
+          %h4 Your answers
           %ul.no-bullets
-            - question.student_answers(@exam).each do |student_answer|
-              %li{class: "student-#{'in' unless student_answer.correct?}correct-answer"}= student.answer.content
+            - question.answers_for(@exam) { :student_answer_ids }.each do |student_answer|
+              %li{class: "student-#{'in' unless student_answer.correct?}correct-answer"}= student_answer.content
