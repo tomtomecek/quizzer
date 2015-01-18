@@ -58,5 +58,14 @@ describe Question do
       correct_answer = Fabricate(:answer, question: question, correct: true)
       expect(question.generate_answers).to include(correct_answer)
     end
+
+    it "generates random array" do
+      question = Fabricate(:question)
+      Fabricate.times(9, :answer, question: question, correct: false)
+      Fabricate.times(3, :answer, question: question, correct: true)
+      answer_sets = []
+      3.times { answer_sets << question.generate_answers }
+      expect(answer_sets.uniq.count).not_to eq 1
+    end
   end
 end
