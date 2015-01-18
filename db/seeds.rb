@@ -28,19 +28,19 @@ ajax_jquery = Quiz.create(
 question1 = Question.create(
   content: "How much is 1 + 1",
   quiz: procedural,
-  value: 1)
+  points: 2)
 question2 = Question.create(
   content: "How much is 2 + 2",
   quiz: procedural,
-  value: 1)
+  points: 4)
 question3 = Question.create(
   content: "How much is 3 + 3",
   quiz: procedural,
-  value: 1)
+  points: 5)
 question4 = Question.create(
   content: "How much is 4 + 4",
   quiz: procedural,
-  value: 2)
+  points: 10)
 
 3.times do 
   Answer.create(
