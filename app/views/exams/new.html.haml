@@ -1,45 +1,15 @@
 .container
   .col-sm-9
-    %h2 Week 1 - Procedural Blackjack
+    %h2= @quiz.title
     %br
-    %form(role="form")
-      .panel.panel-info
-        .panel-heading 1 - Question 1 - How would you describe a method?
-        .panel-body
-          .checkbox
-            %label
-              %input(type="checkbox") another answer
-          .checkbox
-            %label
-              %input(type="checkbox" checked) a container for a chunk of code
-          - 3.times do
-            .checkbox
-              %label
-                %input(type="checkbox") another answer
-      .panel.panel-info
-        .panel-heading 1 - Question 1 - How would you describe a method?
-        .panel-body
-          .checkbox
-            %label
-              %input(type="checkbox") another answer
-          .checkbox
-            %label
-              %input(type="checkbox" checked) a container for a chunk of code
-          - 3.times do
-            .checkbox
-              %label
-                %input(type="checkbox") another answer
-      .panel.panel-info
-        .panel-heading 1 - Question 1 - How would you describe a method?
-        .panel-body
-          .checkbox
-            %label
-              %input(type="checkbox") another answer
-          .checkbox
-            %label
-              %input(type="checkbox" checked) a container for a chunk of code
-          - 3.times do
-            .checkbox
-              %label
-                %input(type="checkbox") another answer
-      %button.btn.btn-default(type="submit") Submit Answers
+    = form_for [@quiz, @exam] do |f|
+      - @quiz.questions.each do |question|
+        .panel.panel-info
+          .panel-heading= question.content
+          .panel-body
+            - question.answers.each do |answer|
+              = hidden_field_tag "generated_answer_ids[]", answer.id
+              = check_box_tag "student_answer_ids[]", answer.id
+              = f.label answer.content
+              %br
+      = f.submit "Submit Answers", class: "btn btn-default"

@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117123915) do
+ActiveRecord::Schema.define(version: 20150117201201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: true do |t|
+    t.integer  "question_id"
+    t.text     "content"
+    t.boolean  "correct"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "courses", force: true do |t|
     t.string "title"
@@ -27,10 +35,20 @@ ActiveRecord::Schema.define(version: 20150117123915) do
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "student_answer_ids",   array: true
+    t.string   "generated_answer_ids", array: true
   end
 
   add_index "exams", ["quiz_id"], name: "index_exams_on_quiz_id", using: :btree
   add_index "exams", ["student_id"], name: "index_exams_on_student_id", using: :btree
+
+  create_table "questions", force: true do |t|
+    t.integer "quiz_id"
+    t.text    "content"
+    t.integer "value"
+  end
+
+  add_index "questions", ["quiz_id"], name: "index_questions_on_quiz_id", using: :btree
 
   create_table "quizzes", force: true do |t|
     t.integer  "course_id"

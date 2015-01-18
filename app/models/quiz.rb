@@ -1,5 +1,8 @@
 class Quiz < ActiveRecord::Base
   belongs_to :course
+  has_many :exams
+  has_many :questions
+  
   validates_presence_of :title
   before_create :generate_slug
 

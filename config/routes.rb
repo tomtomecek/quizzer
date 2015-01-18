@@ -1,6 +1,6 @@
 Rails.application.routes.draw do  
   resources :quizzes, except: [:new, :create, :index, :show, :edit, :update, :destroy] do
-    resources :exams, only: [:new]
+    resources :exams, only: [:new, :create, :show]
   end
   resources :courses, only: [:show]
   get 'ui(/:action)', controller: 'ui'
