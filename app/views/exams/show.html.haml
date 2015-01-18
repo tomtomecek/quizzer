@@ -1,10 +1,14 @@
 .container
   .col-sm-9
     %h2 Results for: #{@quiz.title}
+    %h3 Score: #{@exam.student_score} from #{@quiz.total_score} points
     %br
     - @exam.quiz.questions.each_with_index do |question, index|
       .panel.panel-info
-        .panel-heading= "#{index+1}. #{question.content}"
+        .panel-heading
+          %span.pull-left= "#{index+1}. #{question.content}"
+          %span.pull-right= pluralize(question.points, "point")
+          .clearfix
         .panel-body
           %h4 Correct answers
           %ul.no-bullets
@@ -14,5 +18,8 @@
           %br
           %h4 Your answers
           %ul.no-bullets
-            - question.answers_for(@exam) { :student_answer_ids }.each do |student_answer|
-              %li{class: "student-#{'in' unless student_answer.correct?}correct-answer"}= student_answer.content
+            - if question.answers_for(@exam) { :student_answer_ids }.empty?
+              %li No answers submitted.
+            - else
+              - question.answers_for(@exam) { :student_answer_ids }.each do |student_answer|
+                %li{class: "student-#{'in' unless student_answer.correct?}correct-answer"}= student_answer.content
