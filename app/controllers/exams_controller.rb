@@ -6,13 +6,10 @@ class ExamsController < ApplicationController
 
   def create
     quiz = Quiz.find_by(slug: params[:quiz_id])
-    student_id = 1
-    exam = Exam.create(student_id: student_id, quiz: quiz)
-    params[:student_answer_ids].each do |said|
-      binding.pry
-      StudentAnswer.create(exam: exam, answer_id: said.to_i)
-    end
-
+    exam = Exam.create(
+      quiz: quiz,
+      generated_answer_ids: params[:generated_answer_ids],
+      student_answer_ids: params[:student_answer_ids])
     redirect_to [quiz, exam]
   end
 end

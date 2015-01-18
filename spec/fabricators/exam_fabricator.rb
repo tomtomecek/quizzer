@@ -1,0 +1,2 @@
+Fabricator(:exam) do
+end

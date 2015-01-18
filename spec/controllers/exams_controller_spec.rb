@@ -17,51 +17,40 @@ describe ExamsController do
   end
 
   describe "POST create" do
-    context "with valid data" do
-      it "redirects to :show @exam" do
-        quiz = Fabricate(:quiz)
-        question = Fabricate(:question, quiz: quiz)
-        a1 = Fabricate(:answer, question: question)
-        a2 = Fabricate(:answer, question: question)
-        a3 = Fabricate(:answer, question: question)
-        post :create, quiz_id: quiz.slug, student_answer_ids: [a1.id, a2.id, a3.id]
-        expect(response).to redirect_to [quiz, Exam.first]
-      end
-
-      it "creates an exam" do
-        quiz = Fabricate(:quiz)
-        question = Fabricate(:question, quiz: quiz)
-        a1 = Fabricate(:answer, question: question)
-        a2 = Fabricate(:answer, question: question)
-        a3 = Fabricate(:answer, question: question)
-        post :create, quiz_id: quiz.slug, student_answer_ids: [a1.id, a2.id, a3.id]
-        expect(Exam.count).to eq(1)
-      end
-
-      it "creates an exam under quiz" do
-        quiz = Fabricate(:quiz)
-        question = Fabricate(:question, quiz: quiz)
-        a1 = Fabricate(:answer, question: question)
-        a2 = Fabricate(:answer, question: question)
-        a3 = Fabricate(:answer, question: question)
-        post :create, quiz_id: quiz.slug, student_answer_ids: [a1.id, a2.id, a3.id]
-        expect(quiz.exams.first).to eq(Exam.first)
-      end
-
-      it "creates student answers" do
-        quiz = Fabricate(:quiz)
-        question = Fabricate(:question, quiz: quiz)
-        a1 = Fabricate(:answer, question: question)
-        a2 = Fabricate(:answer, question: question)
-        a3 = Fabricate(:answer, question: question)
-        post :create, quiz_id: quiz.slug, student_answer_ids: [a1.id, a2.id, a3.id]
-        expect(StudentAnswers.count).to eq(3)
-      end
-
+    let(:quiz)     { Fabricate(:quiz) }
+    let(:question) { Fabricate(:question, quiz: quiz) }
+    let(:answer1)  { Fabricate(:answer, question: question) }
+    let(:answer2)  { Fabricate(:answer, question: question) }
+    let(:answer3)  { Fabricate(:answer, question: question) }
+    let(:exam)     { Exam.first }
+    before do
+      post :create, 
+        quiz_id: quiz.slug, 
+        student_answer_ids: [answer1.id], 
+        generated_answer_ids: [answer1.id, answer2.id, answer3.id]
+    end
+    
+    it "redirects to :show @exam" do
+      expect(response).to redirect_to [quiz, exam]
     end
 
-    context "with invalid data" do
-      it "does not create an exam"
+    it "creates an exam" do
+      expect(Exam.count).to eq(1)
+    end
+
+    it "creates an exam under quiz" do
+      expect(quiz.exams.first).to eq(exam)
+    end
+
+    it "creates an exam with student_answer_ids" do
+      student_answer_ids = [answer1].map(&:id).map(&:to_s)
+      expect(exam.student_answer_ids).to match_array student_answer_ids
+    end
+
+    it "creates an exam with generated_answer_ids" do
+      generated_answer_ids = [answer1, answer2, answer3].map(&:id).map(&:to_s)
+      expect(exam.generated_answer_ids).to match_array generated_answer_ids
     end
   end
+
 end

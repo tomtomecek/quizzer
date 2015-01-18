@@ -8,6 +8,7 @@
           .panel-heading= question.content
           .panel-body
             - question.answers.each do |answer|
+              = hidden_field_tag "generated_answer_ids[]", answer.id
               = check_box_tag "student_answer_ids[]", answer.id
               = f.label answer.content
               %br
