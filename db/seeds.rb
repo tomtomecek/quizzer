@@ -42,15 +42,37 @@ question4 = Question.create(
   quiz: procedural,
   value: 2)
 
-4.times do 
+3.times do 
   Answer.create(
   question: question1,
   content: "correct answer 2",
   correct: true)
-end
-6.times do
+  Answer.create(
+  question: question2,
+  content: "correct answer 4",
+  correct: true)
+  Answer.create(
+  question: question3,
+  content: "correct answer 6",
+  correct: true)
+  Answer.create(
+  question: question4,
+  content: "correct answer 8",
+  correct: true)
   Answer.create(
   question: question1,
+  content: "incorrect answer - whatever",
+  correct: false)
+  Answer.create(
+  question: question2,
+  content: "incorrect answer - whatever",
+  correct: false)
+  Answer.create(
+  question: question3,
+  content: "incorrect answer - whatever",
+  correct: false)
+  Answer.create(
+  question: question4,
   content: "incorrect answer - whatever",
   correct: false)
 end
