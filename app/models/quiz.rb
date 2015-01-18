@@ -6,6 +6,10 @@ class Quiz < ActiveRecord::Base
   validates_presence_of :title
   before_create :generate_slug
 
+  def total_score
+    questions.map(&:points).inject(:+)
+  end
+
   def generate_slug
     the_slug = title.parameterize
     while Quiz.where(slug: the_slug).exists?

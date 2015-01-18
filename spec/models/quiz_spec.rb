@@ -25,4 +25,20 @@ describe Quiz do
       expect(quiz.slug).to eq "week-1-procedural-ruby-5"
     end
   end
+
+  describe "#total_score" do
+    it "calculates total score for 1 question" do
+      quiz = Fabricate(:quiz)
+      question1 = Fabricate(:question, quiz: quiz, points: 1)
+      expect(quiz.total_score).to eq(1)
+    end
+
+    it "calculates total score for multiple questions" do
+      quiz = Fabricate(:quiz)
+      question1 = Fabricate(:question, quiz: quiz, points: 1)
+      question2 = Fabricate(:question, quiz: quiz, points: 2)
+      question3 = Fabricate(:question, quiz: quiz, points: 5)
+      expect(quiz.total_score).to eq(8)
+    end
+  end
 end

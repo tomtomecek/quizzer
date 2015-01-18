@@ -3,11 +3,14 @@
     %h2= @quiz.title
     %br
     = form_for [@quiz, @exam] do |f|
-      - @quiz.questions.each do |question|
+      - @quiz.questions.each_with_index do |question, idx|
         .panel.panel-info
-          .panel-heading= question.content
+          .panel-heading
+            %span.pull-left= "#{idx+1}. #{question.content}"
+            %span.pull-right= pluralize(question.points, "point")
+            .clearfix
           .panel-body
-            - question.answers.each do |answer|
+            - question.generate_answers.each do |answer|
               = hidden_field_tag "generated_answer_ids[]", answer.id
               = check_box_tag "student_answer_ids[]", answer.id
               = f.label answer.content

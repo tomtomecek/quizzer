@@ -9,7 +9,7 @@ class ExamsController < ApplicationController
     exam = Exam.create(
       quiz: quiz,
       generated_answer_ids: params[:generated_answer_ids],
-      student_answer_ids: params[:student_answer_ids])
+      student_answer_ids: params[:student_answer_ids])    
     redirect_to [quiz, exam]
   end
 
