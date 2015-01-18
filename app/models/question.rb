@@ -14,15 +14,11 @@ class Question < ActiveRecord::Base
 
   def generate_answers
     total = generate_correct_answers
-
-    if reached_answer_limit?(total)
-      total
-    else
-      answers_to_fill_count = ANSWER_LIMIT - total.count
-      incorrect_answers = answers.select { |a| !a.correct? }
-      answers_to_fill_count.times { total << incorrect_answers.shuffle.pop }
-      total.shuffle
+    unless reached_answer_limit?(total)
+      incorrect_answers = answers.select(&:incorrect?)
+      total << incorrect_answers.shuffle.pop until reached_answer_limit?(total)
     end
+    total.shuffle
   end
 
 private
