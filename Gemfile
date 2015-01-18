@@ -36,6 +36,7 @@ group :test do
   gem 'launchy',          '2.4.3'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner', '1.2.0'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production, :staging do
