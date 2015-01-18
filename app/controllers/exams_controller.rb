@@ -12,4 +12,9 @@ class ExamsController < ApplicationController
       student_answer_ids: params[:student_answer_ids])
     redirect_to [quiz, exam]
   end
+
+  def show    
+    @exam = Exam.find(params[:id])
+    @quiz = @exam.quiz    
+  end
 end

@@ -53,4 +53,21 @@ describe ExamsController do
     end
   end
 
+  describe "GET show" do
+    it "sets the @quiz" do
+      quiz = Fabricate(:quiz)
+      exam = Fabricate(:exam, quiz: quiz)
+      get :show, quiz_id: quiz.slug, id: exam.id
+      expect(assigns(:quiz)).to eq(quiz)
+    end
+
+    it "sets the @exam" do
+      quiz = Fabricate(:quiz)
+      exam = Fabricate(:exam, quiz: quiz)
+      get :show, quiz_id: quiz.slug, id: exam.id
+      expect(assigns(:exam)).to eq(exam)
+    end
+  end
+
+
 end
