@@ -30,7 +30,7 @@ describe Quiz do
     it "calculates total score for 1 question" do
       quiz = Fabricate(:quiz)
       question1 = Fabricate(:question, quiz: quiz, points: 1)
-      expect(quiz.score).to eq(1)
+      expect(quiz.total_score).to eq(1)
     end
 
     it "calculates total score for multiple questions" do
@@ -38,7 +38,7 @@ describe Quiz do
       question1 = Fabricate(:question, quiz: quiz, points: 1)
       question2 = Fabricate(:question, quiz: quiz, points: 2)
       question3 = Fabricate(:question, quiz: quiz, points: 5)
-      expect(quiz.score).to eq(8)
+      expect(quiz.total_score).to eq(8)
     end
   end
 end
