@@ -10,9 +10,8 @@ feature "student performs an exam" do
   given!(:q3) { Fabricate(:question, quiz: week1, points: 5, content: "3 + 3") }
   background { Fabricate.times(4, :answer, question: q1, correct: false, content: "x") }
   given!(:a1) { Fabricate(:answer, question: q1, correct: true, content: "answer is 2") }
-  given!(:wa1) { Fabricate(:answer, question: q2, correct: false, content: "wrong") }
-  given!(:wa2) { Fabricate(:answer, question: q2, correct: false, content: "w2") }
-  given!(:wa3) { Fabricate(:answer, question: q2, correct: false, content: "wrng3") }
+  background { Fabricate.times(2, :answer, question: q2, correct: false, content: "x") }
+  given(:wrong_answer) { Fabricate(:answer, question: q2, correct: false, content: "w")}
   given!(:a2) { Fabricate(:answer, question: q2, correct: true, content: "answer is 4") }
   background { Fabricate.times(4, :answer, question: q3, correct: false, content: "x") }
   given!(:a3) { Fabricate(:answer, question: q3, correct: true, content: "answer is 6") }
@@ -51,8 +50,8 @@ feature "student performs an exam" do
   scenario "exam with missing and incorrect answers" do
     visit new_quiz_exam_path(week1.slug)
     within_question(q1) { check("Answer is 2") }
-    require 'pry'; binding.pry
-    within_question(q2) { check("Wrong") }
+    # require 'pry'; binding.pry
+    check("#answer_#{wrong_answer.id}")
     click_on "Submit Answers"
     expect_to_see "Score: 3 from 12 points"
   end
