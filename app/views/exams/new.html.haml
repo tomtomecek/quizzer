@@ -6,9 +6,6 @@
       - @quiz.questions.each_with_index do |question, idx|
         .panel.panel-info{ id: "question_#{question.id}" }
           .panel-heading
-            %span.pull-left= "#{idx+1}. #{question.content}"
-            %span.pull-right
-              %strong= pluralize(question.points, "point")
             %h3.panel-title.pull-left= "#{idx+1}. #{question.content}"
             %h3.panel-title.pull-right= pluralize(question.points, "point")
             .clearfix

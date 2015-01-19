@@ -32,7 +32,7 @@ feature "student performs an exam" do
     expect(current_path).to eq new_quiz_exam_path(week1.slug)
   end
 
-  scenario "student ticks quiz questions, submits and checks successful results" do
+  scenario "exam with successfull answers" do
     visit new_quiz_exam_path(week1.slug)
     within_question(q1) do
       expect_to_see "1 + 1"
@@ -50,15 +50,24 @@ feature "student performs an exam" do
   scenario "exam with missing and incorrect answers" do
     visit new_quiz_exam_path(week1.slug)
     within_question(q1) { check("Answer is 2") }
-    # require 'pry'; binding.pry
-    check("#answer_#{wrong_answer.id}")
+    within_question(q2) { check("W") }
     click_on "Submit Answers"
+
     expect_to_see "Score: 3 from 12 points"
+    within_question(q1) do
+      expect_to_see "You earned 3 points"
+    end
+    within_question(q2) do
+      expect_to_see "One of the answers was wrong or missing."
+    end
+    within_question(q3) do
+      expect_to_see "No answers submitted"
+    end
   end
 end
 
 def within_question(question)
-  within("#question_#{question.id}") do
+  within(:css, "#question_#{question.id}") do
     yield
   end
 end

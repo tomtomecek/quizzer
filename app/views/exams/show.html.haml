@@ -4,7 +4,7 @@
     %h3 Score: #{@exam.student_score} from #{@quiz.total_score} points
     %br
     - @exam.quiz.questions.each_with_index do |question, index|
-      .panel.panel-info{ id: "#question_#{question.id}" }
+      .panel.panel-info{ id: "question_#{question.id}" }
         .panel-heading
           %span.pull-left= "#{index+1}. #{question.content}"
           %span.pull-right
