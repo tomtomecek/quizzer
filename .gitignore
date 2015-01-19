@@ -29,3 +29,6 @@ Procfile.dev
 # Ignore public uploads
 public/uploads/
 public/tmp/
+
+# Coverage
+coverage/
