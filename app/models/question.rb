@@ -30,6 +30,10 @@ class Question < ActiveRecord::Base
     verify_question?(notes)
   end
 
+  def has_no_student_answer?(exam)
+    answers_for(exam, :student_answer_ids).empty?
+  end
+
 private
 
   def generate_correct_answers
