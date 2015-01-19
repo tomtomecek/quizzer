@@ -11,7 +11,7 @@ feature "student performs an exam" do
   background { Fabricate.times(4, :answer, question: q1, correct: false, content: "x") }
   given!(:a1) { Fabricate(:answer, question: q1, correct: true, content: "answer is 2") }
   background { Fabricate.times(2, :answer, question: q2, correct: false, content: "x") }
-  given(:wrong_answer) { Fabricate(:answer, question: q2, correct: false, content: "w")}
+  given!(:wrong_answer) { Fabricate(:answer, question: q2, correct: false, content: "w")}
   given!(:a2) { Fabricate(:answer, question: q2, correct: true, content: "answer is 4") }
   background { Fabricate.times(4, :answer, question: q3, correct: false, content: "x") }
   given!(:a3) { Fabricate(:answer, question: q3, correct: true, content: "answer is 6") }
