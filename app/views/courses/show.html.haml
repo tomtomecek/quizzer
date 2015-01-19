@@ -1,7 +1,7 @@
 .container
-  .row
-    .col-sm-7
-      - @course.quizzes.each do |quiz|
+  .col-sm-7
+    - @course.quizzes.each do |quiz|
+      .row{ id: "quiz_#{quiz.id}" }
         %h3= quiz.title
         %br
         %p= quiz.description

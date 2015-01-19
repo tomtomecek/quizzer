@@ -1,7 +1,10 @@
+= content_tag :head do
+  %script(type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js")
+  = javascript_include_tag "timezones"
 .container
-  .row
-    .col-sm-7
-      - @courses.each do |course|
+  .col-sm-7
+    - @courses.each do |course|
+      .row{id: "course_#{course.id}"}
         %img(src="http://dummyimage.com/637x284/123/fff.png&text=Course+image")
         %h3= course.title
         %br
