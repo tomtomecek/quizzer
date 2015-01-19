@@ -4,8 +4,8 @@ class Question < ActiveRecord::Base
 
   ANSWER_LIMIT = 4
 
-  def answers_for(exam)
-    results = exam.send(yield).collect do |id|
+  def answers_for(exam, method_name)
+    results = exam.send(method_name).collect do |id|
       answer = Answer.find(id.to_i)
       answer if answer.question == self
     end
@@ -21,6 +21,19 @@ class Question < ActiveRecord::Base
     total.shuffle
   end
 
+  def yield_points?(exam)
+    @generated_answers = answers_for(exam, :generated_answer_ids)
+    notes = answers_for(exam, :student_answer_ids).inject(0) do |notes, answer|
+      verify_student_answer?(answer) ? notes += 1 : notes -= 1
+      notes
+    end
+    verify_question?(notes)
+  end
+
+  def has_no_student_answer?(exam)
+    answers_for(exam, :student_answer_ids).empty?
+  end
+
 private
 
   def generate_correct_answers
@@ -30,11 +43,18 @@ private
     else
       max = correct_answers.count
     end
-    randomizer = rand(1..max)
-    correct_answers.shuffle.slice(0...randomizer)
+    correct_answers.shuffle.slice(0...rand(1..max))
   end
 
   def reached_answer_limit?(total)
     total.count == ANSWER_LIMIT
+  end
+
+  def verify_student_answer?(answer)
+    answer.correct? && @generated_answers.include?(answer)
+  end
+
+  def verify_question?(notes)
+    notes == @generated_answers.select(&:correct?).count
   end
 end

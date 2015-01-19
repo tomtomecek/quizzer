@@ -7,25 +7,9 @@ class Exam < ActiveRecord::Base
   end
 
   def student_score
-    score = 0
-    quiz.questions.each do |question|
-      @generated_answers = question.answers_for(self) { :generated_answer_ids }
-      notes = 0
-      question.answers_for(self) { :student_answer_ids }.each do |answer|
-        verify_student_answer?(answer) ? notes += 1 : notes -= 1
-      end
-      score += question.points if verify_question?(notes)
+    quiz.questions.inject(0) do |score, question|
+      score += question.points if question.yield_points?(self)
+      score
     end
-    score
-  end
-
-private
-
-  def verify_student_answer?(answer)
-    answer.correct? && @generated_answers.include?(answer)
-  end
-
-  def verify_question?(notes)
-    notes == @generated_answers.select(&:correct?).count
   end
 end

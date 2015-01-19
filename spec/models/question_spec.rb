@@ -14,9 +14,9 @@ describe Question do
 
     context "generated_answer_ids" do
       it "returns an array of multiple generated answers from exam" do
-        gaids = [answer1, answer2, answer3].map { |a| a.id.to_s }
+        gaids = to_ids(answer1, answer2, answer3)
         exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids)
-        expect(question1.answers_for(exam) { :generated_answer_ids })
+        expect(question1.answers_for(exam, :generated_answer_ids))
           .to match_array [answer1, answer2]
       end
     end
@@ -24,21 +24,21 @@ describe Question do
     context "student_answer_ids" do
       it "returns an empty array if no answers were picked" do
         exam = Fabricate(:exam, quiz: quiz)
-        expect(question1.answers_for(exam) { :student_answer_ids })
+        expect(question1.answers_for(exam, :student_answer_ids))
           .to match_array []
       end
       
       it "returns an array with 1 answer" do
-        saids = [answer1, answer3].map { |a| a.id.to_s }
+        saids = to_ids(answer1, answer3)
         exam = Fabricate(:exam, quiz: quiz, student_answer_ids: saids)
-        expect(question1.answers_for(exam) { :student_answer_ids })
+        expect(question1.answers_for(exam, :student_answer_ids))
           .to match_array [answer1]
       end
 
       it "returns an array of multiple student answers from exam" do
-        saids = [answer1, answer2, answer3].map { |a| a.id.to_s }
+        saids = to_ids(answer1, answer2, answer3)
         exam = Fabricate(:exam, quiz: quiz, student_answer_ids: saids)
-        expect(question1.answers_for(exam) { :student_answer_ids })
+        expect(question1.answers_for(exam, :student_answer_ids))
           .to match_array [answer1, answer2]
       end
     end
@@ -66,6 +66,42 @@ describe Question do
       answer_sets = []
       3.times { answer_sets << question.generate_answers }
       expect(answer_sets.uniq.count).not_to eq 1
+    end
+  end
+
+  describe "#yield_points?(exam)" do
+    let(:quiz)     { Fabricate(:quiz) }
+    let(:question) { Fabricate(:question, quiz: quiz) }
+    let(:answer1)  { Fabricate(:answer, question: question, correct: true) }
+    let(:answer2)  { Fabricate(:answer, question: question, correct: false) }
+    let(:gaids)    { to_ids(answer1, answer2) }
+
+    it "returns true if question was correctly answered" do      
+      saids = to_ids(answer1)
+      exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids, student_answer_ids: saids)
+      expect(question.yield_points?(exam)).to be true
+    end
+
+    it "returns false if question was not correctly answered" do      
+      saids = to_ids(answer1, answer2)
+      exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids, student_answer_ids: saids)
+      expect(question.yield_points?(exam)).to be false
+    end
+  end
+
+  describe "#has_no_student_answer?(exam)" do
+    it "returns true if there are no student answers" do
+      quiz = Fabricate(:quiz)
+      question = Fabricate(:question)
+      exam = Fabricate(:exam, quiz: quiz, student_answer_ids: [])
+      expect(question).to have_no_student_answer(exam)
+    end
+    it "returns false if there are student answers" do
+      quiz = Fabricate(:quiz)
+      question = Fabricate(:question)
+      answer = Fabricate(:answer, question: question)
+      exam = Fabricate(:exam, quiz: quiz, student_answer_ids: to_ids(answer))
+      expect(question).to_not have_no_student_answer(exam)
     end
   end
 end

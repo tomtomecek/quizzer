@@ -7,7 +7,8 @@
         .panel.panel-info
           .panel-heading
             %span.pull-left= "#{idx+1}. #{question.content}"
-            %span.pull-right= pluralize(question.points, "point")
+            %span.pull-right
+              %strong= pluralize(question.points, "point")
             .clearfix
           .panel-body
             - question.generate_answers.each do |answer|
