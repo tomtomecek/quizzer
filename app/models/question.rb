@@ -14,10 +14,8 @@ class Question < ActiveRecord::Base
 
   def generate_answers
     total = generate_correct_answers
-    unless reached_answer_limit?(total)
-      incorrect_answers = answers.select(&:incorrect?)
-      total << incorrect_answers.shuffle.pop until reached_answer_limit?(total)
-    end
+    incorrect_answers = answers.select(&:incorrect?)
+    total << incorrect_answers.shuffle.pop until reached_answer_limit?(total)
     total.shuffle
   end
 
@@ -30,8 +28,7 @@ private
     else
       max = correct_answers.count
     end
-    randomizer = rand(1..max)
-    correct_answers.shuffle.slice(0...randomizer)
+    correct_answers.shuffle.slice(0...rand(1..max))
   end
 
   def reached_answer_limit?(total)
