@@ -67,6 +67,13 @@ describe Question do
       3.times { answer_sets << question.generate_answers }
       expect(answer_sets.uniq.count).not_to eq 1
     end
+
+    it "generates array of uniq answers" do
+      question = Fabricate(:question)
+      Fabricate.times(5, :answer, question: question, correct: false)
+      correct_answer = Fabricate(:answer, question: question, correct: true)
+      expect(question.generate_answers.uniq.size).to eq(4)
+    end
   end
 
   describe "#yield_points?(exam)" do
