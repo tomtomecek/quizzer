@@ -89,7 +89,7 @@ describe Question do
       expect(question.yield_points?(exam)).to be true
     end
 
-    it "returns false if question was not correctly answered" do      
+    it "returns false if question was not correctly answered" do
       saids = to_ids(answer1, answer2)
       exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids, student_answer_ids: saids)
       expect(question.yield_points?(exam)).to be false
@@ -97,15 +97,15 @@ describe Question do
   end
 
   describe "#has_no_student_answer?(exam)" do
+    let(:quiz)     { Fabricate(:quiz) }
+    let(:question) { Fabricate(:question) }
+    
     it "returns true if there are no student answers" do
-      quiz = Fabricate(:quiz)
-      question = Fabricate(:question)
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: [])
       expect(question).to have_no_student_answer(exam)
     end
+    
     it "returns false if there are student answers" do
-      quiz = Fabricate(:quiz)
-      question = Fabricate(:question)
       answer = Fabricate(:answer, question: question)
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: to_ids(answer))
       expect(question).to_not have_no_student_answer(exam)
