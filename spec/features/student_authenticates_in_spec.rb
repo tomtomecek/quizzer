@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 feature "student authenticates successfully" do
-
   scenario "signs in - has no account" do
     visit root_path
     click_on "Sign in with GitHub"
@@ -26,5 +25,4 @@ feature "student authenticates successfully" do
     expect_to_see "Sign in with GitHub"
     expect_to_not_see "Sign out"
   end
-
 end

@@ -5,7 +5,7 @@
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if logged_in?
-          %li= current_user.username
+          %li.btn.btn-default= current_user.username
           %li
             = link_to sign_out_path, method: :delete, class: "btn btn-default" do
               %i.fa.fa-sign-out
