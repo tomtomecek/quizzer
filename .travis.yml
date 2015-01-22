@@ -5,10 +5,12 @@ sudo: false
 cache: bundler
 addons:
   postgresql: "9.3"
+  code_climate:
+    repo_token: 4435045f186f6da3b724256eb56c9fcead2650914f58931d32fe1b3c62d51259
 before_script:
   - psql -c 'create database quizzer_test;' -U postgres
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script: CODECLIMATE_REPO_TOKEN=4435045f186f6da3b724256eb56c9fcead2650914f58931d32fe1b3c62d51259 bundle exec rspec spec
+script: bundle exec rspec spec
 env:
   MAILER_HOST=localhost:52662

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Quiz do
   it { is_expected.to belong_to(:course) }
