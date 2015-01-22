@@ -1,4 +1,6 @@
 class ExamsController < ApplicationController
+  before_action :require_user
+
   def new
     @quiz = Quiz.find_by(slug: params[:quiz_id])
     @exam = Exam.new(quiz: @quiz)
@@ -7,14 +9,15 @@ class ExamsController < ApplicationController
   def create
     quiz = Quiz.find_by(slug: params[:quiz_id])
     exam = Exam.create(
-      quiz: quiz,
-      generated_answer_ids: params[:generated_answer_ids],
-      student_answer_ids: params[:student_answer_ids])    
+                  quiz: quiz,
+                  generated_answer_ids: params[:generated_answer_ids],
+                  student_answer_ids: params[:student_answer_ids]
+    )
     redirect_to [quiz, exam]
   end
 
-  def show    
+  def show
     @exam = Exam.find(params[:id])
-    @quiz = @exam.quiz    
+    @quiz = @exam.quiz
   end
 end
