@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   describe ".create_with_omniauth" do
     let(:auth) { OmniAuth.config.mock_auth[:github] }
-    
+
     it "creates a user from omniauth hash" do
       User.create_with_omniauth(auth)
       expect(User.count).to eq(1)
