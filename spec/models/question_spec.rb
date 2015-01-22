@@ -45,22 +45,21 @@ describe Question do
   end
 
   describe "#generate_answers" do
+    let(:question) { Fabricate(:question) }
+    
     it "generates 4 answers total" do
-      question = Fabricate(:question)
       Fabricate.times(9, :answer, question: question, correct: false)
       correct_answer = Fabricate(:answer, question: question, correct: true)
       expect(question.generate_answers.size).to eq(4)
     end
 
-    it "generates at least 1 correct answer" do
-      question = Fabricate(:question)
+    it "generates at least 1 correct answer" do      
       Fabricate.times(9, :answer, question: question, correct: false)
       correct_answer = Fabricate(:answer, question: question, correct: true)
       expect(question.generate_answers).to include(correct_answer)
     end
 
-    it "generates random array" do
-      question = Fabricate(:question)
+    it "generates random array" do      
       Fabricate.times(9, :answer, question: question, correct: false)
       Fabricate.times(3, :answer, question: question, correct: true)
       answer_sets = []
@@ -68,8 +67,7 @@ describe Question do
       expect(answer_sets.uniq.count).not_to eq 1
     end
 
-    it "generates array of uniq answers" do
-      question = Fabricate(:question)
+    it "generates array of uniq answers" do      
       Fabricate.times(5, :answer, question: question, correct: false)
       correct_answer = Fabricate(:answer, question: question, correct: true)
       expect(question.generate_answers.uniq.size).to eq(4)
