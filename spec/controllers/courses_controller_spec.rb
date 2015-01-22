@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CoursesController do
   describe "GET index" do
@@ -11,8 +11,14 @@ describe CoursesController do
   end
 
   describe "GET show" do
+    let(:course) { Fabricate(:course) }
+
+    it_behaves_like "require sign in" do
+      let(:action) { get :show, id: course.slug }
+    end
+
     it "sets the @course" do
-      course = Fabricate(:course)
+      set_current_user
       get :show, id: course.slug
       expect(assigns(:course)).to eq course
     end

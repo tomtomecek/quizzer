@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SessionsController do
   before { request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] }
@@ -37,13 +37,19 @@ describe SessionsController do
   end
 
   describe "DELETE #destroy" do
-    before do
-      set_current_user
-      delete :destroy
+    context "when authenticated" do
+      before do
+        set_current_user
+        delete :destroy
+      end
+
+      it { is_expected.to redirect_to root_url }
+      it { is_expected.to set_session(:user_id).to nil }
+      it { is_expected.to set_the_flash[:success] }
     end
 
-    it { is_expected.to redirect_to root_url }
-    it { is_expected.to set_session(:user_id).to nil }
-    it { is_expected.to set_the_flash[:success] }
+    it_behaves_like "require sign in" do
+      let(:action) { delete :destroy }
+    end
   end
 end
