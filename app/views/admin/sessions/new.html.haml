@@ -1,0 +1,21 @@
+.container.admin-login
+  .col-sm-offset-1
+    = form_tag admin_sign_in_path, class: "form-horizontal", role: "form" do
+      %header.col-sm-offset-2
+        %h1 Administrator Login
+      .form-group
+        = label_tag :email, nil, class: "col-sm-2 control-label"
+        .col-sm-4
+          = email_field_tag :email, params[:email] || "", class: "form-control"
+      .form-group
+        = label_tag :password, nil, class: "col-sm-2 control-label"
+        .col-sm-4
+          = password_field_tag :password, nil, class: "form-control"
+      .form-group
+        .col-sm-offset-2.col-sm-4
+          = check_box_tag :remember_me, 1, false, class: "checkbox"
+          = label_tag :remember_me, "Remember me"
+      .form-group
+        .col-sm-offset-2.col-sm-4
+          = submit_tag "Sign in", class: "btn btn-default"
+          = link_to "Forgot password?", ''
