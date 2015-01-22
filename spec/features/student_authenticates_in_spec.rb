@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "student authenticates successfully" do
   scenario "signs in - has no account" do
