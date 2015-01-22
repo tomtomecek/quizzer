@@ -4,8 +4,14 @@
       %a.navbar-brand(href="") Quizzer
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        %li
-          = link_to "/auth/github", class: "btn btn-default" do
-            %i.fa.fa-github.fa-2x
-            %span.sign_in_btn_text
-              Sign in with Github
+        - if logged_in?
+          %li= current_user.username
+          %li
+            = link_to sign_out_path, method: :delete, class: "btn btn-default" do
+              %i.fa.fa-sign-out
+              Sign out
+        - else
+          %li
+            = link_to "/auth/github", class: "btn btn-default" do
+              %i.fa.fa-github.fa-2x
+              %span.sign_in_btn_text Sign in with GitHub
