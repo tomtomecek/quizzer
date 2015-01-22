@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
       user.email    = auth[:info][:email]
       user.name     = auth[:info][:name]
       user.avatar_url = auth[:info][:image]
-      user.github_account_url = auth[:info][:urls][:Github]
+      user.github_account_url = auth[:info][:urls][:GitHub]
     end
   end
 

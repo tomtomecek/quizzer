@@ -8,7 +8,7 @@ omniauth_hash = {
     "nickname" => "alicewang",
     "image" => "https://avatars.githubusercontent.com/u/123456",
     "urls" => {
-      "Github" => "https://github.com/alicewang"
+      "GitHub" => "https://github.com/alicewang"
     }
   }
 }
