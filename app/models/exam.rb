@@ -1,4 +1,5 @@
 class Exam < ActiveRecord::Base
+  belongs_to :student, class_name: "User"
   belongs_to :quiz
   before_create :default_student_answer_ids
 

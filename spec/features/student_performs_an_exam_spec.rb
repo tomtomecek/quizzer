@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "student performs an exam" do
   given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
@@ -15,6 +15,8 @@ feature "student performs an exam" do
   given!(:a2) { Fabricate(:answer, question: q2, correct: true, content: "answer is 4") }
   background { Fabricate.times(4, :answer, question: q3, correct: false, content: "x") }
   given!(:a3) { Fabricate(:answer, question: q3, correct: true, content: "answer is 6") }
+
+  background { sign_in }
 
   scenario "student checks course page and enters a course" do
     visit root_path

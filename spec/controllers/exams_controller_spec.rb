@@ -5,7 +5,7 @@ describe ExamsController do
 
   describe "GET new" do
     let(:quiz) { Fabricate(:quiz) }
-    
+
     it_behaves_like "require sign in" do
       let(:action) { get :new, quiz_id: quiz.slug }
     end
@@ -29,7 +29,7 @@ describe ExamsController do
     let(:answer2)  { Fabricate(:answer, question: question) }
     let(:answer3)  { Fabricate(:answer, question: question) }
     let(:exam)     { Exam.first }
-    
+
     context "when authenticated" do
       before do
         post :create,
@@ -48,6 +48,10 @@ describe ExamsController do
 
       it "creates an exam under quiz" do
         expect(quiz.exams.first).to eq(exam)
+      end
+
+      it "creates an exam under the student" do
+        expect(Exam.first.student).to eq current_user
       end
 
       it "creates an exam with student_answer_ids" do
