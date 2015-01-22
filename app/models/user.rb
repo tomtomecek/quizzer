@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :exams, foreign_key: "student_id"
-
-  def self.create_from_omniauth(auth)
+  def self.create_with_omniauth(auth)
     create do |user|
       user.provider = auth[:provider]
       user.uid      = auth[:uid]
