@@ -9,16 +9,16 @@ class ExamsController < ApplicationController
   def create
     quiz = Quiz.find_by(slug: params[:quiz_id])
     exam = Exam.create(
-                  student: current_user,
-                  quiz: quiz,
-                  generated_answer_ids: params[:generated_answer_ids],
-                  student_answer_ids: params[:student_answer_ids]
+      student: current_user,
+      quiz: quiz,
+      generated_answer_ids: params[:generated_answer_ids],
+      student_answer_ids: params[:student_answer_ids]
     )
     redirect_to [quiz, exam]
   end
 
   def show
-    @exam = Exam.find(params[:id])
+    @exam = current_user.exams.find(params[:id])
     @quiz = @exam.quiz
   end
 end
