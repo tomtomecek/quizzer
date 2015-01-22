@@ -33,9 +33,9 @@ describe ExamsController do
     context "when authenticated" do
       before do
         post :create,
-          quiz_id: quiz.slug,
-          student_answer_ids: to_ids(answer1),
-          generated_answer_ids: to_ids(answer1, answer2, answer3)
+             quiz_id: quiz.slug,
+             student_answer_ids: to_ids(answer1),
+             generated_answer_ids: to_ids(answer1, answer2, answer3)
       end
 
       it "redirects to :show @exam" do

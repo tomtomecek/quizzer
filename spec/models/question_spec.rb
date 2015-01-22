@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Question do
   it { is_expected.to belong_to(:quiz) }
@@ -81,15 +81,21 @@ describe Question do
     let(:answer2)  { Fabricate(:answer, question: question, correct: false) }
     let(:gaids)    { to_ids(answer1, answer2) }
 
-    it "returns true if question was correctly answered" do      
+    it "returns true if question was correctly answered" do
       saids = to_ids(answer1)
-      exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids, student_answer_ids: saids)
+      exam = Fabricate(:exam,
+                       quiz: quiz,
+                       generated_answer_ids: gaids,
+                       student_answer_ids: saids)
       expect(question.yield_points?(exam)).to be true
     end
 
     it "returns false if question was not correctly answered" do
       saids = to_ids(answer1, answer2)
-      exam = Fabricate(:exam, quiz: quiz, generated_answer_ids: gaids, student_answer_ids: saids)
+      exam = Fabricate(:exam, 
+                       quiz: quiz,
+                       generated_answer_ids: gaids,
+                       student_answer_ids: saids)
       expect(question.yield_points?(exam)).to be false
     end
   end
@@ -97,12 +103,12 @@ describe Question do
   describe "#has_no_student_answer?(exam)" do
     let(:quiz)     { Fabricate(:quiz) }
     let(:question) { Fabricate(:question) }
-    
+
     it "returns true if there are no student answers" do
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: [])
       expect(question).to have_no_student_answer(exam)
     end
-    
+
     it "returns false if there are student answers" do
       answer = Fabricate(:answer, question: question)
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: to_ids(answer))

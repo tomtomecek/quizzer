@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Course do
   it { is_expected.to have_many(:quizzes).order(:created_at) }

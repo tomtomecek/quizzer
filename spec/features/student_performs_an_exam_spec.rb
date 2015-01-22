@@ -67,15 +67,9 @@ feature "student performs an exam" do
     click_on "Submit Answers"
 
     expect_to_see "Score: 3 from 12 points"
-    within_question(q1) do
-      expect_to_see "You earned 3 points"
-    end
-    within_question(q2) do
-      expect_to_see "One of the answers was wrong or missing."
-    end
-    within_question(q3) do
-      expect_to_see "No answers submitted"
-    end
+    within_question(q1) { expect_to_see "You earned 3 points" }
+    within_question(q2) { expect_to_see "One of the answers was wrong" }
+    within_question(q3) { expect_to_see "No answers submitted" }
   end
 end
 

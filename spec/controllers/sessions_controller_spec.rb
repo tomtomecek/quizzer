@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SessionsController do
   before { request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] }
