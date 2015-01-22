@@ -38,7 +38,7 @@ describe SessionsController do
 
   describe "DELETE #destroy" do
     before do
-      sign_in
+      set_current_user
       delete :destroy
     end
 
