@@ -1,10 +1,8 @@
 class SessionsController < ApplicationController
   before_action :require_user, only: [:destroy]
 
-  def create
-    auth = request.env["omniauth.auth"]
-    user = User.find_by_provider_and_uid(auth) ||
-           User.create_from_omniauth(auth)
+  def create    
+    user = User.from_omniauth(request.env["omniauth.auth"])
     session[:user_id] = user.id
     flash[:success] = "Signed in!"
     redirect_to root_url
