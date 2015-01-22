@@ -3,11 +3,11 @@ require "spec_helper"
 describe User do
   it { is_expected.to have_many(:exams).with_foreign_key(:student_id) }
 
-  describe ".create_with_omniauth" do
+  describe ".create_from_omniauth" do
     let(:auth) { OmniAuth.config.mock_auth[:github] }
 
     it "creates a user from omniauth hash" do
-      User.create_with_omniauth(auth)
+      User.create_from_omniauth(auth)
       expect(User.count).to eq(1)
     end
   end
