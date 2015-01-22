@@ -6,17 +6,18 @@ gem 'pg',                 '0.18.1'
 gem 'haml-rails',         '0.5.3'
 gem 'bootstrap-sass',     '3.3.1.0'
 gem 'autoprefixer-rails', '4.0.1.1'
-gem 'sass-rails',         '~> 4.0.3'
+gem 'sass-rails',         '4.0.5'
 gem 'font-awesome-rails', '4.2.0.0'
-gem 'uglifier',           '>= 1.3.0'
-gem 'coffee-rails',       '~> 4.0.0'
+gem 'uglifier',           '2.7.0'
+gem 'coffee-rails',       '4.0.1'
 gem 'jquery-rails',       '3.1.2'
 gem 'turbolinks',         '2.5.3'
-gem 'jbuilder',           '~> 2.0'
+gem 'jbuilder',           '2.2.6'
 gem 'paratrooper',        '2.4.1'
 gem 'sidekiq',            '3.3.0'
 gem 'figaro',             '1.0.0'
 gem 'omniauth-github',    '1.1.2'
+gem 'bcrypt',             '3.1.9'
 
 group :development do
   gem 'thin',             '1.6.3'
@@ -36,9 +37,9 @@ end
 group :test do
   gem 'capybara',         '2.4.4'
   gem 'launchy',          '2.4.3'
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers', '2.7.0', require: false
   gem 'database_cleaner', '1.2.0'
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'codeclimate-test-reporter', '0.4.5', require: nil
 end
 
 group :production, :staging do
