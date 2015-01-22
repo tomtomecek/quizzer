@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   end
   resources :courses, only: [:show]
   get 'ui(/:action)', controller: 'ui'
-  root 'courses#index'  
+  root 'courses#index'
 end
