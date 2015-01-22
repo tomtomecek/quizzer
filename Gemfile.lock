@@ -248,7 +248,7 @@ DEPENDENCIES
   autoprefixer-rails (= 4.0.1.1)
   bcrypt (= 3.1.9)
   bootstrap-sass (= 3.3.1.0)
-  bootstrap_form
+  bootstrap_form (= 2.2.0)
   capybara (= 2.4.4)
   codeclimate-test-reporter (= 0.4.5)
   coffee-rails (= 4.0.1)
