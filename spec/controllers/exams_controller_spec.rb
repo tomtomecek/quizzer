@@ -1,8 +1,7 @@
 require "spec_helper"
 
 describe ExamsController do
-  let(:student) { Fabricate(:user) }
-  before { set_current_user(student) }
+  before { set_current_user }
 
   describe "GET new" do
     let(:quiz) { Fabricate(:quiz) }
@@ -73,7 +72,7 @@ describe ExamsController do
 
   describe "GET show" do
     let(:quiz) { Fabricate(:quiz) }
-    let(:exam) { Fabricate(:exam, quiz: quiz, student: student) }
+    let(:exam) { Fabricate(:exam, quiz: quiz) }
 
     it_behaves_like "require sign in" do
       let(:action) { get :show, quiz_id: quiz.slug, id: exam.id }
