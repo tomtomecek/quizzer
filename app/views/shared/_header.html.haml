@@ -10,6 +10,12 @@
             = link_to sign_out_path, method: :delete, class: "btn btn-default" do
               %i.fa.fa-sign-out
               Sign out
+        - elsif logged_in_admin?
+          %li= link_to current_admin.email, '', class: "btn btn-default"
+          %li
+            = link_to admin_sign_out_path, method: :delete, class: "btn btn-default" do
+              %i.fa.fa-sign-out
+              Sign out
         - else
           %li
             = link_to "/auth/github", class: "btn btn-default" do
