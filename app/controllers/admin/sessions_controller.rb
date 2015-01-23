@@ -1,6 +1,6 @@
 class Admin::SessionsController < ApplicationController
   before_action :require_admin, only: [:destroy]
-  
+
   def create
     admin = Admin.find_by(email: params[:email])
 

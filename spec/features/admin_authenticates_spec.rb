@@ -39,7 +39,7 @@ feature "admin authenticates with Quizzer" do
 end
 
 def loging_in_with(options = {})
-  fill_in "Email"   , with: options[:email] || "admin@tealeaf.com"
+  fill_in "Email",    with: options[:email] || "admin@tealeaf.com"
   fill_in "Password", with: options[:password] || "secret"
   click_on "Sign in"
 end
