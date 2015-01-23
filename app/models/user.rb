@@ -9,12 +9,12 @@ private
 
   def self.create_from_omniauth(auth)
     create do |user|
-      user.provider = auth[:provider]
-      user.uid      = auth[:uid]
-      user.username = auth[:info][:nickname]
-      user.email    = auth[:info][:email]
-      user.name     = auth[:info][:name]
-      user.avatar_url = auth[:info][:image]
+      user.provider           = auth[:provider]
+      user.uid                = auth[:uid]
+      user.username           = auth[:info][:nickname]
+      user.email              = auth[:info][:email]
+      user.name               = auth[:info][:name]
+      user.avatar_url         = auth[:info][:image]
       user.github_account_url = auth[:info][:urls][:GitHub]
     end
   end
