@@ -1,0 +1,13 @@
+.container.admin-login
+  .col-sm-offset-1
+    = bootstrap_form_tag(url: admin_sign_in_path, layout: :horizontal, label_col: "col-sm-2",control_col: "col-sm-10") do |f|
+      .col-sm-offset-2
+        %header.col-sm-offset-2
+          %h1 Administrator Login
+        = f.email_field :email, value: params[:email] || "", control_col: "col-sm-5"
+        = f.password_field :password, control_col: "col-sm-5"
+        = f.form_group do
+          = f.check_box :remember_me
+        = f.form_group do
+          = f.submit "Sign in"
+          = link_to "Forgot password?", ''

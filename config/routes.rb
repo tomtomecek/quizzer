@@ -2,6 +2,14 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
   delete "sign_out", to: "sessions#destroy"
 
+  namespace :admin do
+    get "sign_in", to: "sessions#new"
+    post "sign_in", to: "sessions#create"
+    delete "sign_out", to: "sessions#destroy"
+
+    resources :courses, only: [:index, :show]
+  end
+
   resources :quizzes, except: [:new, :create, :index, :show, :edit, :update, :destroy] do
     resources :exams, only: [:new, :create, :show]
   end
