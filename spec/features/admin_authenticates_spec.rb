@@ -30,7 +30,7 @@ feature "admin authenticates with Quizzer" do
     expect_to_see "Incorrect email or password. Please try again."
   end
 
-  scenario "signs out" do    
+  scenario "signs out" do
     sign_in_admin
     click_on "Sign out"
     expect_to_see "Logged out successfully."
