@@ -12,7 +12,9 @@ feature "admin authenticates with Quizzer" do
     filling_sign_in_form_and_submits
 
     expect_to_see "Login was successful!"
-    expect(current_path).to eq admin_courses_path
+    expect_to_not_have_sign_out_link_for_student
+    expect_to_have_sign_out_link_for_admin
+    expect_to_be_in admin_courses_path
   end
 
   scenario "failed sign in" do
@@ -20,19 +22,19 @@ feature "admin authenticates with Quizzer" do
     click_on "Administration"
     expect_to_see "Administrator Login"
     loging_in_with(password: "no match")
-    expect(current_path).to eq admin_sign_in_path
+    expect_to_be_in admin_sign_in_path
     expect_to_see "Incorrect email or password. Please try again."
 
     loging_in_with(email: "no match")
-    expect(current_path).to eq admin_sign_in_path
+    expect_to_be_in admin_sign_in_path
     expect_to_see "Incorrect email or password. Please try again."
   end
 
-  scenario "signs out" do
+  scenario "signs out" do    
     sign_in_admin
     click_on "Sign out"
-    expect_to_see "You've been logged out!"
-    expect(current_path).to eq root_path
+    expect_to_see "Logged out successfully."
+    expect_to_be_in root_path
   end
 end
 
@@ -42,3 +44,11 @@ def loging_in_with(options = {})
   click_on "Sign in"
 end
 alias :filling_sign_in_form_and_submits :loging_in_with
+
+def expect_to_have_sign_out_link_for_admin
+  expect(page).to have_xpath("//a[@href='/admin/sign_out']")
+end
+
+def expect_to_not_have_sign_out_link_for_student
+  expect(page).to have_no_xpath("//a[@href='/sign_out']")
+end
