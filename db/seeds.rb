@@ -1,3 +1,10 @@
+Admin.create(email: "ta@example.com", password: "123456", role: "TA")
+Admin.create(
+  email: "instructor@example.com",
+  password: "123456",
+  role: "instructor"
+)
+
 ruby = Course.create(
   title: "Introduction to Ruby and Web development",
   description: Faker::Lorem.paragraph(10))
@@ -42,7 +49,7 @@ question4 = Question.create(
   quiz: procedural,
   points: 10)
 
-3.times do 
+3.times do
   Answer.create(
   question: question1,
   content: "correct answer 2",
