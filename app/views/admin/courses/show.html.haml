@@ -1,0 +1,11 @@
+.container
+  .col-sm-7
+    - @course.quizzes.each do |quiz|
+      .row{ id: "quiz_#{quiz.id}" }
+        %h3= quiz.title        
+        %br
+        = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
+          %span.glyphicon.glyphicon-play-circle
+          Start Quiz
+        .clearfix
+        %hr(style="padding: 5px 0px;")
