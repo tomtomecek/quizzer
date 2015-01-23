@@ -14,3 +14,16 @@ end
 def current_user
   User.find(session[:user_id])
 end
+
+def clear_current_admin
+  session[:admin_id] = nil
+end
+
+def current_admin
+  Admin.find(session[:admin_id])
+end
+
+def set_current_admin(admin = nil)
+  admin = admin || Fabricate(:admin)
+  session[:admin_id] = admin.id
+end
