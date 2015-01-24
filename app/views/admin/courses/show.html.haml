@@ -3,7 +3,7 @@
     .pull-left
       %h2 All Quizzes within - #{@course.title}
     .pull-right
-      = link_to new_admin_quiz_path(course_id: @course.slug), class: "btn btn-default new_quiz_button" do
+      = link_to new_quiz_path(course_id: @course.slug), class: "btn btn-default new_quiz_button" do
         %span.glyphicon.glyphicon-plus
         New Quiz
     .clearfix
@@ -16,10 +16,10 @@
         = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg" do
           %span.glyphicon.glyphicon-play-circle
           Start Quiz
-        / =# link_to edit_admin_quiz_path(quiz), class: "btn btn-default btn-lg" do
+        / =# link_to edit_quiz_path(quiz), class: "btn btn-default btn-lg" do
         /   %span.glyphicon.glyphicon-edit
         /   Edit
-        / =# link_to admin_quiz_path(quiz), class: "btn btn-default btn-lg" do
+        / =# link_to quiz, class: "btn btn-default btn-lg" do
         /   %span.glyphicon.glyphicon-zoom-in
         /   View
         .clearfix

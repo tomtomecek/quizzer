@@ -26,6 +26,6 @@ feature "admin adds a quiz to a course" do
     click_on "Create Quiz"
 
     expect_to_see "Quiz creation failed"
-    expect_to_be_in admin_quizzes_path
+    expect_to_be_in quizzes_path
   end
 end

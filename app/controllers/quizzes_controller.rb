@@ -1,4 +1,4 @@
-class Admin::QuizzesController < AdminController
+class QuizzesController < AdminController
   def new
     course = Course.find_by(slug: params[:course_id])
     @quiz = course.quizzes.build

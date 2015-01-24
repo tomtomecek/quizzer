@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::QuizzesController do
+describe QuizzesController do
   before { set_current_admin }
 
   describe "GET new" do
