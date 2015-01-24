@@ -2,6 +2,10 @@ class Question < ActiveRecord::Base
   belongs_to :quiz
   has_many :answers
 
+  validates_presence_of :content
+  validates_numericality_of :points, only_integer: true
+  accepts_nested_attributes_for :answers
+
   ANSWER_LIMIT = 4
 
   def answers_for(exam, method_name)

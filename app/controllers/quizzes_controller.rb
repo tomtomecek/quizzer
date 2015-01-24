@@ -20,6 +20,18 @@ class QuizzesController < AdminController
   private
 
   def quiz_params
-    params.require(:quiz).permit(:title, :description, :published)
+    params.require(:quiz).permit(
+      :title,
+      :description,
+      :published,
+      questions_attributes: [
+        :content,
+        :points,
+        answers_attributes: [
+          :content,
+          :correct
+        ]
+      ]
+    )
   end
 end

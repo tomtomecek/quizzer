@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Answer do
   it { is_expected.to belong_to(:question) }
+  it { is_expected.to validate_presence_of(:content) }
 
   describe "#incorrect?" do
     it "returns true if answer is falsy" do

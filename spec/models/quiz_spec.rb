@@ -7,6 +7,7 @@ describe Quiz do
   it { is_expected.to validate_presence_of(:description) }
   it { is_expected.to have_many(:exams) }
   it { is_expected.to have_many(:questions) }
+  it { is_expected.to accept_nested_attributes_for(:questions) }
 
   describe "#generate_slug" do
     it "creates course with slug based on title" do
