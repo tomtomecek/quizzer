@@ -7,6 +7,7 @@ class Admin::QuizzesController < AdminController
   def create
     course = Course.find_by(slug: params[:course_id])
     @quiz = course.quizzes.build(quiz_params)
+
     if @quiz.save
       flash[:success] = "Successfully created new quiz."
       redirect_to admin_course_url(course)

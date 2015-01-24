@@ -2,13 +2,14 @@ require "spec_helper"
 
 feature "admin adds a quiz to a course" do
   given!(:ruby) { Fabricate(:course, title: "Ruby course") }
-
-  scenario "successful quiz creation" do
+  background do
     sign_in_admin
     click_on "Ruby course"
     click_on "New Quiz"
+  end
 
-    fill_in "Title", with: "Week 1 - Ruby basics"
+  scenario "successful quiz creation" do
+    fill_in "Title",       with: "Week 1 - Ruby basics"
     fill_in "Description", with: "Quiz focused on Ruby methods and iterations"
     uncheck "Published"
     click_on "Create Quiz"
@@ -19,16 +20,12 @@ feature "admin adds a quiz to a course" do
   end
 
   scenario "failed attempt on quiz creation" do
-    sign_in_admin
-    click_on "Ruby course"
-    click_on "New Quiz"
-
-    fill_in "Title", with: ""
-    fill_in "Description", with: "Quiz focused on Ruby methods and iterations"
+    fill_in "Title",       with: ""
+    fill_in "Description", with: ""
     uncheck "Published"
     click_on "Create Quiz"
 
     expect_to_see "Quiz creation failed"
-    expect_to_be_in new_admin_quiz_path(course_id: ruby.slug)
+    expect_to_be_in admin_quizzes_path
   end
 end
