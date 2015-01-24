@@ -9,7 +9,6 @@ describe Question do
   end
   it { is_expected.to validate_presence_of(:content) }
   it { is_expected.to validate_numericality_of(:points).only_integer }
-  
 
   describe "#answers_for(exam)" do
     let(:quiz)      { Fabricate(:quiz) }
