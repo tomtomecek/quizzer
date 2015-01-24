@@ -1,0 +1,23 @@
+.container
+  .row
+    .pull-left
+      %h1 All Courses
+    .pull-right
+      = link_to '', class: "btn btn-default new_course_button" do
+        %span.glyphicon.glyphicon-plus
+        New Course
+  %br
+  .col-sm-10
+    %table.table
+      %thead
+        %tr
+          %th(width="60%") Title
+          %th(width="40%") Actions
+      %tbody
+        - @courses.each do |course|
+          %tr
+            %td
+              %strong= link_to course.title, [:admin, course]
+            %td
+              = link_to "Edit", ''
+              = link_to "Publish", ''

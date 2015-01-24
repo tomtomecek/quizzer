@@ -3,7 +3,7 @@ class Quiz < ActiveRecord::Base
   has_many :exams
   has_many :questions
   
-  validates_presence_of :title
+  validates_presence_of :title, :description
   before_create :generate_slug
 
   def total_score
