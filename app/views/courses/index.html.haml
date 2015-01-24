@@ -1,11 +1,11 @@
 .container
   .col-sm-7
     - @courses.each do |course|
-      .row{id: "course_#{course.id}"}
-        %img(src="http://dummyimage.com/637x284/123/fff.png&text=Course+image")
+      .row{ id: "course_#{course.id}" }
+        %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image")
         %h3= course.title
         %br
-        %p= simple_format course.description
+        %p.bg-primary= simple_format course.description
         %br
         = link_to course, class: "btn btn-default btn-lg col-sm-12" do
           %span.glyphicon.glyphicon-play-circle

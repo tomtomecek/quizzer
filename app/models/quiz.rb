@@ -2,9 +2,11 @@ class Quiz < ActiveRecord::Base
   belongs_to :course
   has_many :exams
   has_many :questions
-  
+
   validates_presence_of :title, :description
   before_create :generate_slug
+
+  accepts_nested_attributes_for :questions
 
   def total_score
     questions.map(&:points).inject(:+)
@@ -25,9 +27,9 @@ class Quiz < ActiveRecord::Base
   def to_param
     slug
   end
-  
-private
-  
+
+  private
+
   def slugify(the_slug)
     first_part = the_slug.split('-').slice(0...-1).join('-')
     second_part = the_slug.split('-').last.to_i + 1

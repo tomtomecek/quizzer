@@ -1,6 +1,6 @@
 .container
   %h1 Add new quiz
-  = form_for @quiz, url: admin_quizzes_path, html: { class: "form-horizontal" } do |f|
+  = form_for @quiz, html: { class: "form-horizontal" } do |f|
     = hidden_field_tag :course_id, @quiz.course.slug
     .form-group
       = f.label :title, class: "col-sm-1 control-label"

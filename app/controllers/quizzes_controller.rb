@@ -1,4 +1,4 @@
-class Admin::QuizzesController < AdminController
+class QuizzesController < AdminController
   def new
     course = Course.find_by(slug: params[:course_id])
     @quiz = course.quizzes.build
@@ -20,6 +20,18 @@ class Admin::QuizzesController < AdminController
   private
 
   def quiz_params
-    params.require(:quiz).permit(:title, :description, :published)
+    params.require(:quiz).permit(
+      :title,
+      :description,
+      :published,
+      questions_attributes: [
+        :content,
+        :points,
+        answers_attributes: [
+          :content,
+          :correct
+        ]
+      ]
+    )
   end
 end
