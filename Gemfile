@@ -27,8 +27,7 @@ group :development do
   gem 'letter_opener',    '1.3.0'
 end
 
-group :development, :test do
-  gem 'faker',            '1.4.3'
+group :development, :test do  
   gem 'fabrication',      '2.11.3'
   gem 'pry',              '0.10.1'
   gem 'pry-nav',          '0.2.4'
@@ -41,6 +40,10 @@ group :test do
   gem 'shoulda-matchers', '2.7.0', require: false
   gem 'database_cleaner', '1.2.0'
   gem 'codeclimate-test-reporter', '0.4.5', require: nil
+end
+
+group :development, :test, :staging do
+  gem 'faker',            '1.4.3'  
 end
 
 group :production, :staging do
