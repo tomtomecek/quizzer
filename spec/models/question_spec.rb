@@ -3,7 +3,10 @@ require "spec_helper"
 describe Question do
   it { is_expected.to belong_to(:quiz) }
   it { is_expected.to have_many(:answers) }
-  it { is_expected.to accept_nested_attributes_for(:answers) }
+  it do
+    is_expected.to accept_nested_attributes_for(:answers)
+                   .allow_destroy(true)
+  end
   it { is_expected.to validate_presence_of(:content) }
   it { is_expected.to validate_numericality_of(:points).only_integer }
   

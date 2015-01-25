@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
-  accepts_nested_attributes_for :answers
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
   ANSWER_LIMIT = 4
 
