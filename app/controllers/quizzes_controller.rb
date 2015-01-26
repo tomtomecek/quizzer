@@ -2,6 +2,10 @@ class QuizzesController < AdminController
   def new
     course = Course.find_by(slug: params[:course_id])
     @quiz = course.quizzes.build
+    3.times do
+      question = @quiz.questions.build
+      4.times { question.answers.build }
+    end
   end
 
   def create
@@ -27,9 +31,11 @@ class QuizzesController < AdminController
       questions_attributes: [
         :content,
         :points,
+        :_destroy,
         answers_attributes: [
           :content,
-          :correct
+          :correct,
+          :_destroy
         ]
       ]
     )

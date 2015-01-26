@@ -1,19 +1,45 @@
-.container
-  %h1 Add new quiz
-  = form_for @quiz, html: { class: "form-horizontal" } do |f|
-    = hidden_field_tag :course_id, @quiz.course.slug
+.container  
+  = form_for @quiz, html: { class: "form-horizontal", role: "form" } do |f|
+    .form_group
+      .col-sm-offset-2
+        %h1 Add new quiz
+      = hidden_field_tag :course_id, @quiz.course.slug
     .form-group
-      = f.label :title, class: "col-sm-1 control-label"
-      .col-sm-5
+      = f.label :title, class: "col-sm-2 control-label"
+      .col-sm-8
         = f.text_field :title, class: "form-control"
     .form-group
-      = f.label :description, class: "col-sm-1 control-label"
-      .col-sm-5
-        = f.text_area :description, class: "form-control"
+      = f.label :description, class: "col-sm-2 control-label"
+      .col-sm-8
+        = f.text_area :description, class: "form-control resize_vertical"
     .form-group
-      .col-sm-offset-1.col-sm-5
+      .col-sm-offset-2.col-sm-8
         = f.check_box :published
-        = f.label :published, class: "control-label"
+        = f.label :published
+    = f.fields_for :questions do |q|
+      .form-group
+        .col-sm-offset-2.col-sm-8
+          %h3.pull-left
+            = q.label :content, "Question", class: "control-label", style: "margin-bottom: 5px"
+            %span(style="margin-left: 10px")
+              %i.fa.fa-trash.fa-1x(title="Remove Question")
+          .pull-right.select_titleizer
+            = q.select :points, (1..10).to_a, {prompt: "Select Points"}, {class: "form-control"}
+          .clearfix
+          = q.text_area :content, rows: 3, class: "form-control resize_vertical"
+      = q.fields_for :answers do |b|
+        .form-group
+          .col-sm-offset-2.col-sm-8
+            = b.label :content, "Answer", class: "col-sm-1 control-label"
+            .col-sm-10
+              .input-group
+                %span.input-group-addon(title="At least 1 answer must be correct.")
+                  = b.check_box :correct, checked: true
+                = b.text_area :content, rows: 1, class: "form-control resize_vertical"
+              %small
+                %em ProTip: Tick the checkbox if the answer is correct.
+            .col-sm-1
+              %span.remove_answer.glyphicon.glyphicon-remove(title="Remove Answer")
     .form-group
-      .col-sm-offset-1.col-sm-5
+      .col-sm-offset-2.col-sm-8
         = f.submit "Create Quiz", class: "btn btn-default"
