@@ -52,14 +52,14 @@ describe Question do
   describe "#generate_answers" do
     let(:question) { Fabricate(:question) }
 
-    it "generates 4 answers total" do
+    it "generates 4 answers from mix" do
       Fabricate.times(9, :answer, question: question, correct: false)
       correct_answer = Fabricate(:answer, question: question, correct: true)
       expect(question.generate_answers.size).to eq(4)
     end
 
-    it "generates at least 4 answers" do
-      Fabricate.times(4, :answer, question: question, correct: true)      
+    it "generates 4 answers even if all correct" do
+      Fabricate.times(4, :answer, question: question, correct: true)
       expect(question.generate_answers.size).to eq(4)
     end
 
