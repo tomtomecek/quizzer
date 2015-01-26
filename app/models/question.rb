@@ -17,8 +17,8 @@ class Question < ActiveRecord::Base
   end
 
   def generate_answers
-    total = generate_correct_answers
-    fill_up_with_incorrect_answers(total).shuffle
+    total = [answers.select(&:correct?).sample]
+    fill_up_with_rest(total).shuffle
   end
 
   def yield_points?(exam)
@@ -34,22 +34,16 @@ class Question < ActiveRecord::Base
     answers_for(exam, :student_answer_ids).empty?
   end
 
-private
+  private
 
-  def generate_correct_answers
-    correct_answers = answers.select(&:correct?)
-    if correct_answers.count > ANSWER_LIMIT
-      max = ANSWER_LIMIT
-    else
-      max = correct_answers.count
-    end
-    correct_answers.shuffle.slice(0...rand(1..max))
+  def fill_up_with_rest(total)    
+    add_answer_to(total) until reached_answer_limit?(total)
+    total
   end
 
-  def fill_up_with_incorrect_answers(total)
-    incorrect_answers = answers.select(&:incorrect?).shuffle
-    total << incorrect_answers.pop until reached_answer_limit?(total)
-    total
+  def add_answer_to(total)
+    total << answers.sample
+    total.uniq!
   end
 
   def reached_answer_limit?(total)
