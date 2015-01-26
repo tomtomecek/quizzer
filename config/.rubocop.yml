@@ -8,5 +8,8 @@ Blocks:
                 Prefer {...} over do...end for single-line blocks.
   Enabled: true
 StringLiterals:
-  EnforcedStyle: single_quotes
+  Enabled: false
+Style/WordArray:
+  Description: 'Use %w or %W for arrays of words.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-w'
   Enabled: true
