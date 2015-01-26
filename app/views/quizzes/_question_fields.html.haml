@@ -2,9 +2,9 @@
   .form-group
     .col-sm-offset-2.col-sm-8
       %h3.pull-left
-        = f.label :content, "Question", class: "control-label", style: "margin-bottom: 5px"
+        = f.label :content, "Question", class: "control-label question_label"
         = f.hidden_field :_destroy
-        %span(style="margin-left: 10px")
+        %span.remove_question
           = link_to '', class: "remove_fields" do
             %i.fa.fa-trash.fa-1x(title="Remove Question")
       .pull-right.select_titleizer
