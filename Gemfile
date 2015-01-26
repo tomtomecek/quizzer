@@ -36,10 +36,12 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara',         '2.4.4'
-  gem 'launchy',          '2.4.3'
-  gem 'shoulda-matchers', '2.7.0', require: false
-  gem 'database_cleaner', '1.2.0'
+  gem 'capybara',           '2.4.4'
+  gem 'capybara-webkit',    '1.3.1'
+  gem 'launchy',            '2.4.3'
+  gem 'shoulda-matchers',   '2.7.0', require: false
+  gem 'database_cleaner',   '1.2.0'
+  gem 'selenium-webdriver', '2.44.0'
   gem 'codeclimate-test-reporter', '0.4.5', require: nil
 end
 
