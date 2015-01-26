@@ -1,0 +1,15 @@
+%fieldset
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      = f.label :content, "Answer", class: "col-sm-1 control-label"
+      .col-sm-10
+        .input-group
+          %span.input-group-addon(title="At least 1 answer must be correct.")
+            = f.check_box :correct, checked: true
+          = f.text_area :content, rows: 1, class: "form-control resize_vertical"
+          = f.hidden_field :_destroy
+        %small
+          %em ProTip: Tick the checkbox if the answer is correct.
+      .col-sm-1
+        = link_to '', class: "remove_fields", title: "Remove Answer" do
+          %span.remove_answer.glyphicon.glyphicon-remove

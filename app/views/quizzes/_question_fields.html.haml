@@ -1,0 +1,19 @@
+%fieldset
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      %h3.pull-left
+        = f.label :content, "Question", class: "control-label", style: "margin-bottom: 5px"
+        = f.hidden_field :_destroy
+        %span(style="margin-left: 10px")
+          = link_to '', class: "remove_fields" do
+            %i.fa.fa-trash.fa-1x(title="Remove Question")
+      .pull-right.select_titleizer
+        = f.select :points, (1..10).to_a, {prompt: "Select Points"}, {class: "form-control"}
+      .clearfix
+      = f.text_area :content, rows: 3, class: "form-control resize_vertical"
+  = f.fields_for :answers do |builder|
+    = render 'answer_fields', f: builder
+  .inserter
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      = link_to_add_fields "Add Answer", f, :answers, class: "add_answer_link"
