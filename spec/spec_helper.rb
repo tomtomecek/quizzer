@@ -20,10 +20,22 @@ RSpec.configure do |config|
   # config.mock_with :rr
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
   config.infer_spec_type_from_file_location!
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
   config.include(ExpectationMacros)
   config.include(AuthenticationMacros)
