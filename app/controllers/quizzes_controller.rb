@@ -5,7 +5,6 @@ class QuizzesController < AdminController
   end
 
   def create
-    binding.pry
     course = Course.find_by(slug: params[:course_id])
     @quiz = course.quizzes.build(quiz_params)
 
