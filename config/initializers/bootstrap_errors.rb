@@ -4,7 +4,7 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   form_fields = %w(textarea input select)
 
   elements = Nokogiri::HTML::DocumentFragment.parse(html_tag).css form_fields.join(', ')
-  
+
   elements.each do |e|
     if form_fields.include? e.node_name
       if instance.error_message.is_a?(Array)
@@ -13,7 +13,7 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
             #{html_tag}
           </span>
           ).html_safe
-      else        
+      else
         html = %Q(
           <span class="field_with_errors" data-container="body" data-toggle="popover" data-placement="top" data-content="#{instance.error_message}">
             #{html_tag}
