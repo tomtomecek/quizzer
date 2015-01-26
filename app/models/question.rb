@@ -6,6 +6,8 @@ class Question < ActiveRecord::Base
   validates_numericality_of :points, only_integer: true
   accepts_nested_attributes_for :answers, allow_destroy: true
 
+  attr_reader :total
+
   ANSWER_LIMIT = 4
 
   def answers_for(exam, method_name)
@@ -17,8 +19,8 @@ class Question < ActiveRecord::Base
   end
 
   def generate_answers
-    total = [answers.select(&:correct?).sample]
-    fill_up_with_rest(total).shuffle
+    @total = [answers.select(&:correct?).sample]
+    fill_up_answer_limit.shuffle
   end
 
   def yield_points?(exam)
@@ -36,17 +38,17 @@ class Question < ActiveRecord::Base
 
   private
 
-  def fill_up_with_rest(total)    
-    add_answer_to(total) until reached_answer_limit?(total)
+  def fill_up_answer_limit
+    add_answer_to_total until reached_answer_limit?
     total
   end
 
-  def add_answer_to(total)
+  def add_answer_to_total
     total << answers.sample
     total.uniq!
   end
 
-  def reached_answer_limit?(total)
+  def reached_answer_limit?
     total.count == ANSWER_LIMIT
   end
 
