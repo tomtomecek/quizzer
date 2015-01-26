@@ -4,12 +4,10 @@ describe Question do
   it { is_expected.to belong_to(:quiz) }
   it { is_expected.to have_many(:answers) }
   it do
-    is_expected.to accept_nested_attributes_for(:answers)
-                   .allow_destroy(true)
+    is_expected.to accept_nested_attributes_for(:answers).allow_destroy(true)
   end
   it { is_expected.to validate_presence_of(:content) }
   it { is_expected.to validate_numericality_of(:points).only_integer }
-  
 
   describe "#answers_for(exam)" do
     let(:quiz)      { Fabricate(:quiz) }
@@ -54,9 +52,14 @@ describe Question do
   describe "#generate_answers" do
     let(:question) { Fabricate(:question) }
 
-    it "generates 4 answers total" do
+    it "generates 4 answers from mix" do
       Fabricate.times(9, :answer, question: question, correct: false)
       correct_answer = Fabricate(:answer, question: question, correct: true)
+      expect(question.generate_answers.size).to eq(4)
+    end
+
+    it "generates 4 answers even if all correct" do
+      Fabricate.times(4, :answer, question: question, correct: true)
       expect(question.generate_answers.size).to eq(4)
     end
 
