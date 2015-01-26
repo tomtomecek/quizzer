@@ -1,4 +1,4 @@
-var ready = function() {
+ready = function() {
   $('[data-toggle=popover]').popover('show');
 
   $('form').on('click', '.remove_fields', function(e) {
