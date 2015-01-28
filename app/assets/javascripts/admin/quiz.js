@@ -3,7 +3,9 @@ ready = function() {
 
   $('form').on('click', '.remove_fields', function(e) {
     $(this).prev('input[type=hidden]').val('1');
-    $(this).closest('fieldset').remove();
+    $(this).closest('fieldset').fadeOut(function() {
+      $(this).remove();
+    });
     e.preventDefault();
   });
 

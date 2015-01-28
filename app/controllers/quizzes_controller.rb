@@ -6,6 +6,7 @@ class QuizzesController < AdminController
 
   def create
     course = Course.find_by(slug: params[:course_id])
+
     @quiz = course.quizzes.build(quiz_params)
 
     if @quiz.save
@@ -15,9 +16,15 @@ class QuizzesController < AdminController
       flash.now[:danger] = "Quiz creation failed - check errors below:"
       render :new
     end
+
+  rescue ActiveRecord::NestedAttributes::TooManyRecords => e
+    downsize_params
+    @quiz = course.quizzes.build(quiz_params)
+    flash.now[:info] = "Quiz creation failed - #{e.message}"
+    render :new
   end
 
-  private
+private
 
   def quiz_params
     params.require(:quiz).permit(
@@ -35,5 +42,13 @@ class QuizzesController < AdminController
         ]
       ]
     )
+  end
+
+  def downsize_params
+    params[:quiz][:questions_attributes].each do |q_attrs|
+      until q_attrs[1][:answers_attributes].count <= 10
+        q_attrs[1][:answers_attributes].shift
+      end
+    end
   end
 end

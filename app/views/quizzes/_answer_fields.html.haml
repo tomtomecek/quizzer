@@ -5,7 +5,7 @@
       .col-sm-10
         .input-group
           %span.input-group-addon(title="At least 1 answer must be correct.")
-            = f.check_box :correct, checked: true
+            = f.check_box :correct
           = f.text_area :content, rows: 1, class: "form-control resize_vertical"
           = f.hidden_field :_destroy
         %small

@@ -4,7 +4,12 @@ class Question < ActiveRecord::Base
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
-  accepts_nested_attributes_for :answers, allow_destroy: true
+  accepts_nested_attributes_for(
+    :answers,
+    reject_if: proc { |a| a[:content].blank? },
+    limit: proc { 10 },
+    allow_destroy: true
+  )
 
   attr_reader :total
 

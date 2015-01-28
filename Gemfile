@@ -32,7 +32,7 @@ group :development, :test do
   gem 'fabrication',      '2.11.3'
   gem 'pry',              '0.10.1'
   gem 'pry-nav',          '0.2.4'
-  gem 'rspec-rails',      '2.99'  
+  gem 'rspec-rails',      '2.99'
 end
 
 group :test do
@@ -46,7 +46,7 @@ group :test do
 end
 
 group :development, :test, :staging do
-  gem 'faker',            '1.4.3'  
+  gem 'faker',            '1.4.3'
 end
 
 group :production, :staging do

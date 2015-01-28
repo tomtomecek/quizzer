@@ -35,14 +35,17 @@ describe QuizzesController do
                         title: "Week 1 - Ruby",
                         description: "Checking knowledge...",
                         published: "0",
-                        questions_attributes: [
-                          question(question: "1 + 1",
-                                   answer: "2",
-                                   points: "3"),
-                          question(question: "2 + 2",
-                                   answer: "4",
-                                   points: "3")
-                        ]
+                        questions_attributes: {
+                          "1" => question(question: "1 + 1",
+                                          answer: "2",
+                                          points: "3"),
+                          "2" => question(question: "2 + 2",
+                                          answer: "4",
+                                          points: "4"),
+                          "3" => question(question: "3 + 3",
+                                          answer: "6",
+                                          points: "10")
+                        }
                       }
       end
 
@@ -59,13 +62,17 @@ describe QuizzesController do
 
       it "creates the quiz with questions" do
         quiz = course.quizzes.first
-        expect(quiz.questions.count).to eq 2
+        expect(quiz.questions.count).to eq 3
       end
 
       it "creates the quiz with questions and answers" do
         quiz = course.quizzes.first
-        question = quiz.questions.first
-        expect(question.answers.count).to eq 5
+        question1 = quiz.questions.first
+        question2 = quiz.questions.second
+        question3 = quiz.questions.last
+        expect(question1.answers.count).to eq 5
+        expect(question2.answers.count).to eq 5
+        expect(question3.answers.count).to eq 5
       end
     end
 
@@ -78,11 +85,11 @@ describe QuizzesController do
                           title: "",
                           description: "",
                           published: "0",
-                          questions_attributes: [ 
-                            question(question: "1 + 1",
-                                     answer: "2",
-                                     points: "3")
-                          ]
+                          questions_attributes: {
+                            "1" => question(question: "1 + 1",
+                                            answer: "2",
+                                            points: "3")
+                          }
                         }
         end
 
@@ -112,9 +119,11 @@ describe QuizzesController do
                           title: "Week 1 quiz",
                           description: "Great quiz ...",
                           published: "0",
-                          questions_attributes: [
-                            question(question: "", answer: "2", points: "3")
-                          ]
+                          questions_attributes: {
+                            "1" => question(question: "",
+                                            answer: "2",
+                                            points: "3")
+                          }
                         }
         end
 
@@ -125,50 +134,55 @@ describe QuizzesController do
         end
       end
 
-      context "invalid answer" do
+      context "answer limit reached" do
         before do
           post :create, course_id: course.slug,
                         quiz: {
-                          title: "Week 1 quiz",
-                          description: "Great quiz ...",
+                          title: "Week 1 - Ruby",
+                          description: "Checking knowledge...",
                           published: "0",
-                          questions_attributes: [
-                            question(question: "1 + 1", points: "3")
-                          ]
+                          questions_attributes: {
+                            "1" => question(question: "How much is 1 + 1?",
+                                            points: "3",
+                                            answer: "2",
+                                            correct_count: 7,
+                                            incorrect_count: 4)
+                          }
                         }
         end
 
-        it "does not create any from the set" do
-          expect(Quiz.count).to eq 0
-          expect(Question.count).to eq 0
-          expect(Answer.count).to eq 0
+        it do
+          expect(flash[:info]).to be_present
+          expect(response).to render_template :new
         end
-      end      
+      end
     end
   end
 end
 
 def question(options = {})
-  content         = options[:question]
-  points          = options[:points] || "1"
-  correct_count   = options[:correct_count] || 1
-  incorrect_count = options[:incorrect_count] || 4
+  content   = options[:question]
+  points    = options[:points] || "1"
+  correct   = options[:correct_count] || 1
+  incorrect = options[:incorrect_count] || 4
   {
     content: content,
     points: points,
-    answers_attributes: answers(options[:answer],
-                                correct_count,
-                                incorrect_count)
+    answers_attributes: answers(options[:answer], correct, incorrect)
   }
 end
 
-def answers(answer, corrent_answers, incorrect_answers)
-  arr = []
-  corrent_answers.times do
-    arr << { content: answer, correct: true }
+def answers(answer, correct_answers, incorrect_answers)
+  hash = {}
+
+  correct_answers.times do |n|
+    hash["#{n}"] = { content: answer, correct: true }
   end
-  incorrect_answers.times do
-    arr << { content: "incorrect answer", correct: false }
+
+  incorrect_answers.times do |n|
+    key = correct_answers + n
+    hash["#{key}"] = { content: "incorrect answer", correct: false }
   end
-  arr.shuffle
+
+  hash
 end
