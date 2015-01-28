@@ -9,32 +9,24 @@ feature "admin adds a quiz to a course" do
   end
 
   scenario "successful quiz creation", js: true do
-    skip
-    fill_in "Title",       with: "Week 1 - Ruby basics"
-    fill_in "Description", with: "Quiz focused on Ruby methods and iterations"
-    uncheck "Published"
+    fill_in_valid_quiz_attributes
 
-    click_on "Add Question"
-    fill_in "Question", with: "How much is 1 + 1?"
+    add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
+      add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(3, to: question, with: "incorrect answer") { mark_incorrect }
+      add_answer(4, to: question, with: "incorrect answer") { mark_incorrect }
+    end
 
-    click_on "Add Answer"
-    fill_in "Answer", with: "the correct answer is 2"
-    check "correct"
-
-    click_on "Add Answer"
-    fill_in "Answer", with: "the correct answer is 2"
-    check "correct"
-
-    click_on "Add Answer"
-    fill_in "Answer", with: "the incorrect answer - whatever"
-    uncheck "correct"
-
-    click_on "Add Answer"
-    fill_in "Answer", with: "the correct answer is 2"
-    uncheck "correct"
+    add_question(2, with: "How much is 2 + 2?", points: 4) do |question|
+      add_answer(1, to: question, with: "correct answer 4") { mark_correct }
+      add_answer(2, to: question, with: "correct answer 4") { mark_correct }
+      add_answer(3, to: question, with: "correct answer 4") { mark_correct }
+      add_answer(4, to: question, with: "correct answer 4") { mark_correct }
+      add_answer(5, to: question, with: "") { mark_correct }
+    end
 
     click_on "Create Quiz"
-
     expect_to_be_in admin_course_path(ruby)
     expect_to_see "Week 1 - Ruby basics"
     expect_to_see "Successfully created new quiz."
@@ -49,4 +41,53 @@ feature "admin adds a quiz to a course" do
     expect_to_see "Quiz creation failed"
     expect_to_be_in quizzes_path
   end
+
+  scenario "failed attempt on quiz - question blank", js: true do
+    fill_in_valid_quiz_attributes
+
+    add_question(1, with: "", points: 3) do |question|
+      add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(3, to: question, with: "incorrect answer") { mark_incorrect }
+      add_answer(4, to: question, with: "incorrect answre") { mark_incorrect }
+    end
+
+    click_on "Create Quiz"
+    expect_to_see "Quiz creation failed"
+  end
+
+  scenario "failed attempt on quiz - reached answers limit", js: true do
+    fill_in_valid_quiz_attributes
+
+    add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
+      add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+      add_answer(3, to: question, with: "an answer")
+      add_answer(4, to: question, with: "an answer")
+      add_answer(5, to: question, with: "an answer")
+      add_answer(6, to: question, with: "an answer")
+      add_answer(7, to: question, with: "an answer")
+      add_answer(8, to: question, with: "an answer")
+      add_answer(9, to: question, with: "an answer")
+      add_answer(10, to: question, with: "an answer")
+      add_answer(11, to: question, with: "an answer")
+    end
+
+    click_on "Create Quiz"
+    expect_to_see "Quiz creation failed"
+  end
+end
+
+def fill_in_valid_quiz_attributes
+  fill_in "Title",       with: "Week 1 - Ruby basics"
+  fill_in "Description", with: "Ruby methods and iterations"
+  uncheck "Published"
+end
+
+def mark_correct
+  find(:css, "input[type=checkbox]").set(true)
+end
+
+def mark_incorrect
+  find(:css, "input[type=checkbox]").set(false)
 end
