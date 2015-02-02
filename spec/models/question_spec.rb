@@ -45,7 +45,7 @@ describe Question do
       it { expect(question).to be_invalid }
       it "sets the errors on question" do
         question.valid?
-        expect(question.errors.full_messages).to include "must have at least 4 answers."
+        expect(question.errors.full_messages).to include "Answers - there must be at least 4 answers."
       end
     end
   end
