@@ -126,7 +126,7 @@ feature "admin adds a quiz to a course" do
 
     scenario "check on question", js: true, driver: :selenium do
       fill_in_valid_quiz_attributes
-      add_question(1, with: "", points: 3) do |question|
+      add_question(1, with: "", points: 3) do
         click_away
         expect_to_see "This value is required."
         fill_in "Question", with: "Some question"
