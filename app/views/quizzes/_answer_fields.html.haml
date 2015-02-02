@@ -6,7 +6,7 @@
         .input-group
           %span.input-group-addon(title="At least 1 answer must be correct.")
             = f.check_box :correct
-          = f.text_area :content, rows: 1, class: "form-control resize_vertical"
+          = f.text_area :content, rows: 1, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
           = f.hidden_field :_destroy
         %small
           %em ProTip: Tick the checkbox if the answer is correct.
