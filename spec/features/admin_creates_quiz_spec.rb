@@ -32,7 +32,7 @@ feature "admin adds a quiz to a course" do
     expect_to_see "Successfully created new quiz."
   end
 
-  scenario "failed attempt on quiz creation" do
+  scenario "quiz invalid" do
     fill_in "Title",       with: ""
     fill_in "Description", with: ""
     uncheck "Published"
@@ -42,39 +42,69 @@ feature "admin adds a quiz to a course" do
     expect_to_be_in quizzes_path
   end
 
-  scenario "failed attempt on quiz - question blank", js: true do
-    fill_in_valid_quiz_attributes
+  context "failed attempt on valid quiz" do
+    background { fill_in_valid_quiz_attributes }
 
-    add_question(1, with: "", points: 3) do |question|
-      add_answer(1, to: question, with: "correct answer 2") { mark_correct }
-      add_answer(2, to: question, with: "correct answer 2") { mark_correct }
-      add_answer(3, to: question, with: "incorrect answer") { mark_incorrect }
-      add_answer(4, to: question, with: "incorrect answre") { mark_incorrect }
+    scenario "question blank", js: true do
+      add_question(1, with: "", points: 3) do |question|
+        add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(3, to: question, with: "incorrect answer") { mark_incorrect }
+        add_answer(4, to: question, with: "incorrect answre") { mark_incorrect }
+      end
+
+      click_on "Create Quiz"
+      expect_to_see "Quiz creation failed"
     end
 
-    click_on "Create Quiz"
-    expect_to_see "Quiz creation failed"
-  end
+    scenario "reached answers limit", js: true do
+      add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
+        add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(3, to: question, with: "an answer")
+        add_answer(4, to: question, with: "an answer")
+        add_answer(5, to: question, with: "an answer")
+        add_answer(6, to: question, with: "an answer")
+        add_answer(7, to: question, with: "an answer")
+        add_answer(8, to: question, with: "an answer")
+        add_answer(9, to: question, with: "an answer")
+        add_answer(10, to: question, with: "an answer")
+        add_answer(11, to: question, with: "an answer")
+      end
 
-  scenario "failed attempt on quiz - reached answers limit", js: true do
-    fill_in_valid_quiz_attributes
-
-    add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
-      add_answer(1, to: question, with: "correct answer 2") { mark_correct }
-      add_answer(2, to: question, with: "correct answer 2") { mark_correct }
-      add_answer(3, to: question, with: "an answer")
-      add_answer(4, to: question, with: "an answer")
-      add_answer(5, to: question, with: "an answer")
-      add_answer(6, to: question, with: "an answer")
-      add_answer(7, to: question, with: "an answer")
-      add_answer(8, to: question, with: "an answer")
-      add_answer(9, to: question, with: "an answer")
-      add_answer(10, to: question, with: "an answer")
-      add_answer(11, to: question, with: "an answer")
+      click_on "Create Quiz"
+      expect_to_see "Quiz creation failed"
     end
 
-    click_on "Create Quiz"
-    expect_to_see "Quiz creation failed"
+    scenario "3 answers only", js: true do
+      add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
+        add_answer(1, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(2, to: question, with: "correct answer 2") { mark_correct }
+        add_answer(3, to: question, with: "an answer")
+      end
+
+      click_on "Create Quiz"
+      expect_to_see "Quiz creation failed"
+      expect_to_see "Answers - there must be at least 4 answers."
+    end
+
+    scenario "question missing", js: true do
+      click_on "Create Quiz"
+      expect_to_see "Quiz creation failed"
+    end
+
+    scenario "all incorrect answers", js: true do
+      add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
+        add_answer(1, to: question, with: "incorrect") { mark_incorrect }
+        add_answer(2, to: question, with: "incorrect") { mark_incorrect }
+        add_answer(3, to: question, with: "incorrect") { mark_incorrect }
+        add_answer(4, to: question, with: "incorrect") { mark_incorrect }
+      end
+
+      click_on "Create Quiz"
+      expect_to_see "Quiz creation failed"
+      expect_to_see "Answers - at least 1 must be correct."
+    end
   end
 end
 

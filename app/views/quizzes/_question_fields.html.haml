@@ -11,6 +11,12 @@
         = f.select :points, (1..10).to_a, {prompt: "Select Points"}, {class: "form-control"}
       .clearfix
       = f.text_area :content, rows: 3, class: "form-control resize_vertical"
+      - if f.object.errors.any?
+        .alert.alert-danger(style="margin-top: 15px; margin-bottom: 5px;")
+          %p There are some errors you need to fix:
+          %ul
+            - f.object.errors.full_messages.each do |e|
+              %li= e
   = f.fields_for :answers do |builder|
     = render 'answer_fields', f: builder
   .inserter

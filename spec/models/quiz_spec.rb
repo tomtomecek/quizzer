@@ -5,7 +5,8 @@ describe Quiz do
   it { is_expected.to have_db_index(:course_id) }
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:description) }
-  it { is_expected.to validate_presence_of(:questions) }
+  it { is_expected.to validate_presence_of(:questions).
+                      with_message('requires at least 1 question.') }
   it { is_expected.to have_many(:exams) }
   it { is_expected.to have_many(:questions) }
   it do
