@@ -20,6 +20,7 @@ gem 'figaro',             '1.0.0'
 gem 'omniauth-github',    '1.1.2'
 gem 'bcrypt',             '3.1.9'
 gem 'nokogiri',           '1.6.5'
+gem 'parsley-rails',      '2.0.7.0'
 
 group :development do
   gem 'thin',             '1.6.3'
