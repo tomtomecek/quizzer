@@ -47,11 +47,15 @@ class Question < ActiveRecord::Base
 private
 
   def one_must_be_correct
-    errors[:answers] << "- at least 1 must be correct." unless answers.map(&:correct?).any?
+    unless answers.map(&:correct?).any?
+      errors[:answers] << "- at least 1 must be correct."
+    end
   end
 
   def minimum_answers
-    errors[:answers] << "- there must be at least 4 answers." if answers.size < 4
+    if answers.size < 4
+      errors[:answers] << "- there must be at least 4 answers."
+    end
   end
 
   def fill_up_answer_limit

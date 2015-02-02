@@ -5,42 +5,28 @@ feature "student performs an exam" do
   given(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
   given(:week1) do
     Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") do
-      questions {
+      questions do
         [
           Fabricate(:question, points: 3, content: "1+1") do
-            answers {[
-              Fabricate(:answer, correct: true, content: "answer is 2"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x")
-            ]}
+            answers { incorrect(4) + correct(1, content: "answer is 2") }
           end,
           Fabricate(:question, points: 4, content: "2+2") do
-            answers {[
-              Fabricate(:answer, correct: true, content: "answer is 4"),
-              Fabricate(:answer, correct: false, content: "W"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x")
-            ]}
+            answers do
+              incorrect(2) + incorrect(1, content: "W") +
+              correct(1, content: "answer is 4")
+            end
           end,
           Fabricate(:question, points: 5, content: "3+3") do
-            answers {[
-              Fabricate(:answer, correct: true, content: "answer is 6"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x"),
-              Fabricate(:answer, correct: false, content: "x")
-            ]}
+            answers { incorrect(4) + correct(1, content: "answer is 6") }
           end
         ]
-      }
+      end
     end
   end
   given(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
-  given(:q1) { Question.find_by(points: 3) }
-  given(:q2) { Question.find_by(points: 4) }
-  given(:q3) { Question.find_by(points: 5) }
+  given(:q1) { week1.questions.first }
+  given(:q2) { week1.questions.second }
+  given(:q3) { week1.questions.last }
 
   background do
     build_setup
@@ -101,4 +87,20 @@ def build_setup
   rails
   week1
   week2
+end
+
+def incorrect(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :incorrect)
+  else
+    Fabricate.times(n, :incorrect, content: options[:content])
+  end
+end
+
+def correct(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :correct)
+  else
+    Fabricate.times(n, :correct, content: options[:content])
+  end
 end

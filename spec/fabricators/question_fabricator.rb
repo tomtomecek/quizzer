@@ -5,4 +5,3 @@ Fabricator(:question) do
     Fabricate.times(3, :incorrect) << Fabricate(:correct)
   end
 end
-
