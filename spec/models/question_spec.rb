@@ -170,10 +170,18 @@ describe Question do
   end
 end
 
-def correct(n = 1)
-  Fabricate.times(n, :correct)
+def incorrect(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :incorrect)
+  else
+    Fabricate.times(n, :incorrect, content: options[:content])
+  end
 end
 
-def incorrect(n = 1)
-  Fabricate.times(n, :incorrect)
+def correct(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :correct)
+  else
+    Fabricate.times(n, :correct, content: options[:content])
+  end
 end
