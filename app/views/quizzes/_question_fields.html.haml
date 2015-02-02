@@ -8,9 +8,9 @@
           = link_to '', class: "remove_fields" do
             %i.fa.fa-trash.fa-1x(title="Remove Question")
       .pull-right.select_titleizer
-        = f.select :points, (1..10).to_a, {prompt: "Select Points"}, {class: "form-control"}
+        = f.select :points, (1..10).to_a, {prompt: "Select Points"}, { class: "form-control", required: true, 'data-parsley-trigger' => 'blur'}
       .clearfix
-      = f.text_area :content, rows: 3, class: "form-control resize_vertical"
+      = f.text_area :content, rows: 3, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
       - if f.object.errors.any?
         .alert.alert-danger(style="margin-top: 15px; margin-bottom: 5px;")
           %p There are some errors you need to fix:

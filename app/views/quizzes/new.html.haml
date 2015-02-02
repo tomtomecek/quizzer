@@ -1,7 +1,7 @@
 = content_for :head do
   = javascript_include_tag "admin/quiz.js", 'data-turbolinks-track' => true
 .container
-  = form_for @quiz, html: { class: "form-horizontal", role: "form" } do |f|
+  = form_for @quiz, html: { class: "form-horizontal", role: "form", 'data-parsley-validate' => '' } do |f|
     .form_group
       .col-sm-offset-2
         %h1 Add new quiz
@@ -9,15 +9,19 @@
     .form-group
       = f.label :title, class: "col-sm-2 control-label"
       .col-sm-8
-        = f.text_field :title, class: "form-control"
+        = f.text_field :title, class: "form-control", required: true, 'data-parsley-trigger' => 'blur'
     .form-group
       = f.label :description, class: "col-sm-2 control-label"
       .col-sm-8
-        = f.text_area :description, class: "form-control resize_vertical"
+        = f.text_area :description, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
     .form-group
       .col-sm-offset-2.col-sm-8
         = f.check_box :published
         = f.label :published
+    - if @quiz.errors.messages[:questions]
+      .alert.alert-danger.col-sm-offset-2.col-sm-8
+        - f.object.errors.full_messages.each do |e|
+          %p= e
     = f.fields_for :questions do |builder|
       = render 'question_fields', f: builder
     .inserter
