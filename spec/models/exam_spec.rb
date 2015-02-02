@@ -14,9 +14,9 @@ describe Exam do
   describe "#student_score" do
     let(:quiz) do
       Fabricate(:quiz) do
-        questions {
+        questions do
           [Fabricate(:question, points: 2), Fabricate(:question, points: 3)]
-        }
+        end
       end
     end
     let(:a1) { Fabricate(:answer, question: Question.first, correct: true) }
