@@ -1,31 +1,35 @@
 require "spec_helper"
 
 feature "student performs an exam" do
-  given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
-  given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
-  given!(:week1) { Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") }
-  given!(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
-  given!(:q1) { Fabricate(:question, quiz: week1, points: 3, content: "1+1") }
-  given!(:q2) { Fabricate(:question, quiz: week1, points: 4, content: "2+2") }
-  given!(:q3) { Fabricate(:question, quiz: week1, points: 5, content: "3+3") }
-
-  given!(:a1) do
-    Fabricate(:answer, question: q1, correct: true, content: "answer is 2")
+  given(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
+  given(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
+  given(:week1) do
+    Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") do
+      questions do
+        [
+          Fabricate(:question, points: 3, content: "1+1") do
+            answers { incorrect(4) + correct(1, content: "answer is 2") }
+          end,
+          Fabricate(:question, points: 4, content: "2+2") do
+            answers do
+              incorrect(2) + incorrect(1, content: "W") +
+              correct(1, content: "answer is 4")
+            end
+          end,
+          Fabricate(:question, points: 5, content: "3+3") do
+            answers { incorrect(4) + correct(1, content: "answer is 6") }
+          end
+        ]
+      end
+    end
   end
-  given!(:wrong_answer) do
-    Fabricate(:answer, question: q2, correct: false, content: "w")
-  end
-  given!(:a2) do
-    Fabricate(:answer, question: q2, correct: true, content: "answer is 4")
-  end
-  given!(:a3) do
-    Fabricate(:answer, question: q3, correct: true, content: "answer is 6")
-  end
+  given(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
+  given(:q1) { week1.questions.first }
+  given(:q2) { week1.questions.second }
+  given(:q3) { week1.questions.last }
 
   background do
-    Fabricate.times(4, :answer, question: q1, correct: false, content: "x")
-    Fabricate.times(2, :answer, question: q2, correct: false, content: "x")
-    Fabricate.times(4, :answer, question: q3, correct: false, content: "x")
+    build_setup
     sign_in
   end
 
@@ -76,5 +80,27 @@ end
 def within_question(question)
   within(:css, "#question_#{question.id}") do
     yield
+  end
+end
+
+def build_setup
+  rails
+  week1
+  week2
+end
+
+def incorrect(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :incorrect)
+  else
+    Fabricate.times(n, :incorrect, content: options[:content])
+  end
+end
+
+def correct(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :correct)
+  else
+    Fabricate.times(n, :correct, content: options[:content])
   end
 end

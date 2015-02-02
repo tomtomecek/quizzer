@@ -5,11 +5,12 @@ describe Quiz do
   it { is_expected.to have_db_index(:course_id) }
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:description) }
+  it { is_expected.to validate_presence_of(:questions).
+                      with_message('requires at least 1 question.') }
   it { is_expected.to have_many(:exams) }
   it { is_expected.to have_many(:questions) }
   it do
-    is_expected.to accept_nested_attributes_for(:questions).
-                      allow_destroy(true)
+    is_expected.to accept_nested_attributes_for(:questions).allow_destroy(true)
   end
 
   describe "#generate_slug" do
@@ -33,16 +34,22 @@ describe Quiz do
 
   describe "#total_score" do
     it "calculates total score for 1 question" do
-      quiz = Fabricate(:quiz)
-      question1 = Fabricate(:question, quiz: quiz, points: 1)
+      quiz = Fabricate(:quiz) do
+        questions { [Fabricate(:question, points: 1)] }
+      end
       expect(quiz.total_score).to eq(1)
     end
 
     it "calculates total score for multiple questions" do
-      quiz = Fabricate(:quiz)
-      question1 = Fabricate(:question, quiz: quiz, points: 1)
-      question2 = Fabricate(:question, quiz: quiz, points: 2)
-      question3 = Fabricate(:question, quiz: quiz, points: 5)
+      quiz = Fabricate(:quiz) do
+        questions do
+          [
+            Fabricate(:question, points: 1),
+            Fabricate(:question, points: 2),
+            Fabricate(:question, points: 5)
+          ]
+        end
+      end
       expect(quiz.total_score).to eq(8)
     end
   end

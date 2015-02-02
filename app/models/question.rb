@@ -4,6 +4,9 @@ class Question < ActiveRecord::Base
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
+  validate :minimum_answers
+  validate :one_must_be_correct
+
   accepts_nested_attributes_for(
     :answers,
     reject_if: proc { |a| a[:content].blank? },
@@ -41,7 +44,19 @@ class Question < ActiveRecord::Base
     answers_for(exam, :student_answer_ids).empty?
   end
 
-  private
+private
+
+  def one_must_be_correct
+    unless answers.map(&:correct?).any?
+      errors[:answers] << "- at least 1 must be correct."
+    end
+  end
+
+  def minimum_answers
+    if answers.size < 4
+      errors[:answers] << "- there must be at least 4 answers."
+    end
+  end
 
   def fill_up_answer_limit
     add_answer_to_total until reached_answer_limit?

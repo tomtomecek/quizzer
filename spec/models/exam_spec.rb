@@ -12,13 +12,17 @@ describe Exam do
   end
 
   describe "#student_score" do
-    let(:quiz) { Fabricate(:quiz) }
-    let(:question1) { Fabricate(:question, quiz: quiz, points: 2) }
-    let(:question2) { Fabricate(:question, quiz: quiz, points: 3) }
-    let(:a1) { Fabricate(:answer, question: question1, correct: true) }
-    let(:a2) { Fabricate(:answer, question: question1, correct: false) }
-    let(:a3) { Fabricate(:answer, question: question2, correct: true) }
-    let(:a4) { Fabricate(:answer, question: question2, correct: true) }
+    let(:quiz) do
+      Fabricate(:quiz) do
+        questions do
+          [Fabricate(:question, points: 2), Fabricate(:question, points: 3)]
+        end
+      end
+    end
+    let(:a1) { Fabricate(:answer, question: Question.first, correct: true) }
+    let(:a2) { Fabricate(:answer, question: Question.first, correct: false) }
+    let(:a3) { Fabricate(:answer, question: Question.last, correct: true) }
+    let(:a4) { Fabricate(:answer, question: Question.last, correct: true) }
     let(:generated_answer_ids) { to_ids(a1, a2, a3, a4) }
 
     it "returns 0 if student has not answered anything" do

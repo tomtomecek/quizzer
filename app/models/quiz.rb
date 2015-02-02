@@ -4,12 +4,13 @@ class Quiz < ActiveRecord::Base
   has_many :questions
 
   validates_presence_of :title, :description
+  validates :questions, presence: { message: "requires at least 1 question." }
   before_create :generate_slug
 
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   def total_score
-    questions.map(&:points).inject(:+)
+    questions.pluck(:points).inject(:+)
   end
 
   def generate_slug

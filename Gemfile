@@ -28,7 +28,7 @@ group :development do
   gem 'letter_opener',    '1.3.0'
 end
 
-group :development, :test do  
+group :development, :test do
   gem 'fabrication',      '2.11.3'
   gem 'pry',              '0.10.1'
   gem 'pry-nav',          '0.2.4'
