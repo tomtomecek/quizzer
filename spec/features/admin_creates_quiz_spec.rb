@@ -23,7 +23,6 @@ feature "admin adds a quiz to a course" do
       add_answer(2, to: question, with: "correct answer 4") { mark_correct }
       add_answer(3, to: question, with: "correct answer 4") { mark_correct }
       add_answer(4, to: question, with: "correct answer 4") { mark_correct }
-      add_answer(5, to: question, with: "") { mark_correct }
     end
 
     click_on "Create Quiz"
@@ -45,7 +44,7 @@ feature "admin adds a quiz to a course" do
   context "failed attempt on valid quiz" do
     background { fill_in_valid_quiz_attributes }
 
-    scenario "question blank", js: true do
+    scenario "question blank", js: true, driver: :selenium do
       add_question(1, with: "", points: 3) do |question|
         add_answer(1, to: question, with: "correct answer 2") { mark_correct }
         add_answer(2, to: question, with: "correct answer 2") { mark_correct }
@@ -54,7 +53,7 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
+      expect_to_see "This value is required."
     end
 
     scenario "reached answers limit", js: true do
@@ -91,6 +90,7 @@ feature "admin adds a quiz to a course" do
     scenario "question missing", js: true do
       click_on "Create Quiz"
       expect_to_see "Quiz creation failed"
+      expect_to_see "Questions requires at least 1 question."
     end
 
     scenario "all incorrect answers", js: true do
@@ -106,6 +106,59 @@ feature "admin adds a quiz to a course" do
       expect_to_see "Answers - at least 1 must be correct."
     end
   end
+
+  context "client side validations" do
+    scenario "check on quiz", js: true, driver: :selenium do
+      fill_in "Title", with: ""
+      click_away
+      expect_to_see "This value is required."
+      fill_in "Title", with: "Some title"
+      click_away
+      expect_to_not_see "This value is required."
+
+      fill_in "Description", with: ""
+      click_away
+      expect_to_see "This value is required."
+      fill_in "Description", with: "Some description"
+      click_away
+      expect_to_not_see "This value is required."
+    end
+
+    scenario "check on question", js: true, driver: :selenium do
+      fill_in_valid_quiz_attributes
+      add_question(1, with: "", points: 3) do |question|
+        click_away
+        expect_to_see "This value is required."
+        fill_in "Question", with: "Some question"
+        click_away
+        expect_to_not_see "This value is required."
+
+        select "Select Points"
+        click_away
+        expect_to_see "This value is required."
+        select 3
+        click_away
+        expect_to_not_see "This value is required."
+      end
+    end
+
+    scenario "check on answer", js: true do
+      fill_in_valid_quiz_attributes
+      add_question(1, with: "Some question", points: 3) do |question|
+        add_answer(1, to: question, with: "") do
+          click_away
+          expect_to_see "This value is required."
+          fill_in "Answer", with: "Some answer"
+          click_away
+          expect_to_not_see "This value is required."
+        end
+      end
+    end
+  end
+end
+
+def click_away
+  find(:xpath, "//body").click
 end
 
 def fill_in_valid_quiz_attributes

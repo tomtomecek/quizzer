@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'object management during quiz creation' do
   given!(:ruby) { Fabricate(:course, title: 'Ruby course') }
   background do
-    sign_in_admin    
+    sign_in_admin
     visit new_quiz_path(course_id: ruby.slug)
   end
 
@@ -13,7 +13,7 @@ feature 'object management during quiz creation' do
     expect(page).to have_css("fieldset")
   end
 
-  scenario 'admin adds answer', js: true do
+  scenario 'admin adds answer', js: true, driver: :selenium do
     expect(page).to have_no_css("fieldset")
     add_question(1, with: "", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
@@ -28,7 +28,7 @@ feature 'object management during quiz creation' do
     expect(page).to have_no_css("fieldset")
   end
 
-  scenario 'admin removes an answer', js: true do
+  scenario 'admin removes an answer', js: true, driver: :selenium do
     add_question(1, with: "", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
     end
