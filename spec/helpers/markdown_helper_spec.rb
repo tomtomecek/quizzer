@@ -32,7 +32,8 @@ describe MarkdownHelper do
     context "Markdown level options" do
       it "parses autolinks if not specified with <>" do
         text = "http://gotealeaf.com"
-        expect(helper.markdown(text)).to match /<a href=\"http:\/\/gotealeaf.com\">.+<\/a>/m
+        expect(helper.markdown(text)).
+          to match /<a href=\"http:\/\/gotealeaf.com\">.+<\/a>/m
       end
 
       it "camelcased words will not generate <em> tags" do
@@ -42,7 +43,8 @@ describe MarkdownHelper do
 
       it "uses PHPs fences code blocks" do
         text = "~~~ ruby\n def hello\nputs 'Hello'\nend\n~~~"
-        expect(helper.markdown(text)).to match /<pre>.+class=\"k\">def.+<\/pre>/m
+        expect(helper.markdown(text)).
+          to match /<pre>.+class=\"k\">def.+<\/pre>/m
       end
 
       it "recognizes strikesthrough PHP markdown" do
@@ -64,8 +66,8 @@ describe MarkdownHelper do
     context "syntax highlighting" do
       it "wraps markdown output with class highlighting" do
         text = "``` ruby\nputs 'Hello World'\n```"
-        expect(helper.markdown(text)).to match /<div class="highlight">.+<\/div>/m
+        expect(helper.markdown(text)).to match /div class="highlight".+<\/div/m
       end
     end
-  end  
+  end
 end
