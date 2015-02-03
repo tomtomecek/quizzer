@@ -13,7 +13,7 @@ feature 'object management during quiz creation' do
     expect(page).to have_css("fieldset")
   end
 
-  scenario 'admin adds answer', js: true, driver: :selenium do
+  scenario 'admin adds answer', js: true, driver: :selenium, slow: true do
     expect(page).to have_no_css("fieldset")
     add_question(1, with: "", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
@@ -21,14 +21,14 @@ feature 'object management during quiz creation' do
     expect(page).to have_xpath("//form/fieldset[1]/fieldset[1]")
   end
 
-  scenario 'admin removes a question', js: true do
+  scenario 'admin removes question', js: true do
     add_question(1, with: "", points: 2)
     expect(page).to have_css("fieldset")
     remove_question(1)
     expect(page).to have_no_css("fieldset")
   end
 
-  scenario 'admin removes an answer', js: true, driver: :selenium do
+  scenario 'admin removes answer', js: true, driver: :selenium, slow: true do
     add_question(1, with: "", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
     end

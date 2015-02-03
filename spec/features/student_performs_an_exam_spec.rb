@@ -8,16 +8,16 @@ feature "student performs an exam" do
       questions do
         [
           Fabricate(:question, points: 3, content: "1+1") do
-            answers { incorrect(4) + correct(1, content: "answer is 2") }
+            answers { incorrect(4) + correct(1, content: "Answer is 2") }
           end,
           Fabricate(:question, points: 4, content: "2+2") do
             answers do
               incorrect(2) + incorrect(1, content: "W") +
-              correct(1, content: "answer is 4")
+              correct(1, content: "Answer is 4")
             end
           end,
           Fabricate(:question, points: 5, content: "3+3") do
-            answers { incorrect(4) + correct(1, content: "answer is 6") }
+            answers { incorrect(4) + correct(1, content: "Answer is 6") }
           end
         ]
       end
