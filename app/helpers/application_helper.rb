@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include MarkdownHelper
+
   def github_sign_in_path
     "/auth/github"
   end
