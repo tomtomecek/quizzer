@@ -10,9 +10,12 @@
             %h3.panel-title.pull-right= pluralize(question.points, "point")
             .clearfix
           .panel-body
-            - question.generate_answers.each do |answer|
-              = hidden_field_tag "generated_answer_ids[]", answer.id
-              = check_box_tag "student_answer_ids[]", answer.id, false, id: "answer_#{answer.id}"
-              = f.label answer.content, for: "answer_#{answer.id}"
-              %br
+            - question.generate_answers.each do |answer|               
+              .exam.input-group
+                = hidden_field_tag "generated_answer_ids[]", answer.id
+                .input-group-addon
+                  = check_box_tag "student_answer_ids[]", answer.id, false, id: "answer_#{answer.id}"
+                %p.form-control-static
+                  %label{for: "answer_#{answer.id}"}
+                    = answer.content
       = f.submit "Submit Answers", class: "btn btn-default"
