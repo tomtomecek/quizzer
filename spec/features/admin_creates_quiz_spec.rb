@@ -72,7 +72,8 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
+      expect_to_see "Quiz creation failed -\
+        Maximum 10 records are allowed. Got 11 records instead"
     end
 
     scenario "3 answers only", slow: true do

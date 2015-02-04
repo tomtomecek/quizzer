@@ -18,7 +18,9 @@ module QuizManagementMacros
 
   def remove_question(order)
     within(:xpath, "//form/fieldset[#{order}]") do
-      find(:css, ".remove_fields").click
+      within(:css, ".remove_question") do
+        find(:css, ".remove_fields").click
+      end
     end
   end
 
@@ -41,5 +43,11 @@ module QuizManagementMacros
     add_answer(2, to: question, with: "answer") { mark_incorrect }
     add_answer(3, to: question, with: "answer") { mark_incorrect }
     add_answer(4, to: question, with: "answer") { mark_incorrect }
+  end
+
+  def within_question(n)
+    within(:xpath, "//form/fieldset[#{n}]") do
+      yield n if block_given?
+    end
   end
 end
