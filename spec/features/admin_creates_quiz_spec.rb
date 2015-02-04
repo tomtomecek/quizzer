@@ -166,11 +166,3 @@ def fill_in_valid_quiz_attributes
   fill_in "Description", with: "Ruby methods and iterations"
   uncheck "Published"
 end
-
-def mark_correct
-  find(:css, "input[type=checkbox]").set(true)
-end
-
-def mark_incorrect
-  find(:css, "input[type=checkbox]").set(false)
-end

@@ -27,4 +27,19 @@ module QuizManagementMacros
       find(:css, ".remove_fields").click
     end
   end
+
+  def mark_correct
+    find(:css, "input[type=checkbox]").set(true)
+  end
+
+  def mark_incorrect
+    find(:css, "input[type=checkbox]").set(false)
+  end
+
+  def create_all_answers_for(question)
+    add_answer(1, to: question, with: "answer") { mark_correct }
+    add_answer(2, to: question, with: "answer") { mark_incorrect }
+    add_answer(3, to: question, with: "answer") { mark_incorrect }
+    add_answer(4, to: question, with: "answer") { mark_incorrect }
+  end
 end
