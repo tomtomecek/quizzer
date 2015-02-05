@@ -10,6 +10,8 @@ module MarkdownHelper
       highlight: true,
       superscript: true
     }
-    Redcarpet::Markdown.new(renderer, options).render(content).html_safe
+    preserve do
+      Redcarpet::Markdown.new(renderer, options).render(content).html_safe
+    end
   end
 end
