@@ -1,0 +1,45 @@
+= content_for :head do
+  = javascript_include_tag "admin/quiz.js", 'data-turbolinks-track' => true
+.container
+  .form-horizontal
+    .form_group
+      .col-sm-offset-2
+        %h1 View Quiz
+    .form-group
+      .col-sm-2.control-label Title
+      .col-sm-8
+        .form-control= @quiz.title
+    .form-group
+      .col-sm-2.control-label Description
+      .col-sm-8
+        .form-control= @quiz.description
+    .form-group
+      .col-sm-offset-2.col-sm-8
+        - if @quiz.published?
+          Published
+        - else
+          Unpublished
+    - @quiz.questions.each_with_index do |question, index|
+      %fieldset
+        .form-group
+          .col-sm-offset-2.col-sm-8
+            %h3.pull-left.question_label Question: #{index + 1}
+            .pull-right.select_titleizer= pluralize(question.points, "point")              
+            .clearfix
+            .form-control.resize_vertical= question.content
+        - question.answers.each do |answer|
+          %fieldset
+            .form-group
+              .col-sm-offset-2.col-sm-8
+                .col-sm-1.control-label Answer
+                .col-sm-10
+                  .input-group
+                    %span.input-group-addon
+                      - if answer.correct?
+                        %input(type="checkbox" checked)
+                      - else
+                        %input(type="checkbox")
+                    .form-control.resize_vertical= answer.content
+    .form-group
+      .col-sm-offset-2.col-sm-8
+        = link_to "Back", admin_course_path(@quiz.course), class: "btn btn-default"
