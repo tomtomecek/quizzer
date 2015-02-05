@@ -1,9 +1,9 @@
+= f.hidden_field :_destroy
 %fieldset
   .form-group
     .col-sm-offset-2.col-sm-8
       %h3.pull-left
         = f.label :content, "Question", class: "control-label question_label"
-        = f.hidden_field :_destroy
         %span.remove_question
           = link_to '', class: "remove_fields" do
             %i.fa.fa-trash.fa-1x(title="Remove Question")

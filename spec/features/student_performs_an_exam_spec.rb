@@ -51,14 +51,14 @@ feature "student performs an exam" do
 
   scenario "exam with successfull answers" do
     visit new_quiz_exam_path(week1.slug)
-    within_question(q1) do
+    within_exam_question(q1) do
       expect_to_see "1+1"
       expect_to_see "3 points"
       check("Answer is 2")
     end
 
-    within_question(q2) { check("Answer is 4") }
-    within_question(q3) { check("Answer is 6") }
+    within_exam_question(q2) { check("Answer is 4") }
+    within_exam_question(q3) { check("Answer is 6") }
     click_on "Submit Answers"
     expect(current_path).to eq quiz_exam_path(week1.slug, Exam.first)
     expect_to_see "Score: 12 from 12 points"
@@ -66,18 +66,18 @@ feature "student performs an exam" do
 
   scenario "exam with missing and incorrect answers" do
     visit new_quiz_exam_path(week1.slug)
-    within_question(q1) { check("Answer is 2") }
-    within_question(q2) { check("W") }
+    within_exam_question(q1) { check("Answer is 2") }
+    within_exam_question(q2) { check("W") }
     click_on "Submit Answers"
 
     expect_to_see "Score: 3 from 12 points"
-    within_question(q1) { expect_to_see "You earned 3 points" }
-    within_question(q2) { expect_to_see "One of the answers was wrong" }
-    within_question(q3) { expect_to_see "No answers submitted" }
+    within_exam_question(q1) { expect_to_see "You earned 3 points" }
+    within_exam_question(q2) { expect_to_see "One of the answers was wrong" }
+    within_exam_question(q3) { expect_to_see "No answers submitted" }
   end
 end
 
-def within_question(question)
+def within_exam_question(question)
   within(:css, "#question_#{question.id}") do
     yield
   end

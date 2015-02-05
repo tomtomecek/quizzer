@@ -1,7 +1,7 @@
 class Quiz < ActiveRecord::Base
   belongs_to :course
   has_many :exams
-  has_many :questions
+  has_many :questions, -> { order(:created_at) }, dependent: :destroy
 
   validates_presence_of :title, :description
   validates :questions, presence: { message: "requires at least 1 question." }

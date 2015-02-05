@@ -72,7 +72,8 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
+      expect_to_see "Quiz creation failed -\
+        Maximum 10 records are allowed. Got 11 records instead"
     end
 
     scenario "3 answers only", slow: true do
@@ -165,12 +166,4 @@ def fill_in_valid_quiz_attributes
   fill_in "Title",       with: "Week 1 - Ruby basics"
   fill_in "Description", with: "Ruby methods and iterations"
   uncheck "Published"
-end
-
-def mark_correct
-  find(:css, "input[type=checkbox]").set(true)
-end
-
-def mark_incorrect
-  find(:css, "input[type=checkbox]").set(false)
 end

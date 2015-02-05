@@ -1,85 +1,90 @@
-Admin.create(email: "ta@example.com", password: "123456", role: "TA")
-Admin.create(
+Admin.create!(email: "ta@example.com", password: "123456", role: "TA")
+Admin.create!(
   email: "instructor@example.com",
   password: "123456",
   role: "instructor"
 )
 
-ruby = Course.create(
+ruby = Course.create!(
   title: "Introduction to Ruby and Web development",
   description: Faker::Lorem.paragraph(10))
-rails = Course.create(
+Course.create!(
   title: "Rapid Prototyping with Ruby on Rails",
   description: Faker::Lorem.paragraph(10))
-tdd = Course.create(
+Course.create!(
   title: "Build Robust and Production Quality Applications",
   description: Faker::Lorem.paragraph(10))
 
-procedural = Quiz.create(
-  title: "Week 1 - Procedural Programming",
-  description: Faker::Lorem.paragraph(5),
-  course: ruby)
-oop = Quiz.create(
-  title: "Week 2 - Object Oriented Programming",
-  description: Faker::Lorem.paragraph(5),
-  course: ruby)
-http_sinatra = Quiz.create(
-  title: "Week 3 - HTTP & Sinatra",
-  description: Faker::Lorem.paragraph(5),
-  course: ruby)
-ajax_jquery = Quiz.create(
-  title: "Week 4 - Ajax & jQuery",
-  description: Faker::Lorem.paragraph(5),
-  course: ruby)
+QUIZ_NAMES = [
+  "Week 1 - Procedural Programming",
+  "Week 2 - Object Oriented Programming",
+  "Week 3 - HTTP & Sinatra",
+  "Week 4 - Ajax & jQuery"
+]
 
-question1 = Question.create(
-  content: "How much is 1 + 1",
-  quiz: procedural,
-  points: 2)
-question2 = Question.create(
-  content: "How much is 2 + 2",
-  quiz: procedural,
-  points: 4)
-question3 = Question.create(
-  content: "How much is 3 + 3",
-  quiz: procedural,
-  points: 5)
-question4 = Question.create(
-  content: "How much is 4 + 4",
-  quiz: procedural,
-  points: 10)
+QUIZ_NAMES.each do |quiz_name|
+  Quiz.create! do |quiz|
+    quiz.title       = quiz_name
+    quiz.description = Faker::Lorem.paragraph(5)
+    quiz.course      = ruby
+    quiz.questions.build do |question|
+      question.content = "How much is 1 + 1"
+      question.points  = 2
+      3.times do
+        question.answers.build do |answer|
+          answer.content = "correct answer is 2"
+          answer.correct = true
+        end
+        question.answers.build do |answer|
+          answer.content = "incorrect answer - whatever"
+          answer.content = false
+        end
+      end
+    end
 
-3.times do
-  Answer.create(
-  question: question1,
-  content: "correct answer 2",
-  correct: true)
-  Answer.create(
-  question: question2,
-  content: "correct answer 4",
-  correct: true)
-  Answer.create(
-  question: question3,
-  content: "correct answer 6",
-  correct: true)
-  Answer.create(
-  question: question4,
-  content: "correct answer 8",
-  correct: true)
-  Answer.create(
-  question: question1,
-  content: "incorrect answer - whatever",
-  correct: false)
-  Answer.create(
-  question: question2,
-  content: "incorrect answer - whatever",
-  correct: false)
-  Answer.create(
-  question: question3,
-  content: "incorrect answer - whatever",
-  correct: false)
-  Answer.create(
-  question: question4,
-  content: "incorrect answer - whatever",
-  correct: false)
+    quiz.questions.build do |question|
+      question.content = "How much is 2 + 2"
+      question.points  = 4
+      3.times do
+        question.answers.build do |answer|
+          answer.content = "correct answer is 4"
+          answer.correct = true
+        end
+        question.answers.build do |answer|
+          answer.content = "incorrect answer - whatever"
+          answer.content = false
+        end
+      end
+    end
+
+    quiz.questions.build do |question|
+      question.content = "How much is 3 + 3"
+      question.points  = 5
+      3.times do
+        question.answers.build do |answer|
+          answer.content = "correct answer is 6"
+          answer.correct = true
+        end
+        question.answers.build do |answer|
+          answer.content = "incorrect answer - whatever"
+          answer.content = false
+        end
+      end
+    end
+
+    quiz.questions.build do |question|
+      question.content = "How much is 4 + 4"
+      question.points  = 10
+      3.times do
+        question.answers.build do |answer|
+          answer.content = "correct answer is 8"
+          answer.correct = true
+        end
+        question.answers.build do |answer|
+          answer.content = "incorrect answer - whatever"
+          answer.content = false
+        end
+      end
+    end
+  end
 end

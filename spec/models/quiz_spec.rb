@@ -8,7 +8,11 @@ describe Quiz do
   it { is_expected.to validate_presence_of(:questions).
                       with_message('requires at least 1 question.') }
   it { is_expected.to have_many(:exams) }
-  it { is_expected.to have_many(:questions) }
+  it do
+    is_expected.to have_many(:questions).
+                     order(:created_at).
+                     dependent(:destroy)
+  end
   it do
     is_expected.to accept_nested_attributes_for(:questions).allow_destroy(true)
   end

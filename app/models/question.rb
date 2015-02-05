@@ -1,11 +1,15 @@
 class Question < ActiveRecord::Base
   belongs_to :quiz
-  has_many :answers
+  has_many :answers, dependent: :destroy
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
-  validate :minimum_answers
-  validate :one_must_be_correct
+  # validate :
+  # validate :
+  validate do
+    check_answers_number
+    one_must_be_correct
+  end
 
   accepts_nested_attributes_for(
     :answers,
@@ -52,8 +56,12 @@ private
     end
   end
 
-  def minimum_answers
-    if answers.size < 4
+  def answers_count_valid?
+    answers.reject(&:marked_for_destruction?).size < ANSWER_LIMIT
+  end
+
+  def check_answers_number
+    if answers_count_valid?
       errors[:answers] << "- there must be at least 4 answers."
     end
   end

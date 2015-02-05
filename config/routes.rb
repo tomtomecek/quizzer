@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :courses, only: [:index, :show]
   end
 
-  resources :quizzes, only: [:new, :create] do
+  resources :quizzes, only: [:new, :create, :show, :edit, :update] do
     resources :exams, only: [:new, :create, :show]
   end
   resources :courses, only: [:show]

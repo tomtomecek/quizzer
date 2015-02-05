@@ -151,13 +151,185 @@ describe QuizzesController do
                         }
         end
 
-        it do
-          expect(flash[:info]).to be_present
-          expect(response).to render_template :new
+        it { is_expected.to set_the_flash.now[:info] }
+        it { is_expected.to render_template :new }
+      end
+    end
+  end
+
+  describe "GET edit" do
+    it_behaves_like "require admin sign in" do
+      let(:action) { get :edit, id: 1 }
+    end
+
+    it "sets the @quiz" do
+      quiz = Fabricate(:quiz)
+      get :edit, id: quiz.slug
+      expect(assigns(:quiz)).to eq quiz
+    end
+  end
+
+  describe "PATCH update" do
+    it_behaves_like "require admin sign in" do
+      let(:action) { patch :update, id: 1 }
+    end
+
+    context "with valid data" do
+      let(:quiz) { Fabricate(:quiz) }
+      let(:question) { quiz.questions.first }
+
+      before do
+        patch :update, id: quiz.slug, quiz: {
+          title: "Pro ruby",
+          description: "For advanced",
+          published: "1",
+          questions_attributes: [
+            {
+              _destroy: "false",
+              id: question.id,
+              content: "A new question",
+              points: "10",
+              answers_attributes: [
+                {
+                  _destroy: "false",
+                  id: question.answers[0].id,
+                  content: "updated answer",
+                  correct: true
+                },
+                {
+                  _destroy: "false",
+                  id: question.answers[1].id,
+                  content: "correct answer",
+                  correct: true
+                },
+                {
+                  _destroy: "false",
+                  id: question.answers[2].id,
+                  content: "correct answer",
+                  correct: true
+                },
+                {
+                  _destroy: "false",
+                  id: question.answers[3].id,
+                  content: "correct answer",
+                  correct: true
+                }
+              ]
+            }
+          ]
+        }
+      end
+
+      it { is_expected.to redirect_to admin_course_url(quiz.course) }
+      it { is_expected.to set_the_flash[:success] }
+
+      it "updates the quiz" do
+        expect(quiz.reload.title).to eq("Pro ruby")
+        expect(quiz.description).to eq("For advanced")
+        expect(quiz).to be_published
+      end
+
+      it "updates a question" do
+        expect(question.reload.content).to eq("A new question")
+        expect(question.points).to eq(10)
+      end
+
+      it "updates an answer" do
+        expect(Answer.first.content).to eq("updated answer")
+      end
+    end
+
+    context "with invalid data" do
+      let(:quiz) { Fabricate(:quiz) }
+      let(:question) { quiz.questions.first }
+
+      context "with quiz" do
+        before do
+          patch :update, id: quiz.slug, quiz: {
+            title: "Pro Ruby",
+            description: "",
+            published: "1",
+            questions_attributes: []
+          }
+        end
+
+        it { expect(response).to render_template :edit }
+        it { is_expected.to set_the_flash.now[:danger] }
+        it "sets the @quiz" do
+          expect(assigns(:quiz)).to eq quiz
+        end
+
+        it "does not update the quiz" do
+          expect(quiz.reload.title).to_not eq("Pro Ruby")
+        end
+      end
+
+      context "with question" do
+        before do
+          patch :update, id: quiz.slug, quiz: {
+            title: "Pro Ruby",
+            description: "For advanced",
+            published: "1",
+            questions_attributes: [{ _destroy: "1", id: question.id }]
+          }
+        end
+
+        it "does not update quiz, questions, answers" do
+          expect(quiz.title).to_not eq("Pro Ruby")
+          expect(question).to be
+          answer = question.answers.first
+          expect(answer.content).to_not eq("updated answer")
+        end
+      end
+
+      context "with answer" do
+        before do
+          patch :update, id: quiz.slug, quiz: {
+            title: "Pro ruby",
+            description: "For advanced",
+            published: "1",
+            questions_attributes: [
+              {
+                _destroy: "false",
+                id: question.id,
+                content: "A new question",
+                points: "10",
+                answers_attributes: [
+                  {
+                    _destroy: "false",
+                    id: question.answers[0].id,
+                    content: "updated answer",
+                    correct: true
+                  },
+                  { _destroy: "1", id: question.answers[1].id },
+                  { _destroy: "1", id: question.answers[2].id },
+                  { _destroy: "1", id: question.answers[3].id }
+                ]
+              }
+            ]
+          }
+        end
+
+        it "does not update the answer" do
+          expect(Answer.first.content).to_not eq("updated answer")
+          expect(Answer.count).to eq 4
         end
       end
     end
   end
+
+  describe "GET show" do
+    it_behaves_like "require admin sign in" do
+      let(:action) { get :show, id: 1 }
+    end
+
+    it "sets the @quiz" do
+      quiz = Fabricate(:quiz)
+      get :show, id: quiz.slug
+      expect(assigns(:quiz)).to eq quiz
+    end
+  end
+
 end
 
 def question(options = {})
