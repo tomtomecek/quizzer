@@ -3,6 +3,8 @@
 .container
   .col-sm-9
     %h2= @quiz.title
+    = preserve do
+      = markdown @quiz.description
     %br
     - @quiz.questions.each_with_index do |question, idx|
       .panel.panel-success{ id: "question_#{question.id}" }
@@ -15,7 +17,8 @@
             .clearfix
           %hr.question_horizontal_line
           .row.question-content-view-quiz
-            = markdown(question.content)
+            = preserve do
+              = markdown(question.content)
         .panel-body
           - question.answers.each do |answer|
             .exam.input-group
@@ -23,7 +26,8 @@
                 = check_box_tag "student_answer_ids[]", nil, (true if answer.correct?), disabled: true
               .form-control-static
                 %label.answer-view-quiz
-                  = markdown(answer.content)
+                  = preserve do
+                    = markdown(answer.content)
                 %label.answer_actions
                   = link_to "#", remote: true do
                     %i.fa.fa-edit.fa-1x
