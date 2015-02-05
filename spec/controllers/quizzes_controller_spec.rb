@@ -151,10 +151,8 @@ describe QuizzesController do
                         }
         end
 
-        it do
-          expect(flash[:info]).to be_present
-          expect(response).to render_template :new
-        end
+        it { is_expected.to set_the_flash.now[:info] }
+        it { is_expected.to render_template :new }
       end
     end
   end
@@ -227,13 +225,13 @@ describe QuizzesController do
 
       it "updates the quiz" do
         expect(quiz.reload.title).to eq("Pro ruby")
-        expect(quiz.description).to  eq("For advanced")
-        expect(quiz).to              be_published
+        expect(quiz.description).to eq("For advanced")
+        expect(quiz).to be_published
       end
 
       it "updates a question" do
         expect(question.reload.content).to eq("A new question")
-        expect(question.points).to         eq(10)
+        expect(question.points).to eq(10)
       end
 
       it "updates an answer" do
