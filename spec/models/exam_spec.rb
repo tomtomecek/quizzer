@@ -15,14 +15,17 @@ describe Exam do
     let(:quiz) do
       Fabricate(:quiz) do
         questions do
-          [Fabricate(:question, points: 2), Fabricate(:question, points: 3)]
+          [
+            Fabricate.build(:question, points: 2),
+            Fabricate.build(:question, points: 3)
+          ]
         end
       end
     end
-    let(:a1) { Fabricate(:answer, question: Question.first, correct: true) }
-    let(:a2) { Fabricate(:answer, question: Question.first, correct: false) }
-    let(:a3) { Fabricate(:answer, question: Question.last, correct: true) }
-    let(:a4) { Fabricate(:answer, question: Question.last, correct: true) }
+    let(:a1) { Fabricate(:correct, question: Question.first) }
+    let(:a2) { Fabricate(:incorrect, question: Question.first) }
+    let(:a3) { Fabricate(:correct, question: Question.last) }
+    let(:a4) { Fabricate(:correct, question: Question.last) }
     let(:generated_answer_ids) { to_ids(a1, a2, a3, a4) }
 
     it "returns 0 if student has not answered anything" do

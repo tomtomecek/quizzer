@@ -11,7 +11,7 @@ feature "admin edits a quiz" do
       published: false) do
       questions do
         [
-          Fabricate(:question, content: "How much is 1 + 1?", points: 3) do
+          Fabricate.build(:question, content: "1 + 1?", points: 3) do
             answers do
               [
                 Fabricate(:correct, content: "2"),
@@ -22,7 +22,7 @@ feature "admin edits a quiz" do
               ]
             end
           end,
-          Fabricate(:question, content: "How much is 2 + 2?", points: 4) do
+          Fabricate.build(:question, content: "2 + 2?", points: 4) do
             answers do
               [
                 Fabricate(:correct, content: "4"),
@@ -89,7 +89,7 @@ feature "admin edits a quiz" do
     end
   end
 
-  scenario "admin removes a question", js: true, slow: true do
+  scenario "admin removes a question", :js, :slow do
     remove_question(2)
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
@@ -99,7 +99,7 @@ feature "admin edits a quiz" do
     expect_to_not_see "4 points"
   end
 
-  scenario "admin adds an answer", js: true, slow: true do
+  scenario "admin adds an answer", :js, :slow do
     within_question(2) do |question|
       add_answer(5, to: question, with: "new answer") { mark_incorrect }
     end
@@ -109,7 +109,7 @@ feature "admin edits a quiz" do
     expect_to_see "new answer"
   end
 
-  scenario "admin removes an answer", js: true, slow: true do
+  scenario "admin removes an answer", :js, :slow do
     remove_answer(5, from: 1)
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
@@ -117,7 +117,7 @@ feature "admin edits a quiz" do
     expect_to_not_see "delete me"
   end
 
-  scenario "reached answers limit", js: true, slow: true do
+  scenario "reached answers limit", :js, :slow do
     within_question(1) do |question|
       add_answer(6, to: question, with: "an answer")
       add_answer(7, to: question, with: "an answer")

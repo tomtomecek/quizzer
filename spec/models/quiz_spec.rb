@@ -39,7 +39,7 @@ describe Quiz do
   describe "#total_score" do
     it "calculates total score for 1 question" do
       quiz = Fabricate(:quiz) do
-        questions { [Fabricate(:question, points: 1)] }
+        questions { [Fabricate.build(:question, points: 1)] }
       end
       expect(quiz.total_score).to eq(1)
     end
@@ -48,9 +48,9 @@ describe Quiz do
       quiz = Fabricate(:quiz) do
         questions do
           [
-            Fabricate(:question, points: 1),
-            Fabricate(:question, points: 2),
-            Fabricate(:question, points: 5)
+            Fabricate.build(:question, points: 1),
+            Fabricate.build(:question, points: 2),
+            Fabricate.build(:question, points: 5)
           ]
         end
       end

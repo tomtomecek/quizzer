@@ -24,7 +24,7 @@ describe ExamsController do
 
   describe "POST create" do
     let(:quiz)     { Fabricate(:quiz) }
-    let(:question) { Fabricate(:question, quiz: quiz) }
+    let(:question) { Fabricate.build(:question, quiz: quiz) }
     let(:answer1)  { Fabricate(:answer, question: question) }
     let(:answer2)  { Fabricate(:answer, question: question) }
     let(:answer3)  { Fabricate(:answer, question: question) }

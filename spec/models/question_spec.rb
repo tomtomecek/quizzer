@@ -53,13 +53,20 @@ describe Question do
 
   describe "#answers_for(exam)" do
     let!(:quiz) do
-      Fabricate(:quiz) { questions { Fabricate.times(2, :question) } }
+      Fabricate(:quiz) do
+        questions do
+          [
+            Fabricate.build(:question) { answers { correct + incorrect(3) } },
+            Fabricate.build(:question) { answers { correct + incorrect(3) } }
+          ]
+        end
+      end
     end
-    let(:question1) { Question.first }
-    let(:question2) { Question.last }
-    let(:answer1)   { question1.answers.first }
-    let(:answer2)   { question1.answers.second }
-    let(:answer3)   { question2.answers.last }
+    let(:question2)  { Question.last }
+    let(:question1)  { Question.first }
+    let(:answer1)    { question1.answers.first }
+    let(:answer2)    { question1.answers.second }
+    let(:answer3)    { question2.answers.last }
 
     context "generated_answer_ids" do
       it "returns an array of multiple generated answers from exam" do
@@ -95,45 +102,53 @@ describe Question do
 
   describe "#generate_answers" do
     it "generates 4 answers from mix" do
-      question = Fabricate(:question) do
+      question = Fabricate.build(:question) do
         answers { incorrect(5) + correct }
       end
+      question.save
       expect(question.generate_answers.size).to eq(4)
     end
 
     it "generates 4 answers even if all correct" do
-      question = Fabricate(:question) { answers { correct(4) } }
+      question = Fabricate.build(:question) { answers { correct(4) } }
+      question.save
       expect(question.generate_answers.size).to eq(4)
     end
 
     it "generates at least 1 correct answer" do
-      question = Fabricate(:question) { answers { incorrect(5) + correct } }
+      question = Fabricate.build(:question) do
+        answers { incorrect(5) + correct }
+      end
+      question.save
       expect(question.generate_answers.map(&:correct?).any?).to be true
     end
 
     it "generates random array" do
-      question = Fabricate(:question) do
+      question = Fabricate.build(:question) do
         answers { Fabricate.times(12, :answer) }
       end
+      question.save
       answer_sets = []
       3.times { answer_sets << question.generate_answers }
       expect(answer_sets.uniq.count).not_to eq 1
     end
 
     it "generates array of uniq answers" do
-      question = Fabricate(:question) do
+      question = Fabricate.build(:question) do
         answers { incorrect(5) + correct }
       end
+      question.save
       expect(question.generate_answers.uniq.size).to eq(4)
     end
   end
 
   describe "#yield_points?(exam)" do
     let(:quiz)     { Fabricate(:quiz) }
-    let(:question) { Fabricate(:question, quiz: quiz) }
+    let(:question) { Fabricate.build(:question, quiz: quiz) }
     let(:answer1)  { question.answers.find_by(correct: true) }
     let(:answer2)  { question.answers.find_by(correct: false) }
     let(:gaids)    { to_ids(answer1, answer2) }
+    before { question.save }
 
     it "returns true if question was correctly answered" do
       saids = to_ids(answer1)
@@ -155,15 +170,17 @@ describe Question do
   end
 
   describe "#has_no_student_answer?(exam)" do
-    let(:quiz)     { Fabricate(:quiz) }
-    let(:question) { Fabricate(:question) }
+    let(:quiz) { Fabricate(:quiz) }
 
     it "returns true if there are no student answers" do
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: [])
+      question = Question.first
       expect(question).to have_no_student_answer(exam)
     end
 
     it "returns false if there are student answers" do
+      quiz
+      question = Question.first
       answer = question.answers.first
       exam = Fabricate(:exam, quiz: quiz, student_answer_ids: to_ids(answer))
       expect(question).to_not have_no_student_answer(exam)
