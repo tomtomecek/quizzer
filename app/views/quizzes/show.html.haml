@@ -20,20 +20,10 @@
             = preserve do
               = markdown(question.content)
         .panel-body
-          - question.answers.each do |answer|
-            .exam.input-group
-              .input-group-addon
-                = check_box_tag "student_answer_ids[]", nil, (true if answer.correct?), disabled: true
-              .form-control-static
-                %label.answer-view-quiz
-                  = preserve do
-                    = markdown(answer.content)
-                %label.answer_actions
-                  = link_to "#", remote: true do
-                    %i.fa.fa-edit.fa-1x
-                  = link_to "#", remote: true do
-                    %i.fa.fa-times-circle.fa-1x
+          %div{ id: "question_#{question.id}_answers" }
+            = render partial: 'answers/answer', collection: question.answers
       %hr
     .form-group
       .col-sm-8
         = link_to "Back", admin_course_path(@quiz.course), class: "btn btn-default btn-lg"
+.hook
