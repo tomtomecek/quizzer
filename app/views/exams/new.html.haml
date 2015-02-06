@@ -3,27 +3,27 @@
     %h2= @quiz.title
     %br
     = form_for [@quiz, @exam] do |f|
-      - @exam.generated_questions.each_with_index do |question, idx|
-        .panel.panel-info{ id: "question_#{question.id}" }
+      - @exam.generated_questions.each_with_index do |q, idx|
+        .panel.panel-info{ id: "question_#{q.question.id}" }
           .panel-heading
             .row.panel-title
               %h3.pull-left
                 %span.label.label-info= "Question: #{idx + 1}"
               %h3.pull-right
-                %span.label.label-info= pluralize(question.points, "point")
+                %span.label.label-info= pluralize(q.points, "point")
               .clearfix
             %hr.question_horizontal_line
             .row
               = preserve do
-                = markdown(question.content)
+                = markdown(q.content)
           .panel-body
-            - question.generated_answers.each do |answer|
+            - q.generated_answers.each do |a|
               .exam.input-group
-                = hidden_field_tag "generated_answer_ids[]", answer.id
+                = hidden_field_tag "generated_answer_ids[]", a.answer.id
                 .input-group-addon
-                  = check_box_tag "student_answer_ids[]", answer.id, false, id: "answer_#{answer.id}"
+                  = check_box_tag "student_answer_ids[]", a.answer.id, false, id: "answer_#{a.answer.id}"
                 .form-control-static
-                  %label{for: "answer_#{answer.id}"}
+                  %label{for: "answer_#{a.answer.id}"}
                     = preserve do
-                      = markdown(answer.content)
+                      = markdown(a.content)
       = f.submit "Submit Answers", class: "btn btn-default"

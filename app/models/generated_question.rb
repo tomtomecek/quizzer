@@ -5,7 +5,11 @@ class GeneratedQuestion < ActiveRecord::Base
 
   def build_answers!
     question.generate_answers.each do |ga|
-      generated_answers.build(content: ga.content, correct: ga.correct)
+      generated_answers.build(
+        answer: ga,
+        content: ga.content,
+        correct: ga.correct
+      )
     end
   end
 end
