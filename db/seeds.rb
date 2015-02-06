@@ -23,10 +23,9 @@ QUIZ_NAMES = [
 ]
 
 QUIZ_NAMES.each do |quiz_name|
-  Quiz.create! do |quiz|
+  q = ruby.quizzes.build do |quiz|
     quiz.title       = quiz_name
     quiz.description = Faker::Lorem.paragraph(5)
-    quiz.course      = ruby
     quiz.questions.build do |question|
       question.content = "How much is 1 + 1"
       question.points  = 2
@@ -87,4 +86,5 @@ QUIZ_NAMES.each do |quiz_name|
       end
     end
   end
+  q.save(validate: false)
 end

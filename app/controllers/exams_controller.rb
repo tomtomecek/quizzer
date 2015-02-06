@@ -4,7 +4,7 @@ class ExamsController < ApplicationController
   def new
     @quiz = Quiz.find_by(slug: params[:quiz_id])
     @exam = Exam.new(quiz: @quiz)
-    @exam.build_questions!
+    @exam.build_questions_with_answers!
   end
 
   def create

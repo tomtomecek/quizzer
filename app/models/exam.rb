@@ -15,13 +15,14 @@ class Exam < ActiveRecord::Base
     end
   end
 
-  def build_questions!
+  def build_questions_with_answers!
     quiz.questions.each do |question|
-      generated_questions.build(
+      generated_question = generated_questions.build(
         question: question,
         content: question.content,
         points: question.points
       )
+      generated_question.build_answers!
     end
   end
 end
