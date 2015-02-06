@@ -11,6 +11,14 @@ describe Exam do
     expect(Exam.first.student_answer_ids).to eq []
   end
 
+  context "when built" do
+    it "builds generated questions" do
+      quiz = Fabricate(:quiz)
+      exam = Exam.new(quiz: quiz)
+      expect(exam.generated_questions).to_not be_empty
+    end
+  end
+
   describe "#student_score" do
     let(:quiz) do
       Fabricate(:quiz) do
