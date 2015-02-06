@@ -3,7 +3,7 @@
     %h2= @quiz.title
     %br
     = form_for [@quiz, @exam] do |f|
-      - @quiz.questions.each_with_index do |question, idx|
+      - @exam.generated_questions.each_with_index do |question, idx|
         .panel.panel-info{ id: "question_#{question.id}" }
           .panel-heading
             .row.panel-title
@@ -17,7 +17,7 @@
               = preserve do
                 = markdown(question.content)
           .panel-body
-            - question.generate_answers.each do |answer|
+            - question.generated_answers.each do |answer|
               .exam.input-group
                 = hidden_field_tag "generated_answer_ids[]", answer.id
                 .input-group-addon

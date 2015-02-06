@@ -12,12 +12,18 @@ describe Exam do
     expect(Exam.first.student_answer_ids).to eq []
   end
 
-  describe "#build_questions" do
+  describe "#build_questions_with_answers!" do
+    let(:quiz) { Fabricate(:quiz) }
+    let(:exam) { Fabricate.build(:exam, quiz: quiz) }
+    before { exam.build_questions_with_answers! }
+
     it "builds generated questions" do
-      quiz = Fabricate(:quiz)
-      exam = Exam.new(quiz: quiz)
-      exam.build_questions!
       expect(exam.generated_questions).to_not be_empty
+    end
+
+    it "builds generated answers to generated questions" do
+      question = exam.generated_questions.first
+      expect(question.generated_answers).to_not be_empty
     end
   end
 

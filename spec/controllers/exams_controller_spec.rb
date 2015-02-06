@@ -25,6 +25,12 @@ describe ExamsController do
       get :new, quiz_id: quiz.slug
       expect(assigns(:exam).generated_questions).to_not be_empty
     end
+
+    it "generates answers" do
+      get :new, quiz_id: quiz.slug
+      gq = assigns(:exam).generated_questions.first
+      expect(gq.generated_answers).to_not be_empty
+    end
   end
 
   describe "POST create" do
