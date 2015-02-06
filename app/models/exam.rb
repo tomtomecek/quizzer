@@ -3,6 +3,7 @@ class Exam < ActiveRecord::Base
   belongs_to :quiz
   before_create :default_student_answer_ids
   has_many :generated_questions, dependent: :destroy
+  has_many :generated_answers, through: :generated_questions
 
   def default_student_answer_ids
     self.student_answer_ids = [] if student_answer_ids.nil?

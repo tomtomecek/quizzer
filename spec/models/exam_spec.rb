@@ -6,24 +6,24 @@ describe Exam do
   it { is_expected.to have_db_index(:quiz_id) }
   it { is_expected.to have_db_index(:student_id) }
   it { is_expected.to have_many(:generated_questions).dependent(:destroy) }
+  it { is_expected.to have_many(:generated_answers).through(:generated_questions) }
 
   it "creates an exam with student answer ids empty array if no answer" do
     Fabricate(:exam)
     expect(Exam.first.student_answer_ids).to eq []
   end
 
-  describe "#build_questions_with_answers!" do
+  describe "#create_questions_with_answers!" do
     let(:quiz) { Fabricate(:quiz) }
     let(:exam) { Fabricate.build(:exam, quiz: quiz) }
-    before { exam.build_questions_with_answers! }
+    before { exam.create_questions_with_answers! }
 
     it "builds generated questions" do
       expect(exam.generated_questions).to_not be_empty
     end
 
     it "builds generated answers to generated questions" do
-      question = exam.generated_questions.first
-      expect(question.generated_answers).to_not be_empty
+      expect(exam.generated_answers).to_not be_empty
     end
   end
 
