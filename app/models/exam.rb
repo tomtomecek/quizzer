@@ -24,5 +24,4 @@ class Exam < ActiveRecord::Base
       )
     end
   end
-
 end

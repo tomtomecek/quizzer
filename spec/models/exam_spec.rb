@@ -25,7 +25,7 @@ describe Exam do
     let(:quiz) do
       Fabricate(:quiz) do
         questions do
-          [Fabricate(:question, points: 2),Fabricate(:question, points: 3)]
+          [Fabricate(:question, points: 2), Fabricate(:question, points: 3)]
         end
       end
     end
