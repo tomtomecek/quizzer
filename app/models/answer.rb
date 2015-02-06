@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
   ANSWER_COUNT_MIN = 4
 
   belongs_to :question
-  validates_presence_of :content
+  validates :content, presence: true
 
   validate :check_correct_sibling_answers, on: :update
   validate :check_answers_count, on: :update
@@ -15,13 +15,13 @@ class Answer < ActiveRecord::Base
 private
 
   def check_correct_sibling_answers
-    unless self.question.answers.pluck(:correct).any?
+    unless question.answers.pluck(:correct).any?
       errors.add(:base, :answers_incorrect)
     end
   end
 
   def answers_count_valid?
-    self.question.answers.count >= ANSWER_COUNT_MIN
+    question.answers.count >= ANSWER_COUNT_MIN
   end
 
   def check_answers_count
