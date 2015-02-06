@@ -1,0 +1,6 @@
+- if @answer.errors.any?
+  .alert.alert-danger
+    %p These errors needs to be fixed:
+    %ul
+      - @answer.errors.full_messages.each do |e|
+        %li= e

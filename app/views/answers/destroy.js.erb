@@ -1,0 +1,7 @@
+$('#answer_<%= @id %>').before('<%= j render "shared/flash_messages" %>')
+$('.flash_messages').delay(3000).slideUp('slow');
+<% if @destroyed %>
+  $('#answer_<%= @id %>').fadeOut('slow', function() {
+    $(this).remove();
+  });
+<% end %>

@@ -1,0 +1,24 @@
+.modal.fade#answerFormModal(tabindex="-1" role="dialog" aria-labelledby="Answer" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      = form_for @answer, html: { class: "form-horizontal", role: "form" }, remote: true do |f|
+        .modal-header
+          %button.close(type="button" data-dismiss="modal")
+            %span(aria-hidden="true") &times;
+          %h4.modal-title
+            %i.fa.fa-edit
+            Edit answer
+        .modal-body.clearfix
+          .answer_flash
+            = render "shared/flash_messages"
+          .answer_errors
+            = render "errors"
+          .col-sm-12.form-group
+            = f.check_box :correct
+            = f.label :correct, "Tick if answer is correct."
+          .col-sm-12.form-group
+            = f.label :content, "Answer Content:"
+            = f.text_area :content, rows: 5, placeholder: "You can use markdown.", class: "form-control"
+        .modal-footer
+          %button(type="button" class="btn btn-default" data-dismiss="modal") Close
+          = f.submit "Submit changes", class: "btn btn-default"
