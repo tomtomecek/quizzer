@@ -15,4 +15,8 @@ class ExamsController < ApplicationController
     @exam = Exam.find(params[:id])
     @quiz = @exam.quiz
   end
+
+  def update
+    
+  end
 end

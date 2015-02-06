@@ -62,4 +62,38 @@ describe ExamsController do
       expect(assigns(:exam)).to eq(exam)
     end
   end
+
+  describe "PATCH update" do
+    let(:quiz) { Fabricate(:quiz) }
+
+    it_behaves_like "require sign in" do
+      let(:action) { patch :update, id: 1, quiz_id: quiz.slug }
+    end
+
+    it "updates generated answers with student answers" do
+      exam = Fabricate(:exam, quiz: quiz)
+      gq = exam.generated_questions.first
+      ga1 = gq.generated_answers[0]
+      ga2 = gq.generated_answers[1]
+      ga3 = gq.generated_answers[2]
+      ga4 = gq.generated_answers[3]
+      patch :update, id: exam.id, quiz_id: quiz.slug, exam: {
+        generated_questions_attributes: [
+          {
+            id: gq.id,
+            generated_answers_attributes: [
+              { id: ga1.id, student_marked: "1" },
+              { id: ga2.id, student_marked: "1" },
+              { id: ga3.id, student_marked: "1" },
+              { id: ga4.id, student_marked: "1" }
+            ]
+          }
+        ]
+      }
+      expect(ga1.student_marked?).to be true
+      expect(ga2.student_marked?).to be true
+      expect(ga3.student_marked?).to be true
+      expect(ga4.student_marked?).to be true
+    end
+  end
 end
