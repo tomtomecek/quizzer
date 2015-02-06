@@ -5,16 +5,18 @@ describe Exam do
   it { is_expected.to belong_to(:quiz) }
   it { is_expected.to have_db_index(:quiz_id) }
   it { is_expected.to have_db_index(:student_id) }
+  it { is_expected.to have_many(:generated_questions).dependent(:destroy) }
 
   it "creates an exam with student answer ids empty array if no answer" do
     Fabricate(:exam)
     expect(Exam.first.student_answer_ids).to eq []
   end
 
-  context "when built" do
+  describe "#build_questions" do
     it "builds generated questions" do
       quiz = Fabricate(:quiz)
       exam = Exam.new(quiz: quiz)
+      exam.build_questions!
       expect(exam.generated_questions).to_not be_empty
     end
   end
@@ -23,10 +25,7 @@ describe Exam do
     let(:quiz) do
       Fabricate(:quiz) do
         questions do
-          [
-            Fabricate.build(:question, points: 2),
-            Fabricate.build(:question, points: 3)
-          ]
+          [Fabricate(:question, points: 2),Fabricate(:question, points: 3)]
         end
       end
     end
