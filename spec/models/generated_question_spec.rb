@@ -6,7 +6,7 @@ describe GeneratedQuestion do
   it { is_expected.to belong_to(:question) }
   it { is_expected.to have_db_index(:exam_id) }
   it { is_expected.to have_db_index(:question_id) }
-  xit { is_expected.to have_many(:generated_answers) }
+  it { is_expected.to have_many(:generated_answers).dependent(:destroy) }
 
   context "when built" do
     it "builds generated_answers" do
