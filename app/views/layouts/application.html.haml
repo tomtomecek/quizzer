@@ -10,6 +10,8 @@
     = yield :head
   %body
     = render 'shared/header'
-    = render 'shared/flash_messages'
+    .container
+      #flash_messages
+        = render 'shared/flash_messages'
     = yield
     = render 'shared/footer'

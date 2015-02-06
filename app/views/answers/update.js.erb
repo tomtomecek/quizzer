@@ -1,0 +1,7 @@
+<% if @answer.valid? %>
+  $('#answerFormModal').modal('hide');
+  $('#question_<%= @answer.question.id %>_answers').html('<%= j render partial: "answers/answer", collection: @answer.question.answers %>');
+  $('#flash_messages').html('<%= j render "shared/flash_messages" %>');
+<% else %>
+  $('.answer_errors').html("<%= j render 'errors' %>");
+<% end %>

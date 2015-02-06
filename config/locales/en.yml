@@ -20,4 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        answer:
+          attributes:
+            base:
+              answers_incorrect: At least 1 answer must be correct.
+              answers_too_short: Question requires at least 4 answers.
