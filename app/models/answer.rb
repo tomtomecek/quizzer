@@ -15,6 +15,7 @@ class Answer < ActiveRecord::Base
 private
 
   def check_correct_sibling_answers
+    return true if question_id.nil?
     unless question.answers.pluck(:correct).any?
       errors.add(:base, :answers_incorrect)
     end
@@ -25,6 +26,7 @@ private
   end
 
   def check_answers_count
+    return true if question_id.nil?
     unless answers_count_valid?
       errros.add(:base, :answers_too_short)
     end
