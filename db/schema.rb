@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204142628) do
+ActiveRecord::Schema.define(version: 20150206104842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(version: 20150204142628) do
 
   add_index "exams", ["quiz_id"], name: "index_exams_on_quiz_id", using: :btree
   add_index "exams", ["student_id"], name: "index_exams_on_student_id", using: :btree
+
+  create_table "generated_questions", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "exam_id"
+    t.text     "content"
+    t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "generated_questions", ["exam_id"], name: "index_generated_questions_on_exam_id", using: :btree
+  add_index "generated_questions", ["question_id"], name: "index_generated_questions_on_question_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.integer  "quiz_id"

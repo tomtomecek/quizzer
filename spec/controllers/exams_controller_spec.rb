@@ -20,6 +20,11 @@ describe ExamsController do
       expect(assigns(:exam)).to be_new_record
       expect(assigns(:exam)).to be_kind_of(Exam)
     end
+
+    it "generates questions" do
+      get :new, quiz_id: quiz.slug
+      expect(assigns(:exam).generated_questions).to_not be_empty
+    end
   end
 
   describe "POST create" do
