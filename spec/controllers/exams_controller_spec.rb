@@ -65,35 +65,79 @@ describe ExamsController do
 
   describe "PATCH update" do
     let(:quiz) { Fabricate(:quiz) }
+    let(:exam) { Fabricate(:exam, quiz: quiz, student: current_user) }
+    let(:question) { Question.first }
+    let(:a1) { Answer.first }
+    let(:a2) { Answer.second }
+    let(:a3) { Answer.third }
+    let(:a4) { Answer.fourth }
+    let(:gq) do
+      Fabricate(:generated_question, exam: exam, question: question)
+    end
+    let(:ga1) do
+      Fabricate(:generated_answer, answer: a1, generated_question: gq)
+    end
+    let(:ga2) do
+      Fabricate(:generated_answer, answer: a2, generated_question: gq)
+    end
+    let(:ga3) do
+      Fabricate(:generated_answer, answer: a3, generated_question: gq)
+    end
+    let(:ga4) do
+      Fabricate(:generated_answer, answer: a4, generated_question: gq)
+    end
 
     it_behaves_like "require sign in" do
       let(:action) { patch :update, id: 1, quiz_id: quiz.slug }
     end
 
-    it "updates generated answers with student answers" do
-      exam = Fabricate(:exam, quiz: quiz)
-      gq = exam.generated_questions.first
-      ga1 = gq.generated_answers[0]
-      ga2 = gq.generated_answers[1]
-      ga3 = gq.generated_answers[2]
-      ga4 = gq.generated_answers[3]
-      patch :update, id: exam.id, quiz_id: quiz.slug, exam: {
-        generated_questions_attributes: [
-          {
-            id: gq.id,
-            generated_answers_attributes: [
-              { id: ga1.id, student_marked: "1" },
-              { id: ga2.id, student_marked: "1" },
-              { id: ga3.id, student_marked: "1" },
-              { id: ga4.id, student_marked: "1" }
-            ]
-          }
-        ]
-      }
-      expect(ga1.student_marked?).to be true
-      expect(ga2.student_marked?).to be true
-      expect(ga3.student_marked?).to be true
-      expect(ga4.student_marked?).to be true
+    context "with valid data" do
+      before do
+        patch :update,
+          id: exam.id,
+          quiz_id: quiz.slug,
+          student_answer_ids: to_ids(ga1, ga2, ga3, ga4)
+      end
+
+      it { is_expected.to redirect_to [quiz, exam] }
+      it { is_expected.to set_the_flash[:success] }
+
+      it "updates generated answers with student answers" do
+        expect(ga1.reload.student_marked?).to be true
+        expect(ga2.reload.student_marked?).to be true
+        expect(ga3.reload.student_marked?).to be true
+        expect(ga4.reload.student_marked?).to be true
+      end
+    end
+
+    context "with invalid data" do
+      let(:invalid_answer) { Fabricate(:answer) }
+
+      before do
+        patch :update,
+          id: exam.id,
+          quiz_id: quiz.slug,
+          student_answer_ids: to_ids(invalid_answer)
+      end
+
+      it { is_expected.to render_template :new }
+      it { is_expected.to set_the_flash.now[:danger] }
+
+      it "sets the @quiz" do
+        expect(assigns(:quiz)).to eq(quiz)
+      end
+
+      it "sets the @exam" do
+        expect(assigns(:exam)).to eq(exam)
+      end
+
+      it "does not update generated answers with student answers" do
+        expect(ga1.reload.student_marked).to be nil
+        expect(ga2.reload.student_marked).to be nil
+        expect(ga3.reload.student_marked).to be nil
+        expect(ga4.reload.student_marked).to be nil
+      end
+
     end
   end
 end
