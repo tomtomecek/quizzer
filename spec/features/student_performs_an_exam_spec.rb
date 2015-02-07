@@ -7,16 +7,16 @@ feature "student performs an exam" do
     Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") do
       questions do
         [
-          Fabricate.build(:question, points: 3, content: "1+1") do
+          Fabricate(:question, points: 3, content: "1+1") do
             answers { incorrect(4) + correct(1, content: "Answer is 2") }
           end,
-          Fabricate.build(:question, points: 4, content: "2+2") do
+          Fabricate(:question, points: 4, content: "2+2") do
             answers do
               incorrect(2) + incorrect(1, content: "W") +
               correct(1, content: "Answer is 4")
             end
           end,
-          Fabricate.build(:question, points: 5, content: "3+3") do
+          Fabricate(:question, points: 5, content: "3+3") do
             answers { incorrect(4) + correct(1, content: "Answer is 6") }
           end
         ]
@@ -56,7 +56,6 @@ feature "student performs an exam" do
       expect_to_see "3 points"
       check("Answer is 2")
     end
-
     within_exam_question(q2) { check("Answer is 4") }
     within_exam_question(q3) { check("Answer is 6") }
     click_on "Submit Answers"
@@ -73,7 +72,6 @@ feature "student performs an exam" do
     expect_to_see "Score: 3 from 12 points"
     within_exam_question(q1) { expect_to_see "You earned 3 points" }
     within_exam_question(q2) { expect_to_see "One of the answers was wrong" }
-    within_exam_question(q3) { expect_to_see "No answers submitted" }
   end
 end
 
