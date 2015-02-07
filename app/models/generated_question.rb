@@ -14,10 +14,10 @@ class GeneratedQuestion < ActiveRecord::Base
   end
 
   def yield_points?
-    notes = generated_answers.where(student_marked: true).
-      inject(0) do |notes, ganswer|
-        verify_student_answer?(ganswer) ? notes += 1 : notes -= 1
-        notes
+    student_marked = generated_answers.where(student_marked: true)
+    notes = student_marked.inject(0) do |notes, ganswer|
+      verify_student_answer?(ganswer) ? notes += 1 : notes -= 1
+      notes
     end
     verify_question?(notes)
   end

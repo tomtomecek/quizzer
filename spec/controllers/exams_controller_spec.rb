@@ -94,9 +94,9 @@ describe ExamsController do
     context "with valid data" do
       before do
         patch :update,
-          id: exam.id,
-          quiz_id: quiz.slug,
-          student_answer_ids: to_ids(ga1, ga2, ga3, ga4)
+              id: exam.id,
+              quiz_id: quiz.slug,
+              student_answer_ids: to_ids(ga1, ga2, ga3, ga4)
       end
 
       it { is_expected.to redirect_to [quiz, exam] }
@@ -115,9 +115,9 @@ describe ExamsController do
 
       before do
         patch :update,
-          id: exam.id,
-          quiz_id: quiz.slug,
-          student_answer_ids: to_ids(invalid_answer)
+              id: exam.id,
+              quiz_id: quiz.slug,
+              student_answer_ids: to_ids(invalid_answer)
       end
 
       it { is_expected.to render_template :new }

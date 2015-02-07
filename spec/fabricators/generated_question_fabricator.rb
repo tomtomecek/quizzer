@@ -1,5 +1,5 @@
 Fabricator(:generated_question) do
-  question  
+  question
   content { |attrs| attrs[:question].content }
   points { |attrs| attrs[:question].points }
 end

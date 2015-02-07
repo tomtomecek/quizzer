@@ -6,7 +6,9 @@ describe Exam do
   it { is_expected.to have_db_index(:quiz_id) }
   it { is_expected.to have_db_index(:student_id) }
   it { is_expected.to have_many(:generated_questions).dependent(:destroy) }
-  it { is_expected.to have_many(:generated_answers).through(:generated_questions) }
+  it do
+    is_expected.to have_many(:generated_answers).through(:generated_questions)
+  end
 
   describe "#create_questions_with_answers!" do
     let(:quiz) { Fabricate(:quiz) }
