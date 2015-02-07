@@ -1,11 +1,10 @@
 %section.reset_password.container
   .row
     .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for @user, url: update_password_path, method: :patch do |f|
+      = bootstrap_form_for @admin, url: update_password_reset_path, method: :patch do |f|
         %header
           %h1 Reset Your Password
-        %fieldset
-          = hidden_field_tag :token, @user.token          
-          = f.password_field :password, label: "New Password", column_col: "col-sm-4"
+        = hidden_field_tag :password_reset_token, @admin.password_reset_token
+        = f.password_field :password, label: "New Password", column_col: "col-sm-4"
         %fieldset.form-group.action
           = f.submit "Reset Password", class: "btn btn-default"
