@@ -1,11 +1,11 @@
 class Question < ActiveRecord::Base
+  MAX_ANSWER_LIMIT = 10
+  MIN_ANSWER_LIMIT = 4
   belongs_to :quiz
   has_many :answers, dependent: :destroy
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
-  # validate :
-  # validate :
   validate do
     check_answers_number
     one_must_be_correct
@@ -14,38 +14,15 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for(
     :answers,
     reject_if: proc { |a| a[:content].blank? },
-    limit: proc { 10 },
+    limit: proc { MAX_ANSWER_LIMIT },
     allow_destroy: true
   )
 
   attr_reader :total
 
-  ANSWER_LIMIT = 4
-
-  def answers_for(exam, method_name)
-    results = exam.send(method_name).collect do |id|
-      answer = Answer.find(id.to_i)
-      answer if answer.question == self
-    end
-    results.compact
-  end
-
   def generate_answers
     @total = [answers.select(&:correct?).sample]
     fill_up_answer_limit.shuffle
-  end
-
-  def yield_points?(exam)
-    @generated_answers = answers_for(exam, :generated_answer_ids)
-    notes = answers_for(exam, :student_answer_ids).inject(0) do |notes, answer|
-      verify_student_answer?(answer) ? notes += 1 : notes -= 1
-      notes
-    end
-    verify_question?(notes)
-  end
-
-  def has_no_student_answer?(exam)
-    answers_for(exam, :student_answer_ids).empty?
   end
 
 private
@@ -57,7 +34,7 @@ private
   end
 
   def answers_count_valid?
-    answers.reject(&:marked_for_destruction?).size < ANSWER_LIMIT
+    answers.reject(&:marked_for_destruction?).size < MIN_ANSWER_LIMIT
   end
 
   def check_answers_number
@@ -77,14 +54,7 @@ private
   end
 
   def reached_answer_limit?
-    total.count == ANSWER_LIMIT
+    total.count == MIN_ANSWER_LIMIT
   end
 
-  def verify_student_answer?(answer)
-    answer.correct? && @generated_answers.include?(answer)
-  end
-
-  def verify_question?(notes)
-    notes == @generated_answers.select(&:correct?).count
-  end
 end
