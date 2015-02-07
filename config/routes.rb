@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   delete "/sign_out", to: "sessions#destroy"
 
   get "/password_reset", to: "password_resets#new", as: :new_password_reset
-  post "/password_reset", to: "password_resets#create"  
+  post "/password_reset", to: "password_resets#create"
+  get "/password_reset_confirm", to: "password_resets#confirm", as: :confirm_password_reset
 
   namespace :admin do
     get "/sign_in", to: "sessions#new"
