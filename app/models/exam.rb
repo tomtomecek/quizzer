@@ -1,17 +1,13 @@
 class Exam < ActiveRecord::Base
   belongs_to :student, class_name: "User"
   belongs_to :quiz
-  before_create :default_student_answer_ids
+
   has_many :generated_questions, dependent: :destroy
   has_many :generated_answers, through: :generated_questions
 
-  def default_student_answer_ids
-    self.student_answer_ids = [] if student_answer_ids.nil?
-  end
-
   def student_score
-    quiz.questions.inject(0) do |score, question|
-      score += question.points if question.yield_points?(self)
+    generated_questions.inject(0) do |score, gquestion|
+      score += gquestion.points if gquestion.yield_points?
       score
     end
   end
