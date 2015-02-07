@@ -12,4 +12,23 @@ class GeneratedQuestion < ActiveRecord::Base
       )
     end
   end
+
+  def yield_points?
+    student_marked = generated_answers.where(student_marked: true)
+    notes = student_marked.inject(0) do |notes, ganswer|
+      verify_student_answer?(ganswer) ? notes += 1 : notes -= 1
+      notes
+    end
+    verify_question?(notes)
+  end
+
+private
+
+  def verify_student_answer?(ganswer)
+    ganswer.correct? && generated_answers.include?(ganswer)
+  end
+
+  def verify_question?(notes)
+    notes == generated_answers.select(&:correct?).count
+  end
 end

@@ -17,67 +17,30 @@ describe ExamsController do
 
     it "sets the @exam" do
       get :new, quiz_id: quiz.slug
-      expect(assigns(:exam)).to be_new_record
-      expect(assigns(:exam)).to be_kind_of(Exam)
+      expect(assigns(:exam)).to eq Exam.first
     end
 
-    it "generates questions" do
-      get :new, quiz_id: quiz.slug
-      expect(assigns(:exam).generated_questions).to_not be_empty
-    end
-
-    it "generates answers" do
-      get :new, quiz_id: quiz.slug
-      gq = assigns(:exam).generated_questions.first
-      expect(gq.generated_answers).to_not be_empty
-    end
-  end
-
-  describe "POST create" do
-    let(:quiz)     { Fabricate(:quiz) }
-    let(:question) { Fabricate.build(:question, quiz: quiz) }
-    let(:answer1)  { Fabricate(:answer, question: question) }
-    let(:answer2)  { Fabricate(:answer, question: question) }
-    let(:answer3)  { Fabricate(:answer, question: question) }
-    let(:exam)     { Exam.first }
-
-    context "when authenticated" do
-      before do
-        post :create,
-             quiz_id: quiz.slug,
-             student_answer_ids: to_ids(answer1),
-             generated_answer_ids: to_ids(answer1, answer2, answer3)
-      end
-
-      it "redirects to :show @exam" do
-        expect(response).to redirect_to [quiz, exam]
-      end
-
-      it "creates an exam" do
-        expect(Exam.count).to eq(1)
-      end
-
-      it "creates an exam under quiz" do
-        expect(quiz.exams.first).to eq(exam)
-      end
-
-      it "creates an exam under the student" do
-        expect(Exam.first.student).to eq current_user
-      end
-
-      it "creates an exam with student_answer_ids" do
-        student_answer_ids = to_ids(answer1)
-        expect(exam.student_answer_ids).to match_array student_answer_ids
-      end
-
-      it "creates an exam with generated_answer_ids" do
-        generated_answer_ids = to_ids(answer1, answer2, answer3)
-        expect(exam.generated_answer_ids).to match_array generated_answer_ids
+    context "exam exists" do
+      it "does not create another exam" do
+        Fabricate(:exam, quiz: quiz, student: current_user)
+        expect { get :new, quiz_id: quiz.slug }.to_not change { Exam.count }
       end
     end
 
-    it_behaves_like "require sign in" do
-      let(:action) { post :create, quiz_id: quiz.slug }
+    context "exam does not exist" do
+      it "creates new exam" do
+        expect { get :new, quiz_id: quiz.slug }.to change { Exam.count }.by 1
+      end
+
+      it "generates questions" do
+        get :new, quiz_id: quiz.slug
+        expect(assigns(:exam).generated_questions).to_not be_empty
+      end
+
+      it "generates answers" do
+        get :new, quiz_id: quiz.slug
+        expect(assigns(:exam).generated_answers).to_not be_empty
+      end
     end
   end
 
@@ -97,6 +60,84 @@ describe ExamsController do
     it "sets the @exam" do
       get :show, quiz_id: quiz.slug, id: exam.id
       expect(assigns(:exam)).to eq(exam)
+    end
+  end
+
+  describe "PATCH update" do
+    let(:quiz) { Fabricate(:quiz) }
+    let(:exam) { Fabricate(:exam, quiz: quiz, student: current_user) }
+    let(:question) { Question.first }
+    let(:a1) { Answer.first }
+    let(:a2) { Answer.second }
+    let(:a3) { Answer.third }
+    let(:a4) { Answer.fourth }
+    let(:gq) do
+      Fabricate(:generated_question, exam: exam, question: question)
+    end
+    let(:ga1) do
+      Fabricate(:generated_answer, answer: a1, generated_question: gq)
+    end
+    let(:ga2) do
+      Fabricate(:generated_answer, answer: a2, generated_question: gq)
+    end
+    let(:ga3) do
+      Fabricate(:generated_answer, answer: a3, generated_question: gq)
+    end
+    let(:ga4) do
+      Fabricate(:generated_answer, answer: a4, generated_question: gq)
+    end
+
+    it_behaves_like "require sign in" do
+      let(:action) { patch :update, id: 1, quiz_id: quiz.slug }
+    end
+
+    context "with valid data" do
+      before do
+        patch :update,
+              id: exam.id,
+              quiz_id: quiz.slug,
+              student_answer_ids: to_ids(ga1, ga2, ga3, ga4)
+      end
+
+      it { is_expected.to redirect_to [quiz, exam] }
+      it { is_expected.to set_the_flash[:success] }
+
+      it "updates generated answers with student answers" do
+        expect(ga1.reload.student_marked?).to be true
+        expect(ga2.reload.student_marked?).to be true
+        expect(ga3.reload.student_marked?).to be true
+        expect(ga4.reload.student_marked?).to be true
+      end
+    end
+
+    context "with invalid data" do
+      let(:invalid_answer) { Fabricate(:answer) }
+
+      before do
+        patch :update,
+              id: exam.id,
+              quiz_id: quiz.slug,
+              student_answer_ids: to_ids(invalid_answer)
+      end
+
+      it { is_expected.to render_template :new }
+      it { is_expected.to set_the_flash.now[:danger] }
+
+      it "sets the @quiz" do
+        expect(assigns(:quiz)).to eq(quiz)
+      end
+
+      it "sets the @exam" do
+        expect(assigns(:exam)).to eq(exam)
+      end
+
+      it "does not update generated answers with student answers" do
+        expect(ga1.reload.student_marked).to be nil
+        expect(ga2.reload.student_marked).to be nil
+        expect(ga3.reload.student_marked).to be nil
+        expect(ga4.reload.student_marked).to be nil
+      end
+
     end
   end
 end

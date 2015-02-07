@@ -19,9 +19,8 @@
           .panel-body
             - q.generated_answers.each do |a|
               .exam.input-group
-                = hidden_field_tag "generated_answer_ids[]", a.answer.id
                 .input-group-addon
-                  = check_box_tag "student_answer_ids[]", a.answer.id, false, id: "answer_#{a.answer.id}"
+                  = check_box_tag "student_answer_ids[]", a.id, false, id: "answer_#{a.answer.id}"
                 .form-control-static
                   %label{for: "answer_#{a.answer.id}"}
                     = preserve do
