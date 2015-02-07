@@ -1,11 +1,14 @@
 Rails.application.routes.draw do  
   get "/auth/:provider/callback", to: "sessions#create"
-  delete "sign_out", to: "sessions#destroy"
+  delete "/sign_out", to: "sessions#destroy"
+
+  get "/password_reset", to: "password_resets#new", as: :new_password_reset
+  post "/password_reset", to: "password_resets#create"  
 
   namespace :admin do
-    get "sign_in", to: "sessions#new"
-    post "sign_in", to: "sessions#create"
-    delete "sign_out", to: "sessions#destroy"
+    get "/sign_in", to: "sessions#new"
+    post "/sign_in", to: "sessions#create"
+    delete "/sign_out", to: "sessions#destroy"
 
     resources :courses, only: [:index, :show]
   end
