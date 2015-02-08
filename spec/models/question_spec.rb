@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Question do
   it { is_expected.to belong_to(:quiz) }
-  it { is_expected.to have_many(:answers).dependent(:destroy) }
+  it { is_expected.to have_many(:answers).dependent(:delete_all) }
   it { is_expected.to validate_presence_of(:content) }
   it { is_expected.to validate_numericality_of(:points).only_integer }
   it do

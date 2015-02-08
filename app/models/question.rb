@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
   MAX_ANSWER_LIMIT = 10
   MIN_ANSWER_LIMIT = 4
   belongs_to :quiz
-  has_many :answers, dependent: :destroy
+  has_many :answers, dependent: :delete_all
 
   validates_presence_of :content
   validates_numericality_of :points, only_integer: true
