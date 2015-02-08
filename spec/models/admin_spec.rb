@@ -17,4 +17,18 @@ describe Admin do
       expect(admin.password_reset_expires_at).to be nil
     end
   end
+
+  describe "#generate_password_reset_items" do
+    it "updates password reset to a token" do
+      admin = Fabricate(:admin, password_reset_token: nil)
+      admin.generate_password_reset_items
+      expect(admin.password_reset_token).to be_present
+    end
+
+    it "updates password reset expires at" do
+      admin = Fabricate(:admin, password_reset_expires_at: nil)
+      admin.generate_password_reset_items
+      expect(admin.password_reset_expires_at).to be_present
+    end
+  end
 end

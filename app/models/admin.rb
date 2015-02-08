@@ -3,7 +3,7 @@ class Admin < ActiveRecord::Base
 
   validates :password, length: { minimum: 6 }
 
-  def generate_password_reset_token
+  def generate_password_reset_items
     begin
       token = SecureRandom.urlsafe_base64
     end while Admin.exists?(password_reset_token: token)
