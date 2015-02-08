@@ -3,21 +3,21 @@ Rails.application.routes.draw do
   delete "/sign_out", to: "sessions#destroy"
 
   get "/password_reset",
-    to: "password_resets#new",
-    as: :new_password_reset
+      to: "password_resets#new",
+      as: :new_password_reset
   post "/password_reset", to: "password_resets#create"
   get "/password_reset/:token",
-    to: "password_resets#edit",
-    as: :edit_password_reset
-  get "/password_reset_confirm",
-    to: "password_resets#confirm",
-    as: :confirm_password_reset
+      to: "password_resets#edit",
+      as: :edit_password_reset
   patch "/password_reset",
-    to: "password_resets#update",
-    as: :update_password_reset
+        to: "password_resets#update",
+        as: :update_password_reset
+  get "/password_reset_confirm",
+      to: "password_resets#confirm",
+      as: :confirm_password_reset  
   get "/password_reset/expired",
-    to: "password_reset#expired_token",
-    as: :expired_token
+      to: "password_reset#expired_token",
+      as: :expired_token
 
   namespace :admin do
     get "/sign_in", to: "sessions#new"
