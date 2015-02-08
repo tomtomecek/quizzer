@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/password_reset_confirm", to: "password_resets#confirm",
     as: :confirm_password_reset
   patch "/password_reset", to: "password_resets#update", as: :update_password_reset
+  get "/password_reset/expired", to: "password_reset#expired_token", as: :expired_token
 
   namespace :admin do
     get "/sign_in", to: "sessions#new"
