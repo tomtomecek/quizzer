@@ -21,12 +21,12 @@ feature "admin updates answer from view quiz" do
       click_edit_on(answer)
 
       within(:css, ".modal") do
-        fill_in "Answer Content", with: ""
+        fill_in "Answer's content", with: ""
         click_on "Submit changes"
         expect_to_see "These errors needs to be fixed:"
         expect_to_see "Content can't be blank"
 
-        fill_in "Answer Content", with: "new answer"
+        fill_in "Answer's content", with: "new answer"
         click_on "Submit changes"
       end
 
@@ -43,6 +43,18 @@ feature "admin updates answer from view quiz" do
         expect_to_see "At least 1 answer must be correct."
       end
       expect(page).to have_css(".modal")
+    end
+
+    scenario "redundant flash messages", :js, :slow, driver: :selenium do
+      click_edit_on(answer)
+
+      within(:css, ".modal") do
+        fill_in "Answer's content", with: "new content"
+        click_on "Submit changes"
+      end
+
+      click_edit_on(answer)
+      expect_to_not_see "Successfully updated answer"
     end
   end
 
