@@ -158,10 +158,6 @@ feature "admin adds a quiz to a course" do
   end
 end
 
-def click_away
-  find(:xpath, "//body").click
-end
-
 def fill_in_valid_quiz_attributes
   fill_in "Title",       with: "Week 1 - Ruby basics"
   fill_in "Description", with: "Ruby methods and iterations"

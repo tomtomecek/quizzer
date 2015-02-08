@@ -5,6 +5,6 @@
         %header.col-sm-offset-2
           %h1 Reset Your Password
         = hidden_field_tag :token, @admin.password_reset_token
-        = f.password_field :password, label: "New Password", control_col: "col-sm-5", required: true
+        = f.password_field :password, label: "New Password", control_col: "col-sm-5", required: true, "data-parsley-minlength" => "6", "data-parsley-minlength-message" => "Password must have at least 6 characters."
         = f.form_group do
           = f.submit "Reset Password", class: "btn btn-default"

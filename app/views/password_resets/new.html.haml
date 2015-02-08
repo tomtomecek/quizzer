@@ -5,7 +5,7 @@
         .col-sm-offset-2
           %h1 Forgot Password?
           %p.forgot_password_paragraph We will send you an email with a link that you can use to reset your password.
-        = f.email_field :email, value: params[:email] || "", control_col: "col-sm-5", required: true
+        = f.email_field :email, value: params[:email] || "", control_col: "col-sm-5", required: true, "data-parsley-trigger" => "blur"
         = f.form_group do
           = f.submit "Send Email", class: "btn btn-default"
-          = link_to "Back", '', class: "btn btn-default"
+          = link_to "Back", admin_sign_in_path, class: "btn btn-default"

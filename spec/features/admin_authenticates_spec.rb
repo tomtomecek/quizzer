@@ -36,6 +36,12 @@ feature "admin authenticates with Quizzer" do
     expect_to_see "Logged out successfully."
     expect_to_be_in root_path
   end
+
+  scenario "client side validations", :js, :slow do
+    visit admin_sign_in_path
+    validate_email_error_messages
+    validate_password_error_messages
+  end
 end
 
 def loging_in_with(options = {})
@@ -51,4 +57,22 @@ end
 
 def expect_to_not_have_sign_out_link_for_student
   expect(page).to have_no_xpath("//a[@href='/sign_out']")
+end
+
+def validate_email_error_messages
+  fill_in "Email", with: ""
+  click_on "Sign in"
+  expect_to_see "This value is required"
+  fill_in "Email", with: "admin"
+  click_on "Sign in"
+  expect_to_see "This value should be a valid email"
+end
+
+def validate_password_error_messages
+  fill_in "Password", with: ""
+  click_on "Sign in"
+  expect_to_see "This value is required"
+  fill_in "Password", with: "123"
+  click_on "Sign in"
+  expect_to_see "Password must have at least 6 charact"
 end
