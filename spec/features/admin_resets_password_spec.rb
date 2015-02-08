@@ -41,7 +41,7 @@ feature "admin resets password" do
     admin = Fabricate(:admin,
                       password_reset_token: "123",
                       password_reset_expires_at: 1.hour.from_now)
-    visit edit_password_reset_path("123")
+    visit edit_password_reset_path(admin.password_reset_token)
 
     fill_in_new_password_and_submit("")
     expect_to_see "This value is required"
