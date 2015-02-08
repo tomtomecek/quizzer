@@ -1,0 +1,10 @@
+%section.admin-login.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for @admin, url: update_password_reset_path, method: :patch, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10", html: { 'data-parsley-validate' => ''} do |f|
+        %header.col-sm-offset-2
+          %h1 Reset Your Password
+        = hidden_field_tag :token, @admin.password_reset_token
+        = f.password_field :password, label: "New Password", control_col: "col-sm-5", required: true, "data-parsley-minlength" => "6", "data-parsley-minlength-message" => "Password must have at least 6 characters."
+        = f.form_group do
+          = f.submit "Reset Password", class: "btn btn-default"
