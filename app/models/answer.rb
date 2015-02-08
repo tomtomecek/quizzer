@@ -1,4 +1,5 @@
 class Answer < ActiveRecord::Base
+  include AnswerExceptions
   CORRECT_ANSWER_COUNT_MIN = 1
   ANSWER_COUNT_MIN = 4
 
@@ -10,6 +11,22 @@ class Answer < ActiveRecord::Base
 
   def incorrect?
     !self.correct?
+  end
+
+  def destroy
+    arr = []
+    arr << self.question.answers
+    arr.flatten!
+    arr.delete(self)
+    unless arr.map(&:correct?).any?
+      message = "At least 1 answer must be correct."
+      raise AnswerException.new(message: message)
+    end
+    unless arr.count >= 4
+      message = "Question requires at least 4 answers."
+      raise AnswerException.new(message: message)
+    end
+    super
   end
 
 private

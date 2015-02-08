@@ -7,9 +7,16 @@ class AnswersController < AdminController
 
   def update
     @answer = Answer.find(params[:id])
-    if @answer.update(answer_params)
-      flash[:success] = "Successfully updated answer."
+    ActiveRecord::Base.transaction do
+      @answer.update(answer_params)
+      if @answer.valid?
+        flash.now[:success] = "Successfully updated answer."
+      else
+        raise ActiveRecord::RecordInvalid.new(@answer)
+      end
     end
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:danger] = "#{e.message}"
   end
 
   def destroy
@@ -28,18 +35,6 @@ private
 
   def destroy_answer
     @id = @answer.id
-    arr = []
-    arr << @answer.question.answers
-    arr.flatten!
-    arr.delete(@answer)
-    unless arr.map(&:correct?).any?
-      message = "At least 1 answer must be correct."
-      raise AnswerException.new(message: message)
-    end
-    unless arr.count >= 4
-      message = "Question requires at least 4 answers."
-      raise AnswerException.new(message: message)
-    end
     @answer.destroy
     @destroyed = true
   end
