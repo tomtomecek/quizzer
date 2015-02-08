@@ -3,7 +3,7 @@ class AdminMailer < ActionMailer::Base
 
   def send_reset_token(admin)
     @admin = admin
-    mail to: @admin.email, subject: "Reset Password - #{@admin.email}"
+    mail to: staging(@admin.email), subject: "Reset Password - #{@admin.email}"
   end
 
 private
