@@ -26,7 +26,7 @@ module AuthenticationMacros
   end
 
   def clear_current_user
-    session[:user_id] = nil
+    session.delete(:user_id)
   end
 
   def current_user
@@ -34,15 +34,22 @@ module AuthenticationMacros
   end
 
   def clear_current_admin
-    session[:admin_id] = nil
+    session.delete(:admin_id)
+    cookies.delete(:admin_id)
+    cookies.delete(:remember_token)
   end
 
   def current_admin
     Admin.find(session[:admin_id])
   end
 
-  def set_current_admin(admin = nil)
-    admin = admin || Fabricate(:admin)
+  def set_current_admin(admin = nil, options = {})
+    admin ||= Fabricate(:admin)
+    if admin && options[:remember_me]
+      admin.remember
+      cookies.permanent.signed[:admin_id] = admin.id
+      cookies.permanent[:remember_token] = admin.remember_token
+    end
     session[:admin_id] = admin.id
   end
 end
