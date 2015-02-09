@@ -7,13 +7,13 @@
       = markdown @quiz.description
     %br
     - @quiz.questions.each_with_index do |question, idx|
-      .panel.panel-success{ id: "question_#{question.id}" }
+      .panel.panel-info{ id: "question_#{question.id}" }
         .panel-heading
           .row.panel-title
             %h3.pull-left
-              %span.label.label-success= "Question: #{idx + 1}"
+              %span.label.label-primary= "Question: #{idx + 1}"
             %h3.pull-right
-              %span.label.label-success= pluralize(question.points, "point")
+              %span.label.label-primary= pluralize(question.points, "point")
             .clearfix
           %hr.question_horizontal_line
           .row.question-content-view-quiz
