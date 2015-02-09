@@ -62,6 +62,7 @@ feature "admin updates answer from view quiz" do
     scenario "successfull attempt", :js, :slow, driver: :selenium do
       accept_alert { click_delete_on(redundant_answer) }
       expect_to_see "Successfully deleted the answer"
+      sleep 2
       expect_to_not_see "delete me"
     end
 
