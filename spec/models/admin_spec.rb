@@ -31,4 +31,39 @@ describe Admin do
       expect(admin.password_reset_expires_at).to be_present
     end
   end
+
+  describe "#remember" do
+    it "updates remember_digest" do
+      admin = Fabricate(:admin, remember_digest: nil)
+      admin.remember
+      expect(admin.remember_digest).to_not be nil
+    end
+  end
+
+  describe "#forget!" do
+    it "removes remember digest" do
+      admin = Fabricate(:admin, remember_digest: "123")
+      admin.forget!
+      expect(admin.remember_digest).to be nil
+    end
+  end
+
+  describe "#authenticated?(token)" do
+    let(:admin) { Fabricate(:admin) }
+    let(:token) { admin.remember_token }
+    before { admin.remember }
+
+    it "returns true if admin authenticates with token" do
+      expect(admin).to be_authenticated(token)
+    end
+
+    it "returns false if admins authentication with token fails" do
+      expect(admin.authenticated?("no match")).to be false
+    end
+
+    it "returns false if remember digest is nil" do
+      admin.forget!
+      expect(admin.authenticated?(token)).to be false
+    end
+  end
 end
