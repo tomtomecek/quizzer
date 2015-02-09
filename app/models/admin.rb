@@ -39,7 +39,11 @@ private
   end
 
   def digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :                                            BCrypt::Engine.cost
+    if ActiveModel::SecurePassword.min_cost
+      cost = BCrypt::Engine::MIN_COST
+    else
+      cost = BCrypt::Engine.cost
+    end
     BCrypt::Password.create(string, cost: cost)
   end
 end
