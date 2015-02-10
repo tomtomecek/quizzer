@@ -11,4 +11,8 @@ module ExpectationMacros
   def expect_to_be_in(path)
     expect(current_path).to eq path
   end
+
+  def expect_to_see_no_modal
+    expect(page).to have_no_css(".modal")
+  end
 end
