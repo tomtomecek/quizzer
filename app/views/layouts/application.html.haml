@@ -9,7 +9,10 @@
     = csrf_meta_tags
     = yield :head
   %body
-    = render 'shared/header'
+    - if logged_in_admin?
+      = render 'shared/admin_header'
+    - else
+      = render 'shared/header'
     .container
       #flash_messages
         = render 'shared/flash_messages'
