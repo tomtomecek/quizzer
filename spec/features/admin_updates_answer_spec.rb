@@ -20,7 +20,7 @@ feature "admin updates answer from view quiz" do
       expect_to_see_no_modal
       click_edit_on(answer)
 
-      within(:css, ".modal") do
+      within_modal do
         fill_in "Answer's content", with: ""
         click_on "Submit changes"
         expect_to_see "These errors needs to be fixed:"
@@ -83,8 +83,4 @@ def click_delete_on(answer)
   within(:css, "#answer_#{answer.id}") do
     find(:css, ".fa-times-circle").click
   end
-end
-
-def expect_to_see_no_modal
-  expect(page).to have_no_css(".modal")
 end
