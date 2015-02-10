@@ -3,6 +3,8 @@ class Course < ActiveRecord::Base
 
   has_many :quizzes, -> { order(:created_at) }
 
+  validates :description, presence: true
+
   def generate_slug
     the_slug = title.parameterize
     while Course.where(slug: the_slug).exists?

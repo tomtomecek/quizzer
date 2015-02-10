@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Course do
   it { is_expected.to have_many(:quizzes).order(:created_at) }
+  it { is_expected.to validate_presence_of(:description) }
 
   describe "#generate_slug" do
     it "creates course with slug based on title" do
