@@ -10,9 +10,11 @@ feature "admin checks on exams" do
     week1_rails = Fabricate(:quiz, course: rails)
     exam1 = Fabricate(:exam, student: alice, quiz: week1_ruby)
     exam2 = Fabricate(:exam, student: jake, quiz: week1_rails)
+    sign_in_admin
 
-    visit admin_exams_path
+    within(:css, ".navbar") { click_on "Exams" }
     expect_to_be_in admin_exams_path
+    expect(find("tbody")).to have_css("tr", count: 2)
 
     within(:css, "tr#exam_#{exam1.id}") do
       expect_to_see alice.username
