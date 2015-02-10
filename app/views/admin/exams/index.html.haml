@@ -1,0 +1,24 @@
+.container
+  %h1 Student exams
+  %br
+  %table.table
+    %thead
+      %tr
+        %th #
+        %th Student Github username
+        %th Quiz
+        %th Course
+        %th Status
+        %th Score
+        %th Actions
+    %tbody
+      - @exams.each_with_index do |exam, idx|
+        %tr{ id: "exam_#{exam.id}" }
+          %td= idx + 1
+          %td= exam.student.username
+          %td= exam.quiz.title
+          %td= exam.quiz.course.title
+          %td= exam.status
+          %td #{exam.student_score} / #{exam.quiz.total_score}
+          %td
+            = link_to "View", admin_exam_path(exam)

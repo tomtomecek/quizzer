@@ -1,7 +1,7 @@
 .container
   .col-sm-9
-    %h2 Results for: #{@quiz.title}
-    %h3 Score: #{@exam.student_score} from #{@quiz.total_score} points
+    %h2 Results for: #{@exam.quiz.title}
+    %h3 Score: #{@exam.student_score} from #{@exam.quiz.total_score} points
     %br
     - @exam.generated_questions.each_with_index do |gq, idx|
       .panel.panel-info{ id: "question_#{gq.question.id}" }
@@ -18,18 +18,17 @@
               = markdown(gq.content)
         .panel-body
           - gq.generated_answers.each do |ga|
-            .exam.input-group{ class: "#{ga.correct? ? 'has-success has-feedback' : 'has-error has-feedback'}"}
+            .exam.input-group{ class: "#{ga.correctly_answered? ? 'has-success has-feedback' : 'has-error has-feedback'}" }
               .input-group-addon
-                = check_box_tag "", nil, ga.student_marked? , id: "answer_#{ga.answer.id}", disabled: true
+                = check_box_tag "", nil, ga.student_marked?, id: "answer_#{ga.answer.id}", disabled: true
               .form-control-static
-                - if ga.correct? == ga.student_marked?
+                - if ga.correctly_answered?
                   %span.glyphicon.glyphicon-ok.form-control-feedback
                 - else
                   %span.glyphicon.glyphicon-remove.form-control-feedback
                 %label{for: "answer_#{ga.answer.id}"}
                   = preserve do
                     = markdown(ga.content)
-
         .panel-footer
           - if gq.yield_points?
             %strong You earned #{pluralize(gq.points, "point")}.
