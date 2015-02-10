@@ -9,7 +9,7 @@ feature "admin checks on exams" do
     week1_ruby = Fabricate(:quiz, course: ruby)
     week1_rails = Fabricate(:quiz, course: rails)
     exam1 = Fabricate(:exam, student: alice, quiz: week1_ruby)
-    exam2 = Fabricate(:exam, student: jake, quiz: week1_rails)
+    Fabricate(:exam, student: jake, quiz: week1_rails)
     sign_in_admin
 
     within(:css, ".navbar") { click_on "Exams" }
