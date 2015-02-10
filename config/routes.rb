@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     delete "/sign_out", to: "sessions#destroy"
 
     resources :courses, only: [:index, :show]
+    resources :exams, only: [:index, :show]
   end
 
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do
