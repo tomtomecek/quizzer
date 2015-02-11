@@ -28,11 +28,12 @@ Rails.application.routes.draw do
     resources :exams, only: [:index, :show]
   end
 
+  resources :enrollments, only: [:new, :create]
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do
     resources :exams, only: [:new, :show, :update]
   end
   resources :answers, only: [:edit, :update, :destroy]
-  resources :courses, only: [:show]
+  resources :courses, only: [:index, :show]
   get "ui(/:action)", controller: "ui"
   root "courses#index"
 end

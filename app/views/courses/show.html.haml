@@ -1,4 +1,13 @@
 .container
+  .page-header
+    %h1 Welcome to #{@course.title}
+  .well
+    %dl
+      %dt Enrollment:
+      %dd= @enrollment.paid? ? "Signature Track" : "Free"
+    %dl
+      %dt Quizzes:
+      %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.count}
   .col-sm-7
     - @course.quizzes.each do |quiz|
       .row{ id: "quiz_#{quiz.id}" }

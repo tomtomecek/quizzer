@@ -1,0 +1,6 @@
+- if @enrollment.errors.any?
+  .alert.alert-danger
+    %p These errors needs to be fixed:
+    %ul
+      - @enrollment.errors.full_messages.each do |e|
+        %li= e

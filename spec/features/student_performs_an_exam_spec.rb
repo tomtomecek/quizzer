@@ -1,9 +1,9 @@
 require "spec_helper"
 
 feature "student performs an exam" do
-  given(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
-  given(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
-  given(:week1) do
+  given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
+  given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
+  given!(:week1) do
     Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") do
       questions do
         [
@@ -23,22 +23,22 @@ feature "student performs an exam" do
       end
     end
   end
-  given(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
-  given(:q1) { week1.questions.first }
-  given(:q2) { week1.questions.second }
-  given(:q3) { week1.questions.last }
+  given!(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
+  given!(:q1) { week1.questions.first }
+  given!(:q2) { week1.questions.second }
+  given!(:q3) { week1.questions.last }
 
   background do
-    build_setup
     sign_in
+    Fabricate(:enrollment, course: ruby, student: User.first)
   end
 
   scenario "student checks course page and enters a course" do
-    visit root_path
+    visit courses_path
     expect_to_see "Introduction to Ruby"
     expect_to_see "Rapid Prototyping"
-    within("#course_#{ruby.id}") { click_on "Enter" }
-    expect(current_path).to eq course_path(ruby.slug)
+    within("#course_#{ruby.id}") { click_on "Continue with exams" }
+    expect_to_be_in course_path(ruby.slug)
   end
 
   scenario "student checks course for quizzes" do
@@ -46,7 +46,7 @@ feature "student performs an exam" do
     expect_to_see "Week 1-Procedural"
     expect_to_see "Week 2-OOP"
     within("#quiz_#{week1.id}") { click_on "Start Quiz" }
-    expect(current_path).to eq new_quiz_exam_path(week1.slug)
+    expect_to_be_in new_quiz_exam_path(week1.slug)
   end
 
   scenario "exam with successfull answers" do
@@ -59,7 +59,7 @@ feature "student performs an exam" do
     within_exam_question(q2) { check("Answer is 4") }
     within_exam_question(q3) { check("Answer is 6") }
     click_on "Submit Answers"
-    expect(current_path).to eq quiz_exam_path(week1.slug, Exam.first)
+    expect_to_be_in quiz_exam_path(week1.slug, Exam.first)
     expect_to_see "Score: 12 from 12 points"
   end
 
@@ -79,12 +79,6 @@ def within_exam_question(question)
   within(:css, "#question_#{question.id}") do
     yield
   end
-end
-
-def build_setup
-  rails
-  week1
-  week2
 end
 
 def incorrect(n = 1, options = {})

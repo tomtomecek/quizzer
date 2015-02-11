@@ -31,4 +31,5 @@ RSpec.configure do |config|
   config.include(ExpectationMacros)
   config.include(AuthenticationMacros)
   config.include(QuizManagementMacros)
+  config.include(ModalMacros)
 end

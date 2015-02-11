@@ -3,6 +3,7 @@ require "spec_helper"
 describe Exam do
   it { is_expected.to belong_to(:student).class_name("User") }
   it { is_expected.to belong_to(:quiz) }
+  it { is_expected.to belong_to(:enrollment) }
   it { is_expected.to have_db_index(:quiz_id) }
   it { is_expected.to have_db_index(:student_id) }
   it { is_expected.to have_many(:generated_questions).dependent(:destroy) }
@@ -58,6 +59,25 @@ describe Exam do
       a3.update_column(:student_marked, nil)
       a4.update_column(:student_marked, true)
       expect(Exam.first.student_score).to eq(5)
+    end
+  end
+
+  describe "scope .passed" do
+    it "returns [] if no exam has passed" do
+      Fabricate(:exam, passed: false)
+      expect(Exam.passed).to eq []
+    end
+
+    it "returns an exam for 1 exam passed" do
+      exam = Fabricate(:exam, passed: true)
+      expect(Exam.passed).to eq [exam]
+    end
+
+    it "returns an array of multiple exams" do
+      exam1 = Fabricate(:exam, passed: true)
+      exam2 = Fabricate(:exam, passed: true)
+      Fabricate(:exam, passed: false)
+      expect(Exam.passed).to eq [exam1, exam2]
     end
   end
 end

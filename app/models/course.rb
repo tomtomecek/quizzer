@@ -2,6 +2,9 @@ class Course < ActiveRecord::Base
   before_create :generate_slug  
 
   has_many :quizzes, -> { order(:created_at) }
+  has_many :enrollments
+
+  validates :description, presence: true
 
   def generate_slug
     the_slug = title.parameterize
