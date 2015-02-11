@@ -7,5 +7,6 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find_by(slug: params[:id])
+    @enrollment = current_user.enrollments.find_by(course: @course)
   end
 end
