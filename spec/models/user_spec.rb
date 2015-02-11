@@ -17,4 +17,21 @@ describe User do
       expect(User.count).to eq(1)
     end
   end
+
+  describe "#has_enrolled?(course)" do
+    let(:course) { Fabricate(:course) }
+
+    it "returns true if student has enrolled course" do
+      alice = Fabricate(:user)
+      Fabricate(:enrollment, course: course, student: alice)
+      expect(alice.has_enrolled?(course)).to be true
+    end
+
+    it "returns false if student didnt enroll course" do
+      alice = Fabricate(:user)
+      jake = Fabricate(:user)
+      Fabricate(:enrollment, course: course, student: jake)
+      expect(alice.has_enrolled?(course)).to be false
+    end
+  end
 end
