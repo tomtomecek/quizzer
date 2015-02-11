@@ -5,10 +5,18 @@
         %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image")
         %h3= course.title
         %br
-        %p.bg-primary= simple_format course.description
+        %p.bg-primary
+          = preserve do
+            = markdown course.description
         %br
-        = link_to course, class: "btn btn-default btn-lg col-sm-12" do
-          %span.glyphicon.glyphicon-play-circle
-          Enter
+        - if logged_in? && current_user.has_enrolled?(course)
+          = link_to course, class: "btn btn-default btn-lg col-sm-12" do
+            %span.glyphicon.glyphicon-play-circle
+            Continue with exams
+        - elsif logged_in?
+          = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg col-sm-12", remote: true do
+            %span.glyphicon.glyphicon-log-in
+            Enroll now
         .clearfix
         %hr
+.enrollments_hook
