@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210155011) do
+ActiveRecord::Schema.define(version: 20150211210523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,13 @@ ActiveRecord::Schema.define(version: 20150210155011) do
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status",     default: "in progress"
-    t.integer  "score",      default: 0
+    t.string   "status",        default: "in progress"
+    t.integer  "score",         default: 0
+    t.integer  "enrollment_id"
+    t.boolean  "passed"
   end
 
+  add_index "exams", ["enrollment_id"], name: "index_exams_on_enrollment_id", using: :btree
   add_index "exams", ["quiz_id"], name: "index_exams_on_quiz_id", using: :btree
   add_index "exams", ["student_id"], name: "index_exams_on_student_id", using: :btree
 
