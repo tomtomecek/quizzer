@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
       @current_admin ||= Admin.find(admin_id)
     elsif (admin_id = cookies.signed[:admin_id])
       admin = Admin.find(admin_id)
-      if admin && admin.authenticated?(cookes[:remember_token])
+      if admin && admin.authenticated?(cookies[:remember_token])
         session[:admin_id] = admin.id
         @current_admin = admin
       end

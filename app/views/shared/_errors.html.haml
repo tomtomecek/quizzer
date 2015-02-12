@@ -1,6 +1,6 @@
-- if @answer.errors.any?
+- if obj.errors.any?
   .alert.alert-danger
     %p These errors needs to be fixed:
     %ul
-      - @answer.errors.full_messages.each do |e|
+      - obj.errors.full_messages.each do |e|
         %li= e
