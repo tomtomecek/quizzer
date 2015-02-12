@@ -12,7 +12,7 @@
           .answer_flash
             = render "shared/flash_messages"
           .answer_errors
-            = render "errors"
+            = render "shared/errors", obj: @answer
           = f.check_box :correct, label: "Tick if answer is correct."
           = f.text_area :content, rows: 5, label: "Answer's content:", placeholder: "You can use markdown.", class: "resize_vertical"
         .modal-footer

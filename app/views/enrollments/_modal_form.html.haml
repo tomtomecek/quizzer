@@ -12,7 +12,7 @@
             Enroll Course with Tealeaf!
         .modal-body.clearfix
           .enrollment_errors
-            = render "errors"
+            = render "shared/errors", obj: @enrollment
           = f.hidden_field :course_id
           %fieldset(data-toggle="buttons")
             = f.label :paid, class: "btn btn-default btn-enroll active", id: "free" do
