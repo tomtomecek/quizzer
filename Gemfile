@@ -1,3 +1,4 @@
+source 'https://code.stripe.com'
 source 'https://rubygems.org'
 ruby '2.1.5'
 
@@ -23,6 +24,7 @@ gem 'nokogiri',           '1.6.5'
 gem 'parsley-rails',      '2.0.7.0'
 gem 'redcarpet',          '3.2.2'
 gem 'pygments.rb',        '0.6.0'
+gem 'stripe',             '1.16.1'
 
 group :development do
   gem 'thin',             '1.6.3'
@@ -46,7 +48,7 @@ group :test do
   gem 'shoulda-matchers',   '2.7.0', require: false
   gem 'database_cleaner',   '1.2.0'
   gem 'selenium-webdriver', '2.44.0'
-  gem 'codeclimate-test-reporter', '0.4.5', require: nil
+  gem 'codeclimate-test-reporter', '0.4.5', require: nil  
 end
 
 group :development, :test, :staging do
