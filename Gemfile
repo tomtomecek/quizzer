@@ -13,7 +13,7 @@ gem 'font-awesome-rails', '4.3.0.0'
 gem 'uglifier',           '2.7.0'
 gem 'coffee-rails',       '4.0.1'
 gem 'jquery-rails',       '3.1.2'
-gem 'turbolinks',         '2.5.3'
+# gem 'turbolinks',         '2.5.3'
 gem 'jbuilder',           '2.2.6'
 gem 'paratrooper',        '2.4.1'
 gem 'sidekiq',            '3.3.0'
@@ -48,7 +48,9 @@ group :test do
   gem 'shoulda-matchers',   '2.7.0', require: false
   gem 'database_cleaner',   '1.2.0'
   gem 'selenium-webdriver', '2.44.0'
-  gem 'codeclimate-test-reporter', '0.4.5', require: nil  
+  gem 'codeclimate-test-reporter', '0.4.5', require: nil
+  gem 'vcr',                '2.9.3'
+  gem 'webmock',            '1.20.4'
 end
 
 group :development, :test, :staging do

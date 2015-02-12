@@ -4,9 +4,9 @@ describe StripeWrapper do
   describe StripeWrapper::Charge do
     describe ".create" do
       context "with accepted card" do
-        let(:token) { tokenizer("4242424242424242") }  
+        let(:token) { tokenizer("4242424242424242") }
 
-        it "makes successfull charge" do
+        it "makes successfull charge", :vcr do
           response = StripeWrapper::Charge.create(
             amount: 1999,
             card_token: token
@@ -15,8 +15,8 @@ describe StripeWrapper do
         end
       end
 
-      context "with declined card" do
-        let(:token) { tokenizer("4000000000000002") }        
+      context "with declined card", :vcr do
+        let(:token) { tokenizer("4000000000000002") }
 
         it "does not make successfull charge" do
           response = StripeWrapper::Charge.create(
