@@ -83,7 +83,10 @@ describe EnrollmentsController do
         expect(assigns(:enrollment)).to be_new_record
         expect(assigns(:enrollment)).to be_instance_of Enrollment
       end
-    end
 
+      it "sets the errors" do
+        expect(assigns(:enrollment).errors.any?).to be true
+      end
+    end
   end
 end

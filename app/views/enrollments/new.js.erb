@@ -1,2 +1,6 @@
-$('.enrollments_hook').html('<%= j render "modal_form" %>');
-$('#enrollmentFormModal').modal('show');
+<% if @enrollment.errors.empty? %>
+  $('.enrollments_hook').html('<%= j render "modal_form" %>');
+  $('#enrollmentFormModal').modal('show');
+<% else %>
+  $('.enrollment_errors').html('<%= j render "errors" %>');
+<% end %>
