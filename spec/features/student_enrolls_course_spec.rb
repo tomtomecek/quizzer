@@ -85,7 +85,7 @@ feature "student enrolls course" do
       expect_to_see_no_modal
 
       click_enroll(ruby)
-      within_modal { find(:css, '.modal-header').find(:css, 'button.close').click }
+      within_modal { find('.modal-header').find(:css, 'button.close').click }
       expect_to_see_no_modal
     end
   end

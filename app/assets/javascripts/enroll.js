@@ -49,7 +49,7 @@ $(document).on('click', '#paid', function() {
 
 $(document).on('click', '#free', function() {
   var $freeButton = $('<input class="btn btn-default btn-lg" name="commit" type="submit" value="Enroll now!">');
-  showCreditCardFields(false)
+  showCreditCardFields(false);
   $('input[name=stripeToken]').remove();
   $('.modal-footer').append($freeButton);
 });
