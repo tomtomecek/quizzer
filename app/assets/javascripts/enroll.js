@@ -1,36 +1,69 @@
+function showCreditCardFields(arg) {
+  var $creditCard = $('fieldset.credit_card');
+  if (arg) {
+    $creditCard.slideDown('slow');
+  } else {
+    $creditCard.slideUp('slow');
+  }
+  $('#stripeSubmit, input[type=submit]').remove();
+}
+
+function handleStripeToken(form, token) {
+  var $tokenField = form.find('input[name=stripeToken]');
+  if ($tokenField.size()) {
+    $tokenField.val(token);
+  } else {
+    var $newTokenField = $('<input type=hidden name=stripeToken />').val(token);
+    form.append($newTokenField);
+  }
+}
+
+function submitEnrollment(form) {
+  var $paidSubmitButton = $('<input style="display: none" type=submit />');
+  form.append($paidSubmitButton);
+  $paidSubmitButton.trigger('click');
+  $paidSubmitButton.remove();
+  $('#stripeSubmit').prop('disabled', false);
+}
+
+function stripeResponseHandler(status, response) {
+  var $form = $('#new_enrollment');
+  var $errors = $form.find('.payment-errors');
+
+  if (response.error) {
+    $errors.slideDown();
+    $errors.text(response.error.message);
+    $('#stripeSubmit').prop('disabled', false);
+  } else {
+    $errors.slideUp();
+    handleStripeToken($form, response.id);
+    submitEnrollment($form);
+  }
+}
+
 $(document).on('click', '#paid', function() {
-  $('fieldset.credit_card').slideDown('slow');
-  $('#button-submit').remove();
-  var $paidButton = $('<button type=button class="btn btn-primary" id="stripeSubmit">Enroll now!</button>');
+  var $paidButton = $('<button type=button class="btn btn-primary btn-lg" id="stripeSubmit"><span class="glyphicon glyphicon-certificate"></span>Enroll now!</button>');
+  showCreditCardFields(true);
   $('.modal-footer').append($paidButton);
 });
 
 $(document).on('click', '#free', function() {
-  $('fieldset.credit_card').slideUp('slow');
-  $('#stripeSubmit').remove();
-  var $freeButton = $('<input class="btn btn-default" id="button-submit" name="commit" type="submit" value="Enroll now!">');
+  var $freeButton = $('<input class="btn btn-default btn-lg" name="commit" type="submit" value="Enroll now!">');
+  showCreditCardFields(false)
+  $('input[name=stripeToken]').remove();
   $('.modal-footer').append($freeButton);
 });
 
-
-$(document).on('submit', '#new_enrollment', function(event) {
-  var $form = $(this);
-  alert("ready - from form submission");
-  $form.find('#button-submit').prop('disabled', true);
-  Stripe.card.createToken($form, stripeResponseHandler);
-  return false;
+$('fieldset.credit_card').on('keydown', function(event) {
+  if (event.keyCode == 13) {
+    event.preventDefault();
+    $('#stripeSubmit').trigger('click');
+  }
 });
 
-function stripeResponseHandler(status, response) {
-  var $form = $('#new_enrollment');
-
-  alert("ready - from stripeResponseHandler");
-  if (response.error) {
-    $form.find('.payment-errors').text(response.error.message);
-    $form.find('#button-submit').prop('disabled', false);
-  } else {
-    var token = response.id;
-    $form.append($('<input type="hidden" name="stripe_token" />').val(token));
-    $form.get(0).submit();
-  }
-};
+$(document).on('click', '#stripeSubmit', function(event) {
+  var $form = $(this).closest('form');
+  $(this).prop('disabled', true);
+  Stripe.card.createToken($form, stripeResponseHandler);
+  event.preventDefault();
+});
