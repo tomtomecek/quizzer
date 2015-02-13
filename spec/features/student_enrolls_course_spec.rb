@@ -8,7 +8,7 @@ feature "student enrolls course" do
   end
 
   context "for free", :slow do
-    scenario "student enrolls course for free", :js do
+    scenario "student enrolls course for free", :js, driver: :selenium do
       expect_to_see_no_modal
       within(:css, "#course_#{ruby.id}") { click_on "Enroll now" }
 
