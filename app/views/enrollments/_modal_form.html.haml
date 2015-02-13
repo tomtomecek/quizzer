@@ -1,5 +1,3 @@
-
-
 .modal.fade#enrollmentFormModal(tabindex="-1" role="dialog" aria-labelledby="Enrollment" aria-hidden="true")
   .modal-dialog
     .modal-content
@@ -20,28 +18,33 @@
               %span Free
             = f.label :paid, class: "btn btn-default btn-enroll", id: "paid" do
               = f.radio_button :paid, 1, checked: false, autocomplete: "off"
-              %span Signature Track
-          %fieldset.credit_card(style="display: none;")
+              %i.fa.fa-bookmark
+              %span.signature-track
+                %span.glyphicon.glyphicon-certificate
+                Signature Track
+          %fieldset.credit_card.font-16(style="display: none;")
             %h3 Get certified with Tealeaf for $19.99
             %p
-              Upon successfull course completion you will receive certificate on
-              %span= image_tag("linkedin_logo.jpg", size: "66x20", alt: "LinkedIn logo")
-            %span.payment-errors
+              Upon successfull course completion you will receive verified certificate via email and also you will be able to add it to your
+              %span= image_tag("linkedin_logo.jpg", size: "66x20", alt: "LinkedIn")
+              profile.
+            .payment-errors.alert.alert-danger(style="display: none;")
             .form-group
               %label.control-label.col-sm-4(for="credit_card_number") Credit Card Number
-              .col-sm-8
+              .col-sm-7
                 %input.form-control#credit_card_number(type="text" size="20" data-stripe="number")
             .form-group
               %label.control-label.col-sm-4(for="security_code") Security Code
-              .col-sm-3
+              .col-sm-2
                 %input.form-control#security_code(type="text" size="4" data-stripe="cvc")
             .form-group
               %label.control-label.col-sm-4 Expiration
               .col-sm-3
-                = select_month(Date.today, {add_month_numbers: true}, data: { stripe: "exp-month" }, name: nil, class: 'form-control')
-              .col-sm-2
                 = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, data: { stripe: "exp-year" }, name: nil, class: 'form-control')
-          %fieldset.honor_code
+              .col-sm-4
+                = select_month(Date.today, {add_month_numbers: true}, data: { stripe: "exp-month" }, name: nil, class: 'form-control')
+            %hr
+          %fieldset.honor_code.font-16
             %h3 Sign the Tealeaf Honor Code
             %p All students participating in the course must agree to abide by the following code of conduct:
             %ol
@@ -51,6 +54,6 @@
             = f.label :honor_code, class: "checkbox inline honor_code_check_box" do
               = f.check_box :honor_code
               %span.honor_code_span I agree
-        .modal-footer
-          %button(type="button" class="btn btn-default" data-dismiss="modal") Close
-          = f.submit "Enroll now!", class: "btn btn-default"
+        .modal-footer.font-16
+          %button(type="button" class="btn btn-default btn-lg" data-dismiss="modal") Close
+          = f.submit "Enroll now!", class: "btn btn-default btn-lg"

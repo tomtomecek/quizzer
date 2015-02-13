@@ -1,18 +1,21 @@
 language: ruby
 rvm:
-  - 2.1.5
+- 2.1.5
 sudo: false
 cache: bundler
 addons:
-  postgresql: "9.3"
+  postgresql: '9.3'
   code_climate:
     repo_token: 4435045f186f6da3b724256eb56c9fcead2650914f58931d32fe1b3c62d51259
 before_script:
-  - psql -c 'create database quizzer_test;' -U postgres
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- psql -c 'create database quizzer_test;' -U postgres
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script: bundle exec rspec spec
 env:
-  MAILER_HOST=localhost:52662
-  TRAVIS_RUN=true
-  SLOW_SPECS=true
+  global:
+  - secure: NGhrIJvlqfO+ROh2DSm7V4C4IgVYmV5Po4YQkE1IT6HSC5GP3XuSiYVCKME5nHmKmB6dk22mLI2Vi4bs1t8JuuYVKpVrTdzW/eNCpxefIpRytrdeTnFswgrmrHj5OsOuHHfziiyelTsYH9mKwsRCE1E2Ezj8Q7NEOZ1zXT/p26w=
+  - secure: TMmM5hK5kOfe5YK7STMLS4wyAO0KDOrzjZWeWVNMDRa5Fd/jVS0FRMo0wOr9MTEwII/SAjEabVfscEa6fZice+c4eNmR2OcQOSUH3kgMKP63qxjjASlW1jV9ckh017efe4PEBGqvq7S2K68AmXH/ZRlQywebeHT4sJ1Bt4pjMdk=
+  - secure: dWNBwlPG+VK1bNotBXu8Vgf8uuMZ1EFhFXOV+9rmVsxpVEu1ditXxMg4t+PcbJOtguSZxpa0JJzYgAGeHUTN5djFRwfSFsp2b+8BdxMXh5+ClfOd2Vq+m9c25ajbmkx8ji7X6uU5BhEtkejKY6fAQosWH3ucK8jz4x8HLenUkHY=
+  - secure: o256NBaht33nMexJXxC2ffBbqVjttrez2AwegSsdZ/iMDfjlPL1Zmw+BTaAEmtqanRdG6znkopQyUeTSzf42HPQHHzBgBdzCgJMs9Ak7vcyiNzGBjA/0wYSeKPdgjWwCusLnBuasqxCuQnh6mwygiHspgqMKlJNRyese+nRRZhg=
+  - secure: BBeg3USun35WNtI0hx6NO36hR2oEZ+8jiP2ZoNFGxaf3MebfHEoXrhaiJM1ufjiUVb98EQcxPQZ6831ie5Tb8/dryVa5Ihvez1UgWUK2dnJ1amoEJIMEdWPsX7E4upw7+9v1hnSZRE3kzbyGClGdF1ZWthzuApyw1qDMVL2z2Uk=
