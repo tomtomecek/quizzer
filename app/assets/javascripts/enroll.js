@@ -67,3 +67,7 @@ $(document).on('click', '#stripeSubmit', function(event) {
   Stripe.card.createToken($form, stripeResponseHandler);
   event.preventDefault();
 });
+
+$(document).on('click', 'button[data-dismiss=modal]', function() {
+  $('.modal').remove();
+});

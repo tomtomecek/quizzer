@@ -26,12 +26,12 @@
             %h3 Get certified with Tealeaf for $19.99
             %p
               Upon successfull course completion you will receive verified certificate via email and also you will be able to add it to your
-              %span= image_tag("linkedin_logo.jpg", size: "66x20", alt: "LinkedIn logo")
+              %span= image_tag("linkedin_logo.jpg", size: "66x20", alt: "LinkedIn")
               profile.
             .payment-errors.alert.alert-danger(style="display: none;")
             .form-group
               %label.control-label.col-sm-4(for="credit_card_number") Credit Card Number
-              .col-sm-5
+              .col-sm-7
                 %input.form-control#credit_card_number(type="text" size="20" data-stripe="number")
             .form-group
               %label.control-label.col-sm-4(for="security_code") Security Code
@@ -39,9 +39,9 @@
                 %input.form-control#security_code(type="text" size="4" data-stripe="cvc")
             .form-group
               %label.control-label.col-sm-4 Expiration
-              .col-sm-2
-                = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, data: { stripe: "exp-year" }, name: nil, class: 'form-control')
               .col-sm-3
+                = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, data: { stripe: "exp-year" }, name: nil, class: 'form-control')
+              .col-sm-4
                 = select_month(Date.today, {add_month_numbers: true}, data: { stripe: "exp-month" }, name: nil, class: 'form-control')
             %hr
           %fieldset.honor_code.font-16
