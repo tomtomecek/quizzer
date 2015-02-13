@@ -1,9 +1,15 @@
 $(document).on('click', '#paid', function() {
   $('fieldset.credit_card').slideDown('slow');
+  $('#button-submit').remove();
+  var $paidButton = $('<button type=button class="btn btn-primary" id="stripeSubmit">Enroll now!</button>');
+  $('.modal-footer').append($paidButton);
 });
 
 $(document).on('click', '#free', function() {
   $('fieldset.credit_card').slideUp('slow');
+  $('#stripeSubmit').remove();
+  var $freeButton = $('<input class="btn btn-default" id="button-submit" name="commit" type="submit" value="Enroll now!">');
+  $('.modal-footer').append($freeButton);
 });
 
 
