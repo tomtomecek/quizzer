@@ -1,6 +1,10 @@
 <% if @enrollment.valid? %>
-  $('.enrollments_hook').html('<%= j render "modal_form" %>');
-  $('#enrollmentFormModal').modal('show');
+  <% if @error %>
+    $('.enrollment_errors').html('<%= j render "shared/flash_messages" %>');
+  <% else %>
+    $('.enrollments_hook').html('<%= j render "modal_form" %>');
+    $('#enrollmentFormModal').modal('show');
+  <% end %>
 <% else %>
   $('.enrollment_errors').html('<%= j render "shared/errors", obj: @enrollment %>');
 <% end %>

@@ -18,6 +18,7 @@ end
 
 Capybara.javascript_driver = :webkit
 Capybara.server_port = 52662
+Capybara.default_wait_time = 3
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!

@@ -38,56 +38,91 @@ feature "student enrolls course" do
     end
   end
 
-  context "signature track", :slow do
-    background { click_enroll(ruby) }
+  context "signature track", :js, :slow do
+    background do
+      click_enroll(ruby)
+      click_on_signature_track
+    end
 
-    context "with valid card" do
-      scenario "sucessfull enroll", :js, driver: :selenium do
-        within_modal do
-          click_on_signature_track
-          expect(page).to have_no_css("input[type=submit]")
-          expect(page).to have_css("button[id=stripeSubmit]")
-          expect_to_see "you will receive verified certificate via email"
-          fill_in_card_details(card_number: "4242424242424242")
-          check "I agree"
-          click_button "Enroll now!"
-        end
+    context "with valid card", driver: :selenium do
+      scenario "sucessfull enroll", :vcr do
+        expect(page).to have_no_css("input[type=submit]")
+        expect(page).to have_css("button[id=stripeSubmit]")
+        expect_to_see "you will receive verified certificate via email"
+        fill_in_card_details(card_number: "4242424242424242")
+        check "I agree"
+        click_button "Enroll now!"
+
         expect_to_see "You have now enrolled course #{ruby.title}"
         expect_to_see "Enrollment: Signature Track"
       end
 
-      scenario "forget to check I agree box", :js, driver: :selenium do
-        within_modal do
-          click_on_signature_track
-          fill_in_card_details(card_number: "4242424242424242")
-          click_button "Enroll now!"
-          expect_to_see "Honor code must be accepted"
-          expect(page).to have_no_css("input[type=submit]")
-        end
+      scenario "forget to check I agree box" do
+        fill_in_card_details(card_number: "4242424242424242")
+        click_button "Enroll now!"
+        expect_to_see "Honor code must be accepted"
+        expect(page).to have_no_css("input[type=submit]")
       end
     end
 
-    context "with invalid card", :slow do
-      background { click_enroll(ruby) }
-      scenario "throws an error", :js, driver: :selenium do
-        within_modal do
-          click_on_signature_track
-          fill_in_card_details(card_number: "123")
-          click_button "Enroll now!"
-          expect_to_see "This card number looks invalid."
-        end
+    context "with declined card", driver: :selenium  do
+      scenario "failed enroll card_declined code", :vcr do
+        fill_in_card_details(card_number: "4000000000000002")
+        check "I agree"
+        click_button "Enroll now!"
+        expect_to_see "Your card was declined."
+      end
+
+      scenario "failed enroll incorrect_cvc code", :vcr do
+        fill_in_card_details(card_number: "4000000000000127")
+        check "I agree"
+        click_button "Enroll now!"
+        expect_to_see "Your card's security code is incorrect."
+      end
+
+      scenario "failed enroll expired_card code", :vcr do
+        fill_in_card_details(
+          card_number: "4000000000000069",
+          month: "2 - February",
+          year: "2015")
+        check "I agree"
+        click_button "Enroll now!"
+        expect_to_see "Your card has expired."
+      end
+
+      scenario "failed enroll processing_error code", :vcr do
+        fill_in_card_details(card_number: "4000000000000119")
+        check "I agree"
+        click_button "Enroll now!"
+        expect_to_see "An error occurred while processing your card."
+        expect_to_see "Try again in a little bit."
       end
     end
 
-    scenario "modal removed when cancelled", :js do
-      click_enroll(ruby)
-      within_modal { click_on "Close" }
-      expect_to_see_no_modal
-
-      click_enroll(ruby)
-      within_modal { find('.modal-header').find(:css, 'button.close').click }
-      expect_to_see_no_modal
+    scenario "invalid card", driver: :selenium do
+      fill_in_card_details(card_number: "123")
+      click_button "Enroll now!"
+      expect_to_see "This card number looks invalid."
     end
+
+    scenario "invalid expiration date", driver: :selenium do
+      fill_in_card_details(
+        card_number: "4000000000000069",
+        month: "1 - January",
+        year: "2015")
+      click_button "Enroll now!"
+      expect_to_see "Your card's expiration month is invalid."
+    end
+  end
+
+  scenario "modal removed when cancelled", :js, :slow do
+    click_enroll(ruby)
+    within_modal { click_on "Close" }
+    expect_to_see_no_modal
+
+    click_enroll(ruby)
+    within_modal { find('.modal-header').find(:css, 'button.close').click }
+    expect_to_see_no_modal
   end
 end
 
@@ -102,9 +137,8 @@ end
 def fill_in_card_details(options = {})
   year = options[:year] || Time.now.year + 3
   month = options[:month] || "4 - April"
-  security_code = options[:security_code] || "123"
   fill_in "Credit Card Number", with: options[:card_number]
-  fill_in "Security Code",      with: security_code
+  fill_in "Security Code",      with: "123"
   select month, from: "date_month"
   select year, from: "date_year"
 end
