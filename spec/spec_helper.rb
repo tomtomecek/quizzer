@@ -7,6 +7,8 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'vcr'
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'

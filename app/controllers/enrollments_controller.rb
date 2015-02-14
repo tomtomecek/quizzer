@@ -18,6 +18,7 @@ class EnrollmentsController < ApplicationController
         )
         if charge.successful?
           @enrollment.save
+          EnrollmentMailer.delay.welcome_signature_track(current_user, course)
           flash.keep[:success] = "You have now enrolled course #{course.title}"
           render js: "window.location.replace('#{course_url(course)}');"
         else

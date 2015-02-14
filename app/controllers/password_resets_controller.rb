@@ -8,7 +8,7 @@ class PasswordResetsController < ApplicationController
     admin = Admin.find_by(email: params[:email])
     if admin
       admin.generate_password_reset_items
-      AdminMailer.send_reset_token(admin).deliver
+      AdminMailer.delay.send_reset_token(admin)
     end
     redirect_to confirm_password_reset_url
   end
