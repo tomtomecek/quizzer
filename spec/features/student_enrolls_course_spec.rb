@@ -42,7 +42,7 @@ feature "student enrolls course" do
     background { click_enroll(ruby) }
 
     context "with valid card" do
-      scenario "sucessfull enroll", :js, driver: :selenium do
+      scenario "sucessfull enroll", :js, :vcr, driver: :selenium do
         within_modal do
           click_on_signature_track
           expect(page).to have_no_css("input[type=submit]")
