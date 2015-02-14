@@ -109,6 +109,7 @@ describe EnrollmentsController do
     context "Paid enrollment" do
       context "with valid enrollment and valid card" do
         let(:charge) { double('charge', successful?: true) }
+        let(:mail) { ActionMailer::Base.deliveries.last }
         before do
           expect(StripeWrapper::Charge).to receive(:create).and_return(charge)
           xhr :post, :create, stripeToken: "123123", enrollment: {
@@ -117,6 +118,7 @@ describe EnrollmentsController do
             paid: "1"
           }
         end
+        after { ActionMailer::Base.deliveries.clear }
 
         it "redirects to course show" do
           ajax_redirect = "window.location.replace('#{course_url(ruby)}');"
@@ -133,6 +135,21 @@ describe EnrollmentsController do
 
         it "creates paid enrollment" do
           expect(Enrollment.first).to be_paid
+        end
+
+        it "sends out an email" do
+          expect(ActionMailer::Base.deliveries).to_not be_empty
+        end
+
+        it "sends out email to student" do
+          expect(mail.to).to eq [current_user.email]
+        end
+
+        it "sends out email with correct" do
+          email = mail.body.encoded
+          expect(email).to include current_user.username
+          expect(email).to include "We confirm the payment - $19.99"
+          expect(email).to include "Certification will be sent only upon successful completion of exams."
         end
       end
 
@@ -163,6 +180,9 @@ describe EnrollmentsController do
           expect(Enrollment.count).to eq 0
         end
 
+        it "does not send out an email" do
+          expect(ActionMailer::Base.deliveries).to be_empty
+        end
       end
 
       context "with invalid enrollment" do
