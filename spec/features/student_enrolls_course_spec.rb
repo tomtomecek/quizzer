@@ -58,7 +58,6 @@ feature "student enrolls course" do
         expect_to_see "Enrollment: Signature Track"
 
         open_email("alice@example.com")
-        current_email.save_and_open
         expect(current_email).to have_content "Thank you for your trust in Tealeaf! We confirm the payment - $19.99 for the signature track for course #{ruby.title}."
       end
 
