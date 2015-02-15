@@ -4,7 +4,7 @@ feature "student performs an exam" do
   given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
   given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
   given!(:week1) do
-    Fabricate(:quiz, course: ruby, title: "Week 1-Procedural") do
+    Fabricate(:quiz,course: ruby, title: "Week 1-Procedural", published: true) do
       questions do
         [
           Fabricate(:question, points: 3, content: "1+1") do
@@ -30,7 +30,7 @@ feature "student performs an exam" do
 
   background do
     sign_in
-    Fabricate(:enrollment, course: ruby, student: User.first)
+    Fabricate(:enrollment, course: ruby, student: User.first, paid: false)
   end
 
   scenario "student checks course page and enters a course" do
