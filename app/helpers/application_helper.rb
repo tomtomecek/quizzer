@@ -19,4 +19,9 @@ module ApplicationHelper
         plus_icon + " " + name
     end
   end
+
+  def passing_percentage_array
+    arr = 0.step(100, 5).to_a
+    arr.map { |n| [pluralize(n, "percent"), n] }
+  end
 end
