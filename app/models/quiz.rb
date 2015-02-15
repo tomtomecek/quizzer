@@ -29,6 +29,10 @@ class Quiz < ActiveRecord::Base
     slug
   end
 
+  def passing_score
+    passing_percentage / 100.0 * total_score
+  end
+
   private
 
   def slugify(the_slug)

@@ -48,13 +48,27 @@ describe Quiz do
       quiz = Fabricate(:quiz) do
         questions do
           [
-            Fabricate.build(:question, points: 1),
-            Fabricate.build(:question, points: 2),
-            Fabricate.build(:question, points: 5)
+            Fabricate(:question, points: 1),
+            Fabricate(:question, points: 2),
+            Fabricate(:question, points: 5)
           ]
         end
       end
       expect(quiz.total_score).to eq(8)
+    end
+  end
+
+  describe "#passing_score" do
+    it "returns passing_score for quiz" do
+      quiz = Fabricate.build(:quiz, passing_percentage: 60)
+      quiz.stub(:total_score).and_return(10)
+      expect(quiz.passing_score).to eq 6
+    end
+
+    it "returns float" do
+      quiz = Fabricate.build(:quiz, passing_percentage: 60)
+      quiz.stub(:total_score).and_return(10)
+      expect(quiz.passing_score).to be_kind_of Float
     end
   end
 end
