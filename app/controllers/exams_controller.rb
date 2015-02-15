@@ -23,10 +23,11 @@ class ExamsController < ApplicationController
                         where(id: params[:student_answer_ids])
     if answers_valid?(student_answers)
       student_answers.each { |a| a.update_column(:student_marked, true) }
+      @exam.grade!
       flash[:success] = "xxx"
       redirect_to [@quiz, @exam]
     else
-      flash[:danger] = "Failed"
+      flash.now[:danger] = "Failed"
       render :new
     end
   end

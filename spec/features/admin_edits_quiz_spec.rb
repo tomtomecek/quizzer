@@ -8,6 +8,7 @@ feature "admin edits a quiz" do
       course: ruby,
       title: "Week 1 - Procedural Ruby",
       description: "For beginners",
+      passing_percentage: 60,
       published: false) do
       questions do
         [
@@ -47,6 +48,7 @@ feature "admin edits a quiz" do
     expect_to_be_in edit_quiz_path(quiz)
     fill_in "Title",       with: "Hardcore Ruby"
     fill_in "Description", with: "For advanced programmers"
+    select "50 percent", from: "quiz_passing_percentage"
     check "Published"
     click_on "Update Quiz"
 
@@ -57,6 +59,7 @@ feature "admin edits a quiz" do
       expect_to_see "Published"
       click_on "View Quiz"
     end
+    expect_to_see "50 percents"
     expect_to_see "Hardcore Ruby"
     expect_to_see "For advanced programmers"
   end

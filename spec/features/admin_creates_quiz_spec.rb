@@ -8,7 +8,7 @@ feature "admin adds a quiz to a course" do
     click_on "New Quiz"
   end
 
-  scenario "successful quiz creation", js: true, slow: true do
+  scenario "successful quiz creation", js: true, slow: true, driver: :selenium do
     fill_in_valid_quiz_attributes
 
     add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
@@ -34,6 +34,7 @@ feature "admin adds a quiz to a course" do
   scenario "quiz invalid" do
     fill_in "Title",       with: ""
     fill_in "Description", with: ""
+    select "10 percent", from: "quiz_passing_percentage"
     uncheck "Published"
     click_on "Create Quiz"
 
@@ -161,5 +162,6 @@ end
 def fill_in_valid_quiz_attributes
   fill_in "Title",       with: "Week 1 - Ruby basics"
   fill_in "Description", with: "Ruby methods and iterations"
+  select "60 percent", from: "quiz_passing_percentage"
   uncheck "Published"
 end
