@@ -24,8 +24,10 @@ QUIZ_NAMES = [
 
 QUIZ_NAMES.each do |quiz_name|
   q = ruby.quizzes.build do |quiz|
-    quiz.title       = quiz_name
-    quiz.description = Faker::Lorem.paragraph(5)
+    quiz.title              = quiz_name
+    quiz.description        = Faker::Lorem.paragraph(5)
+    quiz.published          = true
+    quiz.passing_percentage = 60
     quiz.questions.build do |question|
       question.content = "How much is 1 + 1"
       question.points  = 2
@@ -88,3 +90,8 @@ QUIZ_NAMES.each do |quiz_name|
   end
   q.save(validate: false)
 end
+
+Quiz.published.each_with_index do |published_quiz, idx|
+  published_quiz.update_columns(position: idx + 1)
+end
+
