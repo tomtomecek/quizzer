@@ -34,6 +34,7 @@ describe QuizzesController do
                       quiz: {
                         title: "Week 1 - Ruby",
                         description: "Checking knowledge...",
+                        passing_percentage: 60,
                         published: "0",
                         questions_attributes: {
                           "1" => question(question: "1 + 1",
@@ -84,6 +85,7 @@ describe QuizzesController do
                         quiz: {
                           title: "",
                           description: "",
+                          passing_percentage: 60,
                           published: "0",
                           questions_attributes: {
                             "1" => question(question: "1 + 1",
@@ -118,6 +120,7 @@ describe QuizzesController do
                         quiz: {
                           title: "Week 1 quiz",
                           description: "Great quiz ...",
+                          passing_percentage: 60,
                           published: "0",
                           questions_attributes: {
                             "1" => question(question: "",
@@ -140,6 +143,7 @@ describe QuizzesController do
                         quiz: {
                           title: "Week 1 - Ruby",
                           description: "Checking knowledge...",
+                          passing_percentage: 60,
                           published: "0",
                           questions_attributes: {
                             "1" => question(question: "How much is 1 + 1?",
@@ -182,6 +186,7 @@ describe QuizzesController do
         patch :update, id: quiz.slug, quiz: {
           title: "Pro ruby",
           description: "For advanced",
+          passing_percentage: 60,
           published: "1",
           questions_attributes: [
             {
@@ -248,6 +253,7 @@ describe QuizzesController do
           patch :update, id: quiz.slug, quiz: {
             title: "Pro Ruby",
             description: "",
+            passing_percentage: 60,
             published: "1",
             questions_attributes: []
           }
@@ -269,6 +275,7 @@ describe QuizzesController do
           patch :update, id: quiz.slug, quiz: {
             title: "Pro Ruby",
             description: "For advanced",
+            passing_percentage: 60,
             published: "1",
             questions_attributes: [{ _destroy: "1", id: question.id }]
           }
@@ -287,6 +294,7 @@ describe QuizzesController do
           patch :update, id: quiz.slug, quiz: {
             title: "Pro ruby",
             description: "For advanced",
+            passing_percentage: 60,
             published: "1",
             questions_attributes: [
               {

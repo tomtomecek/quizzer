@@ -47,6 +47,7 @@ private
     params.require(:quiz).permit(
       :title,
       :description,
+      :passing_percentage,
       :published,
       questions_attributes: [
         :id,

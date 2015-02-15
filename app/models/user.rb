@@ -10,6 +10,12 @@ class User < ActiveRecord::Base
     enrollments.where(course: course).exists?
   end
 
+  def can_start?(quiz)
+    return false unless quiz.published
+    return true if quiz.position == 1
+    exams.find_by(quiz: quiz.previous).passed?
+  end
+
 private
 
   def self.create_from_omniauth(auth)

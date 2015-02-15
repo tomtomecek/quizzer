@@ -64,28 +64,18 @@ describe ExamsController do
   end
 
   describe "PATCH update" do
-    let(:quiz) { Fabricate(:quiz) }
+    let(:quiz) { Fabricate(:quiz, passing_percentage: 60) }
     let(:exam) { Fabricate(:exam, quiz: quiz, student: current_user) }
     let(:question) { Question.first }
     let(:a1) { Answer.first }
     let(:a2) { Answer.second }
     let(:a3) { Answer.third }
     let(:a4) { Answer.fourth }
-    let(:gq) do
-      Fabricate(:generated_question, exam: exam, question: question)
-    end
-    let(:ga1) do
-      Fabricate(:generated_answer, answer: a1, generated_question: gq)
-    end
-    let(:ga2) do
-      Fabricate(:generated_answer, answer: a2, generated_question: gq)
-    end
-    let(:ga3) do
-      Fabricate(:generated_answer, answer: a3, generated_question: gq)
-    end
-    let(:ga4) do
-      Fabricate(:generated_answer, answer: a4, generated_question: gq)
-    end
+    let(:gq) { Fabricate(:gen_question, exam: exam, question: question) }
+    let(:ga1) { Fabricate(:gen_answer, answer: a1, generated_question: gq) }
+    let(:ga2) { Fabricate(:gen_answer, answer: a2, generated_question: gq) }
+    let(:ga3) { Fabricate(:gen_answer, answer: a3, generated_question: gq) }
+    let(:ga4) { Fabricate(:gen_answer, answer: a4, generated_question: gq) }
 
     it_behaves_like "require sign in" do
       let(:action) { patch :update, id: 1, quiz_id: quiz.slug }
@@ -107,6 +97,14 @@ describe ExamsController do
         expect(ga2.reload.student_marked?).to be true
         expect(ga3.reload.student_marked?).to be true
         expect(ga4.reload.student_marked?).to be true
+      end
+
+      it "sets status to completed" do
+        expect(exam.reload).to be_completed
+      end
+
+      it "grades the exam when completed" do
+        expect(exam.reload.score).to be_present
       end
     end
 
@@ -138,6 +136,9 @@ describe ExamsController do
         expect(ga4.reload.student_marked).to be nil
       end
 
+      it "does not set the status to completed" do
+        expect(exam.reload).to_not be_completed
+      end
     end
   end
 end

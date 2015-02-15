@@ -19,6 +19,6 @@
           %td= exam.quiz.title
           %td= exam.quiz.course.title
           %td= exam.status
-          %td #{exam.student_score} / #{exam.quiz.total_score}
+          %td #{exam.score} / #{exam.quiz.total_score}
           %td
             = link_to "View", admin_exam_path(exam)

@@ -15,6 +15,10 @@
       .col-sm-8
         = f.text_area :description, rows: 3, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
     .form-group
+      = f.label :passing_percentage, class: "col-sm-2 control-label"
+      .col-sm-4
+        = f.select :passing_percentage, passing_percentage_array, {prompt: "Select Percentage"}, { class: "form-control", required: true, 'data-parsley-trigger' => 'blur'}
+    .form-group
       .col-sm-offset-2.col-sm-8
         = f.check_box :published
         = f.label :published

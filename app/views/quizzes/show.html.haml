@@ -5,6 +5,7 @@
     %h2= @quiz.title
     = preserve do
       = markdown @quiz.description
+    %h4 Minimum passing score is on #{pluralize(@quiz.passing_percentage, "percent")}
     %br
     - @quiz.questions.each_with_index do |question, idx|
       .panel.panel-info{ id: "question_#{question.id}" }
