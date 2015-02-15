@@ -22,6 +22,6 @@ module ApplicationHelper
 
   def passing_percentage_array
     arr = 0.step(100, 5).to_a
-    arr.map { |n| [pluralize(n, "percent"), n] }
+    arr.map { |n| ["#{n} %", n] }
   end
 end
