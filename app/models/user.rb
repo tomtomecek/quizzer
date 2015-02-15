@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   def can_start?(quiz)
     return false unless quiz.published
     return true if quiz.position == 1
+    return false if exams.empty?
     exams.find_by(quiz: quiz.previous).passed?
   end
 

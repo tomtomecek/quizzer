@@ -65,6 +65,12 @@ describe User do
         exam1 = Fabricate(:exam, quiz: quiz1, student: student, status: "completed", passed: true)
         expect(student.can_start?(quiz2)).to be true
       end
+
+      it "returs false if no exam has been started" do
+        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
+        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
+        expect(student.can_start?(quiz2)).to be false
+      end
     end
   end
 end
