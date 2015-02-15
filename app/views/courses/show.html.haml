@@ -1,15 +1,15 @@
+.well.col-sm-2
+  %dl
+    %dt Enrollment:
+    %dd= @enrollment.paid? ? "Signature Track" : "Free"
+  %dl
+    %dt Quizzes:
+    %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.published.count}
 .container
   .page-header
     %h1 Welcome to #{@course.title}
-  .well
-    %dl
-      %dt Enrollment:
-      %dd= @enrollment.paid? ? "Signature Track" : "Free"
-    %dl
-      %dt Quizzes:
-      %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.count}
-  .col-sm-7
-    - @course.quizzes.each do |quiz|
+  .col-sm-7.quizzes
+    - @course.quizzes.published.each do |quiz|
       .row{ id: "quiz_#{quiz.id}" }
         %h3= quiz.title
         %br
@@ -22,7 +22,7 @@
           .clearfix
         - else
           = link_to '', class: "btn btn-default btn-lg col-sm-12 disabled" do
-            %span.glyphicon.glyphicon-play-circle
-            Not available yet
+            %span.glyphicon.glyphicon-ban-circle
+            You have to pass previous quiz first.
           .clearfix
         %hr(style="padding: 5px 0px;")
