@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "student performs an exam" do
+feature "student performs an exams" do
   given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
   given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
   given!(:week1) do
@@ -42,6 +42,8 @@ feature "student performs an exam" do
     expect_to_see "Rapid Prototyping"
     within("#course_#{ruby.id}") { click_on "Continue with exams" }
     expect_to_be_in course_path(ruby.slug)
+    expect_to_see "Quizzes: 0 / 1"
+    within(:css, '.quizzes') { expect(page).to have_css('.row', count: 1) }
   end
 
   scenario "student checks course for quizzes" do
