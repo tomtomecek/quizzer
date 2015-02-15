@@ -28,37 +28,41 @@ describe Exam do
     end
   end
 
-  describe "#student_score" do
+  describe "#grade!" do
     let(:exam) { Fabricate(:exam) }
     let(:gq1) { Fabricate(:gen_question, exam: exam, points: 2) }
     let(:gq2) { Fabricate(:gen_question, exam: exam, points: 3) }
-    let(:a1) { Fabricate(:gen_correct, generated_question: gq1) }
-    let(:a2) { Fabricate(:gen_correct, generated_question: gq1) }
-    let(:a3) { Fabricate(:gen_incorrect, generated_question: gq2) }
-    let(:a4) { Fabricate(:gen_correct, generated_question: gq2) }
 
-    it "returns 0 if student has not answered anything" do
-      a1.update_column(:student_marked, nil)
-      a2.update_column(:student_marked, nil)
-      a3.update_column(:student_marked, nil)
-      a4.update_column(:student_marked, nil)
-      expect(Exam.first.student_score).to eq(0)
+    it "sets score to 0 if student has not answered anything" do
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: nil)
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: nil)
+      Fabricate(:gen_incorrect, generated_question: gq2, student_marked: nil)
+      Fabricate(:gen_correct, generated_question: gq2, student_marked: nil)
+      exam.grade!
+      expect(exam.reload.score).to eq(0)
     end
 
-    it "returns sum of points for correctly answered 1 question" do
-      a1.update_column(:student_marked, true)
-      a2.update_column(:student_marked, true)
-      a3.update_column(:student_marked, nil)
-      a4.update_column(:student_marked, nil)
-      expect(Exam.first.student_score).to eq(2)
+    it "sets score to sum of points for correctly answered 1 question" do
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: true)
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: true)
+      Fabricate(:gen_incorrect, generated_question: gq2, student_marked: nil)
+      Fabricate(:gen_correct, generated_question: gq2, student_marked: nil)
+      exam.grade!
+      expect(exam.reload.score).to eq(2)
     end
 
-    it "returns sum of points for all correctly answered questions" do
-      a1.update_column(:student_marked, true)
-      a2.update_column(:student_marked, true)
-      a3.update_column(:student_marked, nil)
-      a4.update_column(:student_marked, true)
-      expect(Exam.first.student_score).to eq(5)
+    it "sets score to sum of points for all correctly answered questions" do
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: true)
+      Fabricate(:gen_correct, generated_question: gq1, student_marked: true)
+      Fabricate(:gen_incorrect, generated_question: gq2, student_marked: nil)
+      Fabricate(:gen_correct, generated_question: gq2, student_marked: true)
+      exam.grade!
+      expect(exam.reload.score).to eq(5)
+    end
+
+    it "sets status as completed" do
+      exam.grade!
+      expect(exam.reload.status).to eq("completed")
     end
   end
 
@@ -78,6 +82,38 @@ describe Exam do
       exam2 = Fabricate(:exam, passed: true)
       Fabricate(:exam, passed: false)
       expect(Exam.passed).to eq [exam1, exam2]
+    end
+  end
+
+  describe "#completed?" do
+    it "returns true when exam is completed" do
+      exam = Fabricate(:exam, status: "completed")
+      expect(exam.completed?).to be true
+    end
+
+    it "returns false when exam is not completed" do
+      exam = Fabricate(:exam, status: "in progress")
+      expect(exam.completed?).to be false
+    end
+  end
+
+  describe "#passed?" do
+    let(:quiz) { Fabricate(:quiz, passing_percentage: 60) }
+    before { quiz.stub(:total_score).and_return(100) }
+
+    it "returns true if student passed completed exam" do
+      exam = Fabricate(:exam, score: 60, quiz: quiz, status: "completed")
+      expect(exam.passed?).to be true
+    end
+
+    it "returns false if student did not pass completed exam" do
+      exam = Fabricate(:exam, score: 59, quiz: quiz, status: "completed")
+      expect(exam.passed?).to be false
+    end
+
+    it "returns false if the exam is not completed" do
+      exam = Fabricate(:exam, score: 100, quiz: quiz, status: "in progress")
+      expect(exam.passed?).to be false
     end
   end
 end
