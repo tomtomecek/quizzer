@@ -4,8 +4,8 @@ class Quiz < ActiveRecord::Base
   has_many :questions, -> { order(:created_at) }, dependent: :destroy
   scope :published, -> { where(published: true) }
 
-  validates_presence_of :title, :description, :passing_percentage
-  validates_numericality_of :position, only_integer: true, if: :published?
+  validates :title, :description, :passing_percentage, presence: true
+  validates :position, numericality: { only_integer: true}, if: :published?
   validates :questions, presence: { message: "requires at least 1 question." }
 
   accepts_nested_attributes_for :questions, allow_destroy: true

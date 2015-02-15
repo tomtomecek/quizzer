@@ -4,7 +4,10 @@ feature "student performs an exam" do
   given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
   given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
   given!(:week1) do
-    Fabricate(:quiz,course: ruby, title: "Week 1-Procedural", published: true) do
+    Fabricate(:quiz,
+              course: ruby,
+              title: "Week 1-Procedural",
+              published: true) do
       questions do
         [
           Fabricate(:question, points: 3, content: "1+1") do

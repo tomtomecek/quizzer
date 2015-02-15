@@ -8,7 +8,7 @@ feature "admin adds a quiz to a course" do
     click_on "New Quiz"
   end
 
-  scenario "successful quiz creation", js: true, slow: true, driver: :selenium do
+  scenario "successful quiz creation", js: true, slow: true do
     fill_in_valid_quiz_attributes
 
     add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
