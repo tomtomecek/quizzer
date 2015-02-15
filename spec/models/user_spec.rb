@@ -34,4 +34,37 @@ describe User do
       expect(alice.has_enrolled?(course)).to be false
     end
   end
+
+  describe "#can_start?(quiz)" do
+    let(:ruby) { Fabricate(:course) }
+    let(:student) { Fabricate(:user) }
+
+    context "unpublished" do
+      it "returns false" do
+        quiz = Fabricate(:quiz, published: false)
+        expect(student.can_start?(quiz)).to be false
+      end
+    end
+
+    context "published" do
+      it "returns true for first published quiz" do
+        quiz = Fabricate(:quiz, course: ruby, published: true, position: 1)
+        expect(student.can_start?(quiz)).to be true
+      end
+
+      it "returns false if previous exam was not passed" do
+        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
+        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
+        exam1 = Fabricate(:exam, quiz: quiz1, student: student, status: "completed", passed: false)
+        expect(student.can_start?(quiz2)).to be false
+      end
+
+      it "returns true if first exam was passed" do
+        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
+        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
+        exam1 = Fabricate(:exam, quiz: quiz1, student: student, status: "completed", passed: true)
+        expect(student.can_start?(quiz2)).to be true
+      end
+    end
+  end
 end

@@ -29,9 +29,11 @@ describe Exam do
   end
 
   describe "#grade!" do
-    let(:exam) { Fabricate(:exam) }
+    let(:quiz) { Fabricate(:quiz, passing_percentage: 60) }
+    let(:exam) { Fabricate(:exam, quiz: quiz) }
     let(:gq1) { Fabricate(:gen_question, exam: exam, points: 2) }
     let(:gq2) { Fabricate(:gen_question, exam: exam, points: 3) }
+    before { Quiz.any_instance.stub(:total_score).and_return(5) }
 
     it "sets score to 0 if student has not answered anything" do
       Fabricate(:gen_correct, generated_question: gq1, student_marked: nil)
@@ -64,6 +66,18 @@ describe Exam do
       exam.grade!
       expect(exam.reload.status).to eq("completed")
     end
+
+    it "sets passed to true" do
+      Exam.any_instance.stub(:calculated_score).and_return(5)
+      exam.grade!
+      expect(exam.reload.passed).to be true
+    end
+
+    it "sets passed to false" do
+      Exam.any_instance.stub(:calculated_score).and_return(2)
+      exam.grade!
+      expect(exam.reload.passed).to be false
+    end
   end
 
   describe "scope .passed" do
@@ -94,26 +108,6 @@ describe Exam do
     it "returns false when exam is not completed" do
       exam = Fabricate(:exam, status: "in progress")
       expect(exam.completed?).to be false
-    end
-  end
-
-  describe "#passed?" do
-    let(:quiz) { Fabricate(:quiz, passing_percentage: 60) }
-    before { quiz.stub(:total_score).and_return(100) }
-
-    it "returns true if student passed completed exam" do
-      exam = Fabricate(:exam, score: 60, quiz: quiz, status: "completed")
-      expect(exam.passed?).to be true
-    end
-
-    it "returns false if student did not pass completed exam" do
-      exam = Fabricate(:exam, score: 59, quiz: quiz, status: "completed")
-      expect(exam.passed?).to be false
-    end
-
-    it "returns false if the exam is not completed" do
-      exam = Fabricate(:exam, score: 100, quiz: quiz, status: "in progress")
-      expect(exam.passed?).to be false
     end
   end
 end
