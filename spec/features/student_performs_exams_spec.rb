@@ -26,7 +26,9 @@ feature "student performs an exams" do
       end
     end
   end
-  given!(:week2) { Fabricate(:quiz, course: ruby, title: "Week 2-OOP") }
+  given!(:week2) do
+    Fabricate(:quiz, course: ruby, title: "Week 2-OOP", published: true)
+  end
   given!(:q1) { week1.questions.first }
   given!(:q2) { week1.questions.second }
   given!(:q3) { week1.questions.last }
@@ -42,8 +44,8 @@ feature "student performs an exams" do
     expect_to_see "Rapid Prototyping"
     within("#course_#{ruby.id}") { click_on "Continue with exams" }
     expect_to_be_in course_path(ruby.slug)
-    expect_to_see "Quizzes: 0 / 1"
-    within(:css, '.quizzes') { expect(page).to have_css('.row', count: 1) }
+    expect_to_see "Quizzes: 0 / 2"
+    within(:css, '.quizzes') { expect(page).to have_css('.row', count: 2) }
   end
 
   scenario "student checks course for quizzes" do

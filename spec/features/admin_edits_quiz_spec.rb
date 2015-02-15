@@ -48,7 +48,7 @@ feature "admin edits a quiz" do
     expect_to_be_in edit_quiz_path(quiz)
     fill_in "Title",       with: "Hardcore Ruby"
     fill_in "Description", with: "For advanced programmers"
-    select "50 percent", from: "quiz_passing_percentage"
+    select "50 %", from: "quiz_passing_percentage"
     check "Published"
     click_on "Update Quiz"
 

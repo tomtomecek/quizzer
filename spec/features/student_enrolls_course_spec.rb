@@ -4,7 +4,7 @@ feature "student enrolls course" do
   given(:ruby) { Fabricate(:course, title: "Ruby") }
   background do
     clear_emails
-    Fabricate.times(3, :quiz, course: ruby)
+    Fabricate.times(3, :quiz, course: ruby, published: true)
     sign_in
   end
 
