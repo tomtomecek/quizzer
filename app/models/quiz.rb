@@ -5,7 +5,7 @@ class Quiz < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   validates :title, :description, :passing_percentage, presence: true
-  validates :position, numericality: { only_integer: true}, if: :published?
+  validates :position, numericality: { only_integer: true }, if: :published?
   validates :questions, presence: { message: "requires at least 1 question." }
 
   accepts_nested_attributes_for :questions, allow_destroy: true
@@ -45,7 +45,7 @@ private
 
   def normalize_positions
     if published?
-      self.position = self.course.quizzes.published.size + 1 if position.nil?
+      self.position = course.quizzes.published.size + 1 if position.nil?
     else
       self.position = nil
     end

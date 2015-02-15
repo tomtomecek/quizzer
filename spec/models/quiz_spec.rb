@@ -104,9 +104,9 @@ describe Quiz do
     end
 
     it "returns nil if there is no other published quiz" do
-      quiz1 = Fabricate(:quiz, course: ruby, published: false)
-      quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 1)
-      expect(quiz2.previous).to be nil
+      Fabricate(:quiz, course: ruby, published: false)
+      quiz = Fabricate(:quiz, course: ruby, published: true, position: 1)
+      expect(quiz.previous).to be nil
     end
 
     it "returns previous quiz in chain of published quizzes" do
