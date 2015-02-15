@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215110825) do
+ActiveRecord::Schema.define(version: 20150215150025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20150215110825) do
     t.string   "status",        default: "in progress"
     t.integer  "score"
     t.integer  "enrollment_id"
+    t.boolean  "passed"
   end
 
   add_index "exams", ["enrollment_id"], name: "index_exams_on_enrollment_id", using: :btree
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150215110825) do
     t.string   "slug"
     t.boolean  "published",          default: false
     t.integer  "passing_percentage"
+    t.integer  "position"
   end
 
   add_index "quizzes", ["course_id"], name: "index_quizzes_on_course_id", using: :btree
