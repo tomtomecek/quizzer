@@ -1,7 +1,7 @@
 .container
   .col-sm-9
     %h2 Results for: #{@exam.quiz.title}
-    %h3 Score: #{@exam.student_score} from #{@exam.quiz.total_score} points
+    %h3 Score: #{@exam.score} from #{@exam.quiz.total_score} points
     %br
     - @exam.generated_questions.each_with_index do |gq, idx|
       .panel.panel-info{ id: "question_#{gq.question.id}" }
