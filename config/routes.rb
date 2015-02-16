@@ -30,7 +30,9 @@ Rails.application.routes.draw do
 
   resources :enrollments, only: [:new, :create]
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do
-    resources :exams, only: [:new, :show, :update]
+    resources :exams, only: [:new, :show] do
+      member { patch :complete }
+    end
   end
   resources :answers, only: [:edit, :update, :destroy]
   resources :courses, only: [:index, :show]
