@@ -2,7 +2,7 @@
   .col-sm-9
     %h2= @quiz.title
     %br
-    = form_for [@quiz, @exam] do |f|
+    = form_for [@quiz, @exam], url: complete_quiz_exam_path(@quiz, @exam) do |f|
       - @exam.generated_questions.each_with_index do |q, idx|
         .panel.panel-info{ id: "question_#{q.question.id}" }
           .panel-heading
