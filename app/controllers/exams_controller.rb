@@ -25,7 +25,13 @@ class ExamsController < ApplicationController
       student_answers.each { |a| a.update_column(:student_marked, true) }
       @exam.grade!
       if @exam.passed?
-        Permission.create(student: current_user, quiz: @quiz.next_published) if @quiz.next_published
+        if @quiz.next_published
+          Permission.create(
+            student: current_user,
+            quiz: @quiz.next_published,
+            enrollment: @exam.enrollment
+          )
+        end
         flash[:success] = "Congratulations. You have passed the quiz."
       else
         flash[:warning] = "Sorry, you have to re-attempt the exam."

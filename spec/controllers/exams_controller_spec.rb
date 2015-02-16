@@ -139,9 +139,9 @@ describe ExamsController do
           Fabricate(:quiz, published: true, course: ruby)
           expect {
             patch :complete,
-                id: exam.id,
-                quiz_id: quiz.slug,
-                student_answer_ids: to_ids(ga1)
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
           }.to change { Permission.count }
         end
       end
@@ -159,9 +159,9 @@ describe ExamsController do
           Fabricate(:quiz, published: true, course: ruby)
           expect {
             patch :complete,
-                id: exam.id,
-                quiz_id: quiz.slug,
-                student_answer_ids: to_ids(ga2)
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga2)
           }.to_not change { Permission.count }
         end
       end
