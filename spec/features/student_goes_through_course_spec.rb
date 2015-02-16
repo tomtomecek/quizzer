@@ -51,13 +51,11 @@ feature "student goes through whole course" do
     within(:css, "#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz3.id}") { expect_to_see "Exam passed" }
-    save_and_open_screenshot
     within(:css, ".well") do
       expect_to_see "Quizzes: 3 / 3"
       expect_to_see "Congratulations! Check out your certification"
       click_on "here"
     end
-    save_and_open_screenshot
   end
 end
 
