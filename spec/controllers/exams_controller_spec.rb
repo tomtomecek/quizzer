@@ -184,7 +184,7 @@ describe ExamsController do
       context "enrollment completion" do
         it "complets the enrollment" do
           Fabricate.times(2, :quiz, course: ruby, published: true)
-          Fabricate.times(2, 
+          Fabricate.times(2,
                           :exam,
                           student: current_user,
                           enrollment: enrollment,

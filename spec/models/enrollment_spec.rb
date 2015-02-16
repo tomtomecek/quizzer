@@ -35,7 +35,7 @@ describe Enrollment do
 
     it "returns true when enrollment met completion rules" do
       Fabricate.times(3, :quiz, published: true, course: ruby)
-      Fabricate.times(3, 
+      Fabricate.times(3,
                       :exam,
                       enrollment: enrollment,
                       student: student,
@@ -45,7 +45,7 @@ describe Enrollment do
 
     it "returns false when enrollment did not meet completion rules" do
       Fabricate.times(4, :quiz, published: true, course: ruby)
-      Fabricate.times(3, 
+      Fabricate.times(3,
                       :exam,
                       enrollment: enrollment,
                       student: student,
