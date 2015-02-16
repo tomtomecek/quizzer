@@ -1,2 +1,2 @@
-Fabricator(:certificate) do  
+Fabricator(:certificate) do
 end

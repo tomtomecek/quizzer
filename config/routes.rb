@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   resources :enrollments, only: [:new, :create] do
     resources :certificates, only: [:create]
   end
-  
+
   get "/certificates/:licence_number", to: "certificates#show", as: :certificate
 
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do

@@ -184,7 +184,11 @@ describe ExamsController do
       context "enrollment completion" do
         it "complets the enrollment" do
           Fabricate.times(2, :quiz, course: ruby, published: true)
-          Fabricate.times(2, :exam, student: current_user, enrollment: enrollment, passed: true)
+          Fabricate.times(2, 
+                          :exam,
+                          student: current_user,
+                          enrollment: enrollment,
+                          passed: true)
           patch :complete,
                 id: exam.id,
                 quiz_id: quiz.slug,
@@ -194,7 +198,11 @@ describe ExamsController do
 
         it "does not complete the enrollment" do
           Fabricate.times(3, :quiz, course: ruby, published: true)
-          Fabricate.times(2, :exam, student: current_user, enrollment: enrollment, passed: true)
+          Fabricate.times(2,
+                          :exam,
+                          student: current_user,
+                          enrollment: enrollment,
+                          passed: true)
           patch :complete,
                 id: exam.id,
                 quiz_id: quiz.slug,

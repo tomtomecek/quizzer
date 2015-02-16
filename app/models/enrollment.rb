@@ -12,6 +12,16 @@ class Enrollment < ActiveRecord::Base
   end
 
   def is_completed?
-    passed_exams.count >= 3 && (passed_exams.count == course.published_quizzes.count)
+    reached_minimum_passed_exams? && passed_through_all_quizzes?
+  end
+
+private
+
+  def reached_minimum_passed_exams?
+    passed_exams.count >= 3
+  end
+
+  def passed_through_all_quizzes?
+    passed_exams.count == course.published_quizzes.count
   end
 end
