@@ -18,13 +18,18 @@ describe CoursesController do
       let(:action) { get :show, id: course.slug }
     end
 
+    it_behaves_like "requires enrollment" do
+      let(:action) { get :show, id: course.slug }
+    end
+
     it "sets the @course" do
+      set_enrollment(current_user, course)
       get :show, id: course.slug
       expect(assigns(:course)).to eq course
     end
 
     it "sets the @enrollment" do
-      Fabricate(:enrollment, student: current_user, course: course)
+      set_enrollment(current_user, course)
       get :show, id: course.slug
       expect(assigns(:enrollment).student).to eq current_user
     end
