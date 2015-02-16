@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :exams, foreign_key: "student_id"
   has_many :enrollments, foreign_key: "student_id"
+  has_many :permissions, foreign_key: "student_id"
 
   def self.from_omniauth(auth)    
     User.find_by_provider_and_uid(auth) || User.create_from_omniauth(auth)
@@ -10,11 +11,8 @@ class User < ActiveRecord::Base
     enrollments.where(course: course).exists?
   end
 
-  def can_start?(quiz)
-    return false unless quiz.published
-    return true if quiz.position == 1
-    return false if exams.empty?
-    exams.find_by(quiz: quiz.previous).passed?
+  def has_permission?(quiz)
+    permissions.pluck(:quiz_id).include? quiz.id
   end
 
 private

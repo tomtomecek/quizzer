@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe User do
   it { is_expected.to have_many(:exams).with_foreign_key(:student_id) }
+  it { is_expected.to have_many(:enrollments).with_foreign_key(:student_id) }
+  it { is_expected.to have_many(:permissions).with_foreign_key(:student_id) }
 
   describe ".from_omniauth" do
     let(:auth) { OmniAuth.config.mock_auth[:github] }
@@ -35,42 +37,19 @@ describe User do
     end
   end
 
-  describe "#can_start?(quiz)" do
-    let(:ruby) { Fabricate(:course) }
-    let(:student) { Fabricate(:user) }
-
-    context "unpublished" do
-      it "returns false" do
-        quiz = Fabricate(:quiz, published: false)
-        expect(student.can_start?(quiz)).to be false
-      end
+  describe "#has_permission?(quiz)" do
+    it "returs true when student has permission on quiz" do
+      student = Fabricate(:user)
+      quiz = Fabricate(:quiz)
+      Fabricate(:permission, student: student, quiz: quiz)
+      expect(student.has_permission?(quiz)).to be true
     end
 
-    context "published" do
-      it "returns true for first published quiz" do
-        quiz = Fabricate(:quiz, course: ruby, published: true, position: 1)
-        expect(student.can_start?(quiz)).to be true
-      end
-
-      it "returns false if previous exam was not passed" do
-        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
-        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
-        exam1 = Fabricate(:exam, quiz: quiz1, student: student, status: "completed", passed: false)
-        expect(student.can_start?(quiz2)).to be false
-      end
-
-      it "returns true if first exam was passed" do
-        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
-        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
-        exam1 = Fabricate(:exam, quiz: quiz1, student: student, status: "completed", passed: true)
-        expect(student.can_start?(quiz2)).to be true
-      end
-
-      it "returs false if no exam has been started" do
-        quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
-        quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
-        expect(student.can_start?(quiz2)).to be false
-      end
+    it "returns false when student does not have permission on quiz" do
+      student = Fabricate(:user)
+      quiz = Fabricate(:quiz)
+      Fabricate(:permission, student: student)
+      expect(student.has_permission?(quiz)).to be false
     end
   end
 end
