@@ -6,6 +6,14 @@ class Course < ActiveRecord::Base
 
   validates :description, presence: true
 
+  def starting_quiz
+    quizzes.published.find_by(position: 1)
+  end
+
+  def published_quizzes
+    quizzes.published
+  end
+
   def generate_slug
     the_slug = title.parameterize
     while Course.where(slug: the_slug).exists?
