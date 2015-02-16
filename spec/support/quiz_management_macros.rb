@@ -50,4 +50,10 @@ module QuizManagementMacros
       yield n if block_given?
     end
   end
+
+  def within_exam_question(question)
+    within(:css, "#question_#{question.id}") do
+      yield
+    end
+  end
 end
