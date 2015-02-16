@@ -7,6 +7,7 @@ feature "student performs an exams" do
     Fabricate(:quiz,
               course: ruby,
               title: "Week 1-Procedural",
+              passing_percentage: 50,
               published: true) do
       questions do
         [
@@ -27,7 +28,11 @@ feature "student performs an exams" do
     end
   end
   given!(:week2) do
-    Fabricate(:quiz, course: ruby, title: "Week 2-OOP", published: true)
+    Fabricate(:quiz,
+              course: ruby,
+              title: "Week 2-OOP",
+              published: true,
+              passing_percentage: 10)
   end
   given!(:q1) { week1.questions.first }
   given!(:q2) { week1.questions.second }

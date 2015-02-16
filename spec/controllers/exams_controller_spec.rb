@@ -3,7 +3,7 @@ require "spec_helper"
 describe ExamsController do
   let(:ruby) { Fabricate(:course) }
   let(:quiz) do
-    Fabricate(:quiz, published: true, passing_percentage: 60, course: ruby)
+    Fabricate(:quiz, published: true, passing_percentage: 10, course: ruby)
   end
   before do
     set_current_user
@@ -90,7 +90,7 @@ describe ExamsController do
 
   describe "PATCH complete" do
     let(:exam) { Fabricate(:exam, quiz: quiz, student: current_user) }
-    let(:gq) { Fabricate(:gen_question, exam: exam) }
+    let(:gq) { Fabricate(:gen_question, exam: exam, points: 10) }
     let(:ga1) { Fabricate(:gen_correct, generated_question: gq) }
     let(:ga2) { Fabricate(:gen_incorrect, generated_question: gq) }
     let(:ga3) { Fabricate(:gen_incorrect, generated_question: gq) }
@@ -106,6 +106,46 @@ describe ExamsController do
     end
 
     context "with valid data" do
+      context "permissions" do
+        it "creates permission to next quiz" do
+          Fabricate(:quiz, published: true, course: ruby)
+          expect {
+            patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
+          }.to change { Permission.count }
+        end
+
+        it "sets flash success" do
+          Fabricate(:quiz, published: true, course: ruby)
+          patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
+          expect(flash[:success]).to be_present
+        end
+
+        it "sets flash warning" do
+          Fabricate(:quiz, published: true, course: ruby)
+          patch :complete,
+                id: exam.id,
+                quiz_id: quiz.slug,
+                student_answer_ids: to_ids(ga2)
+          expect(flash[:warning]).to be_present
+        end
+
+        it "does not create permission" do
+          Fabricate(:quiz, published: true, course: ruby)
+          expect {
+            patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga2)
+          }.to_not change { Permission.count }
+        end
+      end
+
       context "exam passed" do
         before do
           patch :complete,
@@ -129,40 +169,6 @@ describe ExamsController do
 
         it "grades the exam when completed" do
           expect(exam.reload.score).to be_present
-        end
-
-        it "sets flash success" do
-          expect(flash[:success]).to be_present
-        end
-
-        it "creates permission to next quiz" do
-          Fabricate(:quiz, published: true, course: ruby)
-          expect {
-            patch :complete,
-                  id: exam.id,
-                  quiz_id: quiz.slug,
-                  student_answer_ids: to_ids(ga1)
-          }.to change { Permission.count }
-        end
-      end
-
-      context "exam did not pass" do
-        it "sets flash warning" do
-          patch :complete,
-                id: exam.id,
-                quiz_id: quiz.slug,
-                student_answer_ids: to_ids(ga2)
-          expect(flash[:warning]).to be_present
-        end
-
-        it "does not create permission" do
-          Fabricate(:quiz, published: true, course: ruby)
-          expect {
-            patch :complete,
-                  id: exam.id,
-                  quiz_id: quiz.slug,
-                  student_answer_ids: to_ids(ga2)
-          }.to_not change { Permission.count }
         end
       end
     end
