@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215150025) do
 
+ActiveRecord::Schema.define(version: 20150215150025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,20 @@ ActiveRecord::Schema.define(version: 20150215150025) do
 
   add_index "generated_questions", ["exam_id"], name: "index_generated_questions_on_exam_id", using: :btree
   add_index "generated_questions", ["question_id"], name: "index_generated_questions_on_question_id", using: :btree
+
+  create_table "permissions", force: true do |t|
+    t.integer  "enrollment_id"
+    t.integer  "quiz_id"
+    t.integer  "student_id"
+    t.integer  "attempt"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["enrollment_id"], name: "index_permissions_on_enrollment_id", using: :btree
+  add_index "permissions", ["quiz_id"], name: "index_permissions_on_quiz_id", using: :btree
+  add_index "permissions", ["student_id"], name: "index_permissions_on_student_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.integer  "quiz_id"
