@@ -71,7 +71,7 @@ def build_question
     Fabricate(:question, points: 10) do
       answers {
         Fabricate.times(3, :incorrect) <<
-         Fabricate(:correct, content: "Correct Answer")
+        Fabricate(:correct, content: "Correct Answer")
       }
     end
   ]

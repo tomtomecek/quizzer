@@ -68,7 +68,7 @@ describe User do
     end
   end
 
-  describe "#exam(quiz)" do    
+  describe "#exam(quiz)" do
     let(:student) { Fabricate(:user) }
     let(:quiz) { Fabricate(:quiz) }
 
