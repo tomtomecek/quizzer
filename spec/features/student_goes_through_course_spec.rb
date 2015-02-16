@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-feature "student goes through whole course" do
+feature "student goes through whole course", :slow do
   given(:year) { Time.now.year + 3 }
   given(:ruby) { Fabricate(:course) }
+  background { clear_emails }
 
   scenario "full course experience", :js, :vcr, driver: :selenium do
     quiz1 = build_quiz(ruby)
@@ -54,8 +55,8 @@ feature "student goes through whole course" do
     within(:css, ".well") do
       expect_to_see "Quizzes: 3 / 3"
       expect_to_see "Congratulations! Check out your certification"
-      click_on "here"
     end
+    clear_emails
   end
 end
 

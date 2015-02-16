@@ -8,12 +8,13 @@ describe CertificatesController do
   end
 
   describe "POST create" do
+    let(:enrollment) { Fabricate(:enrollment) }
     it_behaves_like "require sign in" do
       let(:action) { post :create, enrollment_id: 1 }
     end
 
     it_behaves_like "requires enrollment" do
-      let(:action) { post :create, enrollment_id: 1 }
+      let(:action) { post :create, enrollment_id: enrollment.id }
     end
 
     context "with valid data" do
