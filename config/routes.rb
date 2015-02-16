@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   resources :enrollments, only: [:new, :create] do
     resources :certificates, only: [:create]
   end
-  resources :certificates, only: [:show]
+  
+  get "/certificates/:licence_number", to: "certificates#show", as: :certificate
+
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do
     resources :exams, only: [:new, :show] do
       member { patch :complete }
