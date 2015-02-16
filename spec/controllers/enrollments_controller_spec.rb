@@ -23,6 +23,7 @@ describe EnrollmentsController do
 
   describe "XHR POST create" do
     let(:ruby) { Fabricate(:course) }
+    let!(:quiz) { Fabricate(:quiz, published: true, course: ruby) }
     it_behaves_like "require sign in" do
       let(:action) { xhr :post, :create, enrollment: { course_id: 1 } }
     end
@@ -71,6 +72,14 @@ describe EnrollmentsController do
             paid: "0"
           }
         end
+
+        it "creates permission" do
+          expect(Permission.count).to eq 1
+        end
+
+        it "creates permission under quiz" do
+          expect(quiz.permissions).to include Permission.first
+        end
       end
 
       context "with invalid inputs" do
@@ -102,6 +111,10 @@ describe EnrollmentsController do
             honor_code: "0",
             paid: "0"
           }
+        end
+
+        it "does not create a permission" do
+          expect(Permission.count).to eq 0
         end
       end
     end
@@ -152,6 +165,14 @@ describe EnrollmentsController do
           expect(email).to include ruby.title
           expect(email).to include "Certification will be sent only upon successful completion of exams."
         end
+
+        it "creates permission" do
+          expect(Permission.count).to eq 1
+        end
+
+        it "creates permission under quiz" do
+          expect(quiz.permissions).to include Permission.first
+        end
       end
 
       context "with valid enrollment and declined card" do
@@ -183,6 +204,10 @@ describe EnrollmentsController do
 
         it "does not send out an email" do
           expect(ActionMailer::Base.deliveries).to be_empty
+        end
+
+        it "does not create a permission" do
+          expect(Permission.count).to eq 0
         end
       end
 

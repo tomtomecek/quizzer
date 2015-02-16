@@ -23,4 +23,33 @@ describe Course do
       expect(course.slug).to eq "introduction-to-ruby-5"
     end
   end
+
+  describe "#starting_quiz" do
+    let(:course) { Fabricate(:course) }
+
+    it "returns published quiz with position 1" do
+      quiz = Fabricate(:quiz, published: true, course: course, position: 1)
+      expect(course.starting_quiz).to eq quiz
+    end
+
+    it "does not return unpublished quiz" do
+      quiz = Fabricate(:quiz, published: false, course: course)
+      expect(course.starting_quiz).to_not be quiz
+    end
+  end
+
+  describe "#published_quizzes" do
+    let(:course) { Fabricate(:course) }
+    it "returns array of published quizzes" do
+      quiz1 = Fabricate(:quiz, published: true, course: course)
+      quiz2 = Fabricate(:quiz, published: true, course: course)
+      Fabricate(:quiz, published: false, course: course)
+      expect(course.published_quizzes).to match_array [quiz1, quiz2]
+    end
+
+    it "returns [] for no published quizzes" do
+      Fabricate(:quiz, published: false, course: course)
+      expect(course.published_quizzes).to match_array []
+    end
+  end
 end

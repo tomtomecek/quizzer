@@ -6,7 +6,7 @@ Blocks:
                 Avoid using {...} for multi-line blocks (multiline chaining is
                 always ugly).
                 Prefer {...} over do...end for single-line blocks.
-  Enabled: true
+  Enabled: false
 StringLiterals:
   Enabled: false
 Style/WordArray:

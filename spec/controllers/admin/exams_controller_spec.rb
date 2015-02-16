@@ -27,6 +27,13 @@ describe Admin::ExamsController do
       expect(response).to render_template "exams/show"
     end
 
+    it "sets the @quiz" do
+      quiz = Fabricate(:quiz)
+      exam = Fabricate(:exam, quiz: quiz)
+      get :show, id: exam.id
+      expect(assigns(:quiz)).to eq quiz
+    end
+
     it "sets the @exam" do
       exam = Fabricate(:exam)
       get :show, id: exam.id

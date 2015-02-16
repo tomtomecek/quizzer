@@ -7,6 +7,7 @@ feature "student performs an exams" do
     Fabricate(:quiz,
               course: ruby,
               title: "Week 1-Procedural",
+              passing_percentage: 50,
               published: true) do
       questions do
         [
@@ -27,7 +28,11 @@ feature "student performs an exams" do
     end
   end
   given!(:week2) do
-    Fabricate(:quiz, course: ruby, title: "Week 2-OOP", published: true)
+    Fabricate(:quiz,
+              course: ruby,
+              title: "Week 2-OOP",
+              published: true,
+              passing_percentage: 10)
   end
   given!(:q1) { week1.questions.first }
   given!(:q2) { week1.questions.second }
@@ -35,7 +40,9 @@ feature "student performs an exams" do
 
   background do
     sign_in
-    Fabricate(:enrollment, course: ruby, student: User.first, paid: false)
+    student = User.first
+    enr = Fabricate(:enrollment, course: ruby, student: student, paid: false)
+    Fabricate(:permission, student: student, quiz: week1, enrollment: enr)
   end
 
   scenario "student checks course page and enters a course" do
@@ -68,6 +75,7 @@ feature "student performs an exams" do
     click_on "Submit Answers"
     expect_to_be_in quiz_exam_path(week1.slug, Exam.first)
     expect_to_see "Score: 12 from 12 points"
+    expect_to_see "Congratulations. You have passed the quiz."
   end
 
   scenario "exam with missing and incorrect answers" do
@@ -77,6 +85,7 @@ feature "student performs an exams" do
     click_on "Submit Answers"
 
     expect_to_see "Score: 3 from 12 points"
+    expect_to_see "Sorry, you have to re-attempt the exam."
     within_exam_question(q1) { expect_to_see "You earned 3 points" }
     within_exam_question(q2) { expect_to_see "One of the answers was wrong" }
   end

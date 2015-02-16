@@ -40,4 +40,12 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
+
+  def require_enrollment
+    course = Course.find_by(slug: params[:id])
+    unless current_user.has_enrolled?(course)
+      flash[:danger] = "You have to enroll first."
+      redirect_to root_url
+    end
+  end
 end
