@@ -19,17 +19,21 @@ class ExamsController < ApplicationController
 
   def complete
     @exam = current_user.exams.find(params[:id])
+    enrollment = @exam.enrollment
     student_answers = @exam.generated_answers.
                         where(id: params[:student_answer_ids])
     if answers_valid?(student_answers)
       student_answers.each { |a| a.update_column(:student_marked, true) }
       @exam.grade!
       if @exam.passed?
+        if enrollment.is_completed?
+          enrollment.update_columns(completed: true)
+        end
         if @quiz.next_published
           Permission.create(
             student: current_user,
             quiz: @quiz.next_published,
-            enrollment: @exam.enrollment
+            enrollment: enrollment
           )
         end
         flash[:success] = "Congratulations. You have passed the quiz."

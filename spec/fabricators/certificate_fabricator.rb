@@ -1,0 +1,2 @@
+Fabricator(:certificate) do
+end

@@ -4,6 +4,7 @@ describe User do
   it { is_expected.to have_many(:exams).with_foreign_key(:student_id) }
   it { is_expected.to have_many(:enrollments).with_foreign_key(:student_id) }
   it { is_expected.to have_many(:permissions).with_foreign_key(:student_id) }
+  it { is_expected.to have_many(:certificates).with_foreign_key(:student_id) }
 
   describe ".from_omniauth" do
     let(:auth) { OmniAuth.config.mock_auth[:github] }
