@@ -99,6 +99,25 @@ describe Exam do
     end
   end
 
+  describe "scope .failed" do
+    it "returns [] if no exam is completed" do
+      Fabricate(:exam, passed: true)
+      expect(Exam.failed).to eq []
+    end
+
+    it "returns an exam for 1 exam passed" do
+      exam = Fabricate(:exam, passed: false)
+      expect(Exam.failed).to eq [exam]
+    end
+
+    it "returns an array of multiple exams" do
+      exam1 = Fabricate(:exam, passed: false)
+      exam2 = Fabricate(:exam, passed: false)
+      Fabricate(:exam, passed: true)
+      expect(Exam.failed).to eq [exam1, exam2]
+    end
+  end
+
   describe "#completed?" do
     it "returns true when exam is completed" do
       exam = Fabricate(:exam, status: "completed")

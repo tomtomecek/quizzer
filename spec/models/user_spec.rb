@@ -53,4 +53,62 @@ describe User do
       expect(student.has_permission?(quiz)).to be false
     end
   end
+
+  describe "#examined_from?(quiz)" do
+    let(:student) { Fabricate(:user) }
+    let(:quiz) { Fabricate(:quiz) }
+
+    it "returns true if student attempted the quiz" do
+      Fabricate(:exam, quiz: quiz, student: student)
+      expect(student.examined_from?(quiz)).to be true
+    end
+
+    it "returns false if student did not attempt quiz" do
+      expect(student.examined_from?(quiz)).to be false
+    end
+  end
+
+  describe "#exam(quiz)" do
+    let(:student) { Fabricate(:user) }
+    let(:quiz) { Fabricate(:quiz) }
+
+    it "returns exam object from quiz" do
+      exam = Fabricate(:exam, quiz: quiz, student: student)
+      expect(student.exam(quiz)).to eq exam
+    end
+
+    it "returns nil if student has no exam from quiz" do
+      expect(student.exam(quiz)).to eq nil
+    end
+  end
+
+  describe "#passed_exam?(quiz)" do
+    let(:student) { Fabricate(:user) }
+    let(:quiz) { Fabricate(:quiz) }
+
+    it "returns true if student passed exam from quiz" do
+      Fabricate(:exam, quiz: quiz, student: student, passed: true)
+      expect(student.passed_exam?(quiz)).to be true
+    end
+
+    it "returns false if student did not pass exam from quiz" do
+      Fabricate(:exam, quiz: quiz, student: student, passed: false)
+      expect(student.passed_exam?(quiz)).to be false
+    end
+  end
+
+  describe "#failed_exam?(quiz)" do
+    let(:student) { Fabricate(:user) }
+    let(:quiz) { Fabricate(:quiz) }
+
+    it "returns true if student failed exam from quiz" do
+      Fabricate(:exam, quiz: quiz, student: student, passed: false)
+      expect(student.failed_exam?(quiz)).to be true
+    end
+
+    it "returns false if student did not fail exam from quiz" do
+      Fabricate(:exam, quiz: quiz, student: student, passed: true)
+      expect(student.failed_exam?(quiz)).to be false
+    end
+  end
 end

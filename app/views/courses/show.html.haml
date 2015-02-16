@@ -6,7 +6,13 @@
     %dt Quizzes:
     %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.published.count}
   - if @enrollment.completed? && @enrollment.paid?
-    %h3 Congratulations! Check out your certification #{link_to "here", enrollment_certficates_path(@enrollment), method: :post}
+    %dl
+      %dt Congratulations!
+      %dd
+        Check out your certification
+        = link_to enrollment_certificates_path(@enrollment), method: :post, target: "_blank" do
+          here
+          %span.glyphicon.glyphicon-new-window(style="font-size: 11px;")
 .container
   .page-header
     %h1 Welcome to #{@course.title}
@@ -18,12 +24,29 @@
         %p= quiz.description
         %br
         - if current_user.has_permission?(quiz)
-          = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
-            %span.glyphicon.glyphicon-play-circle
-            Start Quiz
-          .clearfix
+          - if current_user.examined_from?(quiz)
+            - if current_user.passed_exam?(quiz)
+              = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-success btn-lg col-sm-12" do
+                %span.glyphicon.glyphicon-ok-circle
+                Exam passed
+              .clearfix
+            - elsif current_user.failed_exam?(quiz)
+              = link_to '', class: "btn btn-warning btn-lg col-sm-12" do
+                %span.glyphicon.glyphicon-repeat
+                Re-attempt
+              .clearfix
+            - else
+              = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
+                %span.glyphicon.glyphicon-play-circle
+                Continue in Quiz
+              .clearfix
+          - else
+            = link_to new_quiz_exam_path(quiz), class: "btn btn-primary btn-lg col-sm-12" do
+              %span.glyphicon.glyphicon-play-circle
+              Start Quiz
+            .clearfix
         - else
-          = link_to '', class: "btn btn-default btn-lg col-sm-12 disabled" do
+          = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
             %span.glyphicon.glyphicon-ban-circle
             You have to pass previous quiz first.
           .clearfix

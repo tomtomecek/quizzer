@@ -16,6 +16,22 @@ class User < ActiveRecord::Base
     permissions.pluck(:quiz_id).include? quiz.id
   end
 
+  def examined_from?(quiz)
+    exams.pluck(:quiz_id).include? quiz.id
+  end
+
+  def exam(quiz)
+    exams.find_by(quiz: quiz)
+  end
+
+  def passed_exam?(quiz)
+    exams.passed.pluck(:quiz_id).include? quiz.id
+  end
+
+  def failed_exam?(quiz)
+    exams.failed.pluck(:quiz_id).include? quiz.id
+  end
+
 private
 
   def self.create_from_omniauth(auth)

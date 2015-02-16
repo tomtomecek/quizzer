@@ -42,7 +42,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_enrollment
-    course = Course.find_by(slug: params[:id])
+    course = Course.find_by(slug: params[:id]) ||
+             Enrollment.find(params[:enrollment_id]).course
     unless current_user.has_enrolled?(course)
       flash[:danger] = "You have to enroll first."
       redirect_to root_url

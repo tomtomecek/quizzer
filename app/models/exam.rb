@@ -7,6 +7,7 @@ class Exam < ActiveRecord::Base
   has_many :generated_questions, dependent: :destroy
   has_many :generated_answers, through: :generated_questions
   scope :passed, -> { where(passed: true).order(:id) }
+  scope :failed, -> { where(passed: false).order(:id) }
 
   def grade!
     self.calculated_score = calculate_student_score
