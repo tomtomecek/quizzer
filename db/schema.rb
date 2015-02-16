@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150216143525) do
+ActiveRecord::Schema.define(version: 20150216153139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 20150216143525) do
     t.integer  "question_id"
     t.text     "content"
     t.boolean  "correct"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "certificates", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "enrollment_id"
+    t.string   "licence_number"
+    t.datetime "expires_at"
+    t.boolean  "distinction"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
