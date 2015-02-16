@@ -99,4 +99,20 @@ describe User do
       expect(student.passed_exam?(quiz)).to be false
     end
   end
+
+  describe "#failed_exam?(quiz)" do
+    it "returns true if student failed exam from quiz" do
+      student = Fabricate(:user)
+      quiz = Fabricate(:quiz)
+      Fabricate(:exam, quiz: quiz, student: student, passed: false)
+      expect(student.failed_exam?(quiz)).to be true
+    end
+
+    it "returns false if student did not fail exam from quiz" do
+      student = Fabricate(:user)
+      quiz = Fabricate(:quiz)
+      Fabricate(:exam, quiz: quiz, student: student, passed: true)
+      expect(student.failed_exam?(quiz)).to be false
+    end
+  end
 end

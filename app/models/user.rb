@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     exams.passed.pluck(:quiz_id).include? quiz.id
   end
 
+  def failed_exam?(quiz)
+    exams.failed.pluck(:quiz_id).include? quiz.id
+  end
+
 private
 
   def self.create_from_omniauth(auth)
