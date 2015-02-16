@@ -4,6 +4,7 @@ describe Enrollment do
   it { is_expected.to belong_to(:course) }
   it { is_expected.to belong_to(:student).class_name("User") }
   it { is_expected.to have_many(:exams) }
+  it { is_expected.to have_one(:certificate) }
 
   context "validates acceptance of honor code" do
     it "is valid when user accepts" do

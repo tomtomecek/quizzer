@@ -3,6 +3,7 @@ class Enrollment < ActiveRecord::Base
   belongs_to :student, class_name: "User"
 
   has_many :exams
+  has_one :certificate
 
   validates :honor_code, acceptance: true
 
