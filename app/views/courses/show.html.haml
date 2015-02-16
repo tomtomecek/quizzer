@@ -5,11 +5,13 @@
   %dl
     %dt Quizzes:
     %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.published.count}
+  - if @enrollment.completed? && @enrollment.paid?
+    %h3 Congratulations! Check out your certification #{link_to "here", enrollment_certficates_path(@enrollment), method: :post}
 .container
   .page-header
     %h1 Welcome to #{@course.title}
   .col-sm-7.quizzes
-    - @course.quizzes.published.each do |quiz|
+    - @course.published_quizzes.each do |quiz|
       .row{ id: "quiz_#{quiz.id}" }
         %h3= quiz.title
         %br
