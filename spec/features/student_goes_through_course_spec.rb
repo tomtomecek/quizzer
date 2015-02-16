@@ -70,7 +70,8 @@ def build_question
   [
     Fabricate(:question, points: 10) do
       answers {
-        Fabricate.times(3, :incorrect) << Fabricate(:correct, content: "Correct Answer")
+        Fabricate.times(3, :incorrect) <<
+         Fabricate(:correct, content: "Correct Answer")
       }
     end
   ]
@@ -80,7 +81,7 @@ def enroll_paid
   click_on "Enroll now"
   find(:xpath, "//label[contains(.,'Signature Track')]").click
   fill_in "Credit Card Number", with: "4242424242424242"
-  fill_in "Security Code",      with: "123"
+  fill_in "Security Code", with: "123"
   select "1 - January", from: "date_month"
   select year, from: "date_year"
   check "I agree"
