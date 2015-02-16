@@ -28,7 +28,10 @@ Rails.application.routes.draw do
     resources :exams, only: [:index, :show]
   end
 
-  resources :enrollments, only: [:new, :create]
+  resources :enrollments, only: [:new, :create] do
+    resources :certificates, only: [:create]
+  end
+  resources :certificates, only: [:show]
   resources :quizzes, only: [:new, :create, :show, :edit, :update] do
     resources :exams, only: [:new, :show] do
       member { patch :complete }
