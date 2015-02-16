@@ -23,7 +23,7 @@ module AuthenticationMacros
   end
 
   def current_user
-    User.find(session[:user_id])
+    @current_user ||= User.find(session[:user_id])
   end
 
   def clear_current_admin
@@ -33,7 +33,7 @@ module AuthenticationMacros
   end
 
   def current_admin
-    Admin.find(session[:admin_id])
+    @current_admin ||= Admin.find(session[:admin_id])
   end
 
   def set_current_admin(admin = nil, options = {})
@@ -44,5 +44,21 @@ module AuthenticationMacros
       cookies.permanent[:remember_token] = admin.remember_token
     end
     session[:admin_id] = admin.id
+  end
+
+  def set_enrollment(user, course)
+    Fabricate(:enrollment, student: user, course: course)
+  end
+
+  def clear_enrollments
+    Enrollment.destroy_all
+  end
+
+  def set_permission(user, quiz)
+    Fabricate(:permission, student: user, quiz: quiz)
+  end
+
+  def clear_permissions
+    Permission.destroy_all
   end
 end

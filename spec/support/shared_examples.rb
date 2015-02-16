@@ -33,3 +33,23 @@ shared_examples "redirect users" do
     expect(response).to redirect_to root_url
   end
 end
+
+shared_examples "requires enrollment" do
+  it "redirects non-enrolled users to root url" do
+    set_current_user
+    clear_enrollments
+    action
+    expect(flash[:danger]).to be_present
+    expect(response).to redirect_to root_url
+  end
+end
+
+shared_examples "requires permission" do
+  it "redirects to courses show" do
+    set_current_user
+    clear_permissions
+    action
+    expect(flash[:danger]).to be_present
+    expect(response).to redirect_to redirection
+  end
+end
