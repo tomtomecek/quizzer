@@ -9,6 +9,7 @@ describe Quiz do
   it { is_expected.to validate_presence_of(:questions).
                       with_message('requires at least 1 question.') }
   it { is_expected.to have_many(:exams) }
+  it { is_expected.to have_many(:permissions) }
   it { is_expected.to have_many(:questions).
                       order(:created_at).
                       dependent(:destroy) }
@@ -94,27 +95,51 @@ describe Quiz do
     end
   end
 
-  describe "#previous" do
+  describe "#previous_published" do
     let(:ruby) { Fabricate(:course) }
     it "returns previous published quiz" do
       quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
       Fabricate(:quiz, course: ruby, published: false)
       quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
-      expect(quiz2.previous).to eq quiz1
+      expect(quiz2.previous_published).to eq quiz1
     end
 
     it "returns nil if there is no other published quiz" do
       Fabricate(:quiz, course: ruby, published: false)
       quiz = Fabricate(:quiz, course: ruby, published: true, position: 1)
-      expect(quiz.previous).to be nil
+      expect(quiz.previous_published).to be nil
     end
 
     it "returns previous quiz in chain of published quizzes" do
       quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
       quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
       quiz3 = Fabricate(:quiz, course: ruby, published: true, position: 3)
-      expect(quiz3.previous).to eq quiz2
-      expect(quiz3.previous).to_not eq quiz1
+      expect(quiz3.previous_published).to eq quiz2
+      expect(quiz3.previous_published).to_not eq quiz1
+    end
+  end
+
+  describe "#next_published" do
+    let(:ruby) { Fabricate(:course) }
+    it "returns next published quiz" do
+      quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
+      Fabricate(:quiz, course: ruby, published: false)
+      quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
+      expect(quiz1.next_published).to eq quiz2
+    end
+
+    it "returns nil if there is no other published quiz" do
+      quiz = Fabricate(:quiz, course: ruby, published: true, position: 1)
+      Fabricate(:quiz, course: ruby, published: false)
+      expect(quiz.next_published).to be nil
+    end
+
+    it "returns next quiz in the chain of published quizzes" do
+      quiz1 = Fabricate(:quiz, course: ruby, published: true, position: 1)
+      quiz2 = Fabricate(:quiz, course: ruby, published: true, position: 2)
+      quiz3 = Fabricate(:quiz, course: ruby, published: true, position: 3)
+      expect(quiz1.next_published).to eq quiz2
+      expect(quiz2.next_published).to eq quiz3
     end
   end
 

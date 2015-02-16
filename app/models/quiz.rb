@@ -1,6 +1,7 @@
 class Quiz < ActiveRecord::Base
   belongs_to :course
   has_many :exams
+  has_many :permissions
   has_many :questions, -> { order(:created_at) }, dependent: :destroy
   scope :published, -> { where(published: true) }
 
@@ -36,9 +37,12 @@ class Quiz < ActiveRecord::Base
     passing_percentage / 100.0 * total_score
   end
 
-  def previous
-    previous_position = position - 1
-    course.quizzes.published.find_by(position: previous_position)
+  def previous_published
+    course.published_quizzes.find_by(position: position.pred)
+  end
+
+  def next_published
+    course.published_quizzes.find_by(position: position.next)
   end
 
 private
