@@ -9,4 +9,8 @@ class Enrollment < ActiveRecord::Base
   def passed_exams
     exams.passed
   end
+
+  def is_completed?
+    passed_exams.count >= 3 && (passed_exams.count == course.published_quizzes.count)
+  end
 end

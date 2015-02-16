@@ -89,7 +89,16 @@ describe ExamsController do
   end
 
   describe "PATCH complete" do
-    let(:exam) { Fabricate(:exam, quiz: quiz, student: current_user) }
+    let(:enrollment) do
+      Fabricate(:enrollment, student: current_user, course: ruby)
+    end
+    let(:exam) do
+      Fabricate(:exam,
+                quiz: quiz,
+                student: current_user,
+                enrollment: enrollment)
+    end
+
     let(:gq) { Fabricate(:gen_question, exam: exam, points: 10) }
     let(:ga1) { Fabricate(:gen_correct, generated_question: gq) }
     let(:ga2) { Fabricate(:gen_incorrect, generated_question: gq) }
@@ -169,6 +178,28 @@ describe ExamsController do
 
         it "grades the exam when completed" do
           expect(exam.reload.score).to be_present
+        end
+      end
+
+      context "enrollment completion" do
+        it "complets the enrollment" do
+          Fabricate.times(2, :quiz, course: ruby, published: true)
+          Fabricate.times(2, :exam, student: current_user, enrollment: enrollment, passed: true)
+          patch :complete,
+                id: exam.id,
+                quiz_id: quiz.slug,
+                student_answer_ids: to_ids(ga1)
+          expect(enrollment.reload).to be_completed
+        end
+
+        it "does not complete the enrollment" do
+          Fabricate.times(3, :quiz, course: ruby, published: true)
+          Fabricate.times(2, :exam, student: current_user, enrollment: enrollment, passed: true)
+          patch :complete,
+                id: exam.id,
+                quiz_id: quiz.slug,
+                student_answer_ids: to_ids(ga1)
+          expect(enrollment.reload).to_not be_completed
         end
       end
     end

@@ -26,4 +26,28 @@ describe Enrollment do
       expect(enrollment.passed_exams).to eq [exam1, exam2]
     end
   end
+
+  describe "#is_completed?" do
+    let(:ruby) { Fabricate(:course) }
+    let(:student) { Fabricate(:user) }
+    let(:enrollment) { Fabricate(:enrollment, student: student, course: ruby) }
+
+    it "returns true when enrollment met completion rules" do
+      Fabricate.times(3, :quiz, published: true, course: ruby)
+      Fabricate.times(3, :exam,
+                         enrollment: enrollment,
+                         student: student,
+                         passed: true)
+      expect(enrollment.is_completed?).to be true
+    end
+
+    it "returns false when enrollment did not meet completion rules" do
+      Fabricate.times(4, :quiz, published: true, course: ruby)
+      Fabricate.times(3, :exam,
+                         enrollment: enrollment,
+                         student: student,
+                         passed: true)
+      expect(enrollment.is_completed?).to be false
+    end
+  end
 end
