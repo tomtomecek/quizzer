@@ -19,6 +19,7 @@ class EnrollmentsController < ApplicationController
         if charge.successful?
           @enrollment.save
           EnrollmentMailer.delay.welcome_signature_track(current_user, course)
+          Permission.create(student: current_user, enrollment: @enrollment, quiz: course.starting_quiz) if course.published_quizzes.any?
           flash.keep[:success] = "You have now enrolled course #{course.title}"
           render js: "window.location.replace('#{course_url(course)}');"
         else
@@ -28,6 +29,7 @@ class EnrollmentsController < ApplicationController
         end
       elsif enrollment_free?
         @enrollment.save
+        Permission.create(student: current_user, enrollment: @enrollment, quiz: course.starting_quiz) if course.published_quizzes.any?
         flash.keep[:success] = "You have now enrolled course #{course.title}"
         render js: "window.location.replace('#{course_url(course)}');"
       else
