@@ -91,12 +91,6 @@ feature "student performs an exams" do
   end
 end
 
-def within_exam_question(question)
-  within(:css, "#question_#{question.id}") do
-    yield
-  end
-end
-
 def incorrect(n = 1, options = {})
   if options == {}
     Fabricate.times(n, :incorrect)

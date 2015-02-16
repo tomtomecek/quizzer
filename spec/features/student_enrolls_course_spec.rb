@@ -14,7 +14,7 @@ feature "student enrolls course" do
       within(:css, "#course_#{ruby.id}") { click_on "Enroll now" }
 
       within_modal do
-        find(:xpath, "//label[contains(.,'Free')]").click
+        click_on_free
         expect(page).to have_no_css('fieldset.credit_card')
         expect(page).to have_no_css('input[name=stripeToken]')
         check "I agree"
@@ -132,6 +132,10 @@ end
 
 def click_enroll(course)
   within(:css, "#course_#{course.id}") { click_on "Enroll now" }
+end
+
+def click_on_free
+  find(:xpath, "//label[contains(.,'Free')]").click
 end
 
 def click_on_signature_track
