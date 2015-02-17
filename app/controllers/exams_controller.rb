@@ -32,7 +32,7 @@ class ExamsController < ApplicationController
           if enrollment.paid?
             cert = current_user.certificates.create(enrollment: enrollment)
             EnrollmentMailer.delay.announce_certificate(current_user, cert)
-            flash[:info] << " We sent you email with instructions about your certification"
+            flash[:info] << " We sent you email with instructions about your certification."
           end
         end
         if @quiz.next_published
