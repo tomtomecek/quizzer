@@ -261,6 +261,8 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
+    turbolinks (2.5.3)
+      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.0)
@@ -325,6 +327,7 @@ DEPENDENCIES
   sidekiq (= 3.3.0)
   stripe (= 1.16.1)
   thin (= 1.6.3)
+  turbolinks (= 2.5.3)
   uglifier (= 2.7.0)
   unicorn (= 4.8.3)
   vcr (= 2.9.3)
