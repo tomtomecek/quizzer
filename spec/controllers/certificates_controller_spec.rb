@@ -51,8 +51,5 @@ describe CertificatesController do
 
   describe "GET show" do
     let(:cert) { Fabricate(:certificate, student: current_user) }
-    it_behaves_like "require sign in" do
-      let(:action) { get :show, licence_number: "12313" }
-    end
   end
 end

@@ -7,6 +7,12 @@ class EnrollmentMailer < ActionMailer::Base
     mail to: check_for_staging, subject: "Signature track - confirmed"
   end
 
+  def announce_certificate(user, certificate)
+    @student = user
+    @certificate = certificate
+    mail to: check_for_staging, subject: "Your certification is ready!"
+  end
+
 private
 
   def check_for_staging

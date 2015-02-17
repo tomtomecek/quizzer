@@ -1,0 +1,13 @@
+!!! 5
+%html
+  %body
+    %p Dear #{@student.username},
+    %p Congratulations! You have passed the course #{@certificate.course.title} by Tealeaf Academy and received a Certificate of Accomplishment.
+    %hr
+    %p
+      Please access your Certificate of Accomplishment #{link_to "here", certificate_url(@certificate.licence_number), target: "_blank"}, or go to your ...url...(course records)
+    %p We look forward to seeing you in class again soon!
+    %p
+      Keep learning,
+      %br
+      the Tealeaf Academy team

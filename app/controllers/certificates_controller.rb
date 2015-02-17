@@ -1,5 +1,5 @@
 class CertificatesController < ApplicationController
-  before_action :require_user
+  before_action :require_user, only: [:create]
   before_action :require_enrollment, only: [:create]
 
   def create
