@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Certificate do
   it { is_expected.to belong_to(:enrollment) }
   it { is_expected.to belong_to(:student).class_name("User") }
+  it { is_expected.to delegate_method(:course).to(:enrollment) }
 
   describe "#generate licence number" do
     it "creates certificate with licence number" do

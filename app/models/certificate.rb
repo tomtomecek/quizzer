@@ -2,6 +2,7 @@ class Certificate < ActiveRecord::Base
   belongs_to :enrollment
   belongs_to :student, class_name: "User"
 
+  delegate :course, to: :enrollment
   before_create :add_licence_number
 
   def add_licence_number
