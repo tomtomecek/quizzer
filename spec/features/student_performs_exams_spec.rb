@@ -85,7 +85,7 @@ feature "student performs an exams" do
     click_on "Submit Answers"
 
     expect_to_see "Score: 3 from 12 points"
-    expect_to_see "Sorry, you have to re-attempt the exam."
+    expect_to_see "Sorry, you have to re-attempt the quiz."
     within_exam_question(q1) { expect_to_see "You earned 3 points" }
     within_exam_question(q2) { expect_to_see "One of the answers was wrong" }
   end
