@@ -15,7 +15,7 @@ feature "student receives certificate" do
 
   scenario "via email", :js, driver: :selenium do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
-    Fabricate(:exam, 
+    Fabricate(:exam,
               passed: true,
               student: alice,
               quiz: quiz1,
@@ -48,7 +48,7 @@ feature "student receives certificate" do
     visit certificate_path(cert.licence_number)
     click_on "Download as PDF"
 
-    unless ENV['TRAVIS_RUN'] do
+    unless ENV['TRAVIS_RUN']
       expect(response_headers['Content-Type']).to eq "application/pdf"
       expect(response_headers['Content-Disposition']).
         to include "inline; filename=\"certificate_test.pdf\""
