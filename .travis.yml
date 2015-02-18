@@ -13,6 +13,7 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 script: bundle exec rspec spec
 env:
+  NO_TRAVIS: true
   global:
   - secure: NGhrIJvlqfO+ROh2DSm7V4C4IgVYmV5Po4YQkE1IT6HSC5GP3XuSiYVCKME5nHmKmB6dk22mLI2Vi4bs1t8JuuYVKpVrTdzW/eNCpxefIpRytrdeTnFswgrmrHj5OsOuHHfziiyelTsYH9mKwsRCE1E2Ezj8Q7NEOZ1zXT/p26w=
   - secure: TMmM5hK5kOfe5YK7STMLS4wyAO0KDOrzjZWeWVNMDRa5Fd/jVS0FRMo0wOr9MTEwII/SAjEabVfscEa6fZice+c4eNmR2OcQOSUH3kgMKP63qxjjASlW1jV9ckh017efe4PEBGqvq7S2K68AmXH/ZRlQywebeHT4sJ1Bt4pjMdk=

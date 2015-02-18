@@ -61,8 +61,10 @@ describe CertificatesController do
     end
 
     it "allows pdf download" do
-      get :show, licence_number: cert.licence_number, format: :pdf
-      expect(response.headers['Content-Type']).to eq "application/pdf"
+      unless ENV['NO_TRAVIS']
+        get :show, licence_number: cert.licence_number, format: :pdf
+        expect(response.headers['Content-Type']).to eq "application/pdf"
+      end
     end
   end
 end
