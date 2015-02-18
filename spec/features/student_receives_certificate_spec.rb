@@ -35,7 +35,10 @@ feature "student receives certificate" do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
     Fabricate(:certificate, student: alice, enrollment: paid)
     visit certificate_path(cert.licence_number)
-    expect_to_see "Download as PDF"
+    click_on "Download as PDF"
+
+    expect(response_headers['Content-Type']).to eq "application/pdf"
+    expect(response_headers['Content-Disposition']).to include("filename='certificate.pdf'")
   end
 end
 
