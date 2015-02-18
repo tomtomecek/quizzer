@@ -8,9 +8,8 @@ module AuthenticationMacros
                                email: "admin@tealeaf.com",
                                password: "secret")
     visit admin_sign_in_path
-    save_and_open_page
-    fill_in "Email",    with: admin.email
-    fill_in "Password", with: admin.password
+    fill_in "email",    with: admin.email
+    fill_in "password", with: admin.password
     click_on "Sign in"
   end
 
