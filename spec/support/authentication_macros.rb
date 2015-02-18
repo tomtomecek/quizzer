@@ -8,8 +8,8 @@ module AuthenticationMacros
                                email: "admin@tealeaf.com",
                                password: "secret")
     visit admin_sign_in_path
-    find('#email').set(admin.email)
-    find('#password').set(admin.password)
+    find(:xpath, "//input[@id='email']").set(admin.email)
+    find(:xpath, "//input[@id='password']").set(admin.password)
     click_on "Sign in"
   end
 
