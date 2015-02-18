@@ -29,6 +29,7 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
+  config.filter_run_excluding :no_travis if ENV["NO_TRAVIS"]
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false

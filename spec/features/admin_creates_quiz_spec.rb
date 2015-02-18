@@ -8,7 +8,7 @@ feature "admin adds a quiz to a course" do
     click_on "New Quiz"
   end
 
-  scenario "successful quiz creation", js: true, slow: true do
+  scenario "successful quiz creation", :js do
     fill_in_valid_quiz_attributes
 
     add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
@@ -42,22 +42,10 @@ feature "admin adds a quiz to a course" do
     expect_to_be_in quizzes_path
   end
 
-  context "failed attempt on valid quiz", js: true do
+  context "failed attempt on valid quiz" do
     background { fill_in_valid_quiz_attributes }
 
-    scenario "question blank", driver: :selenium, slow: true do
-      add_question(1, with: "", points: 3) do |question|
-        add_answer(1, to: question, with: "correct answer 2") { mark_correct }
-        add_answer(2, to: question, with: "correct answer 2") { mark_correct }
-        add_answer(3, to: question, with: "incorrect answer") { mark_incorrect }
-        add_answer(4, to: question, with: "incorrect answre") { mark_incorrect }
-      end
-
-      click_on "Create Quiz"
-      expect_to_see "This value is required."
-    end
-
-    scenario "reached answers limit", slow: true do
+    scenario "reached answers limit", :js do
       add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
         add_answer(1, to: question, with: "correct answer 2") { mark_correct }
         add_answer(2, to: question, with: "correct answer 2") { mark_correct }
@@ -77,7 +65,7 @@ feature "admin adds a quiz to a course" do
         Maximum 10 records are allowed. Got 11 records instead"
     end
 
-    scenario "3 answers only", slow: true do
+    scenario "3 answers only", :js do
       add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
         add_answer(1, to: question, with: "correct answer 2") { mark_correct }
         add_answer(2, to: question, with: "correct answer 2") { mark_correct }
@@ -89,13 +77,13 @@ feature "admin adds a quiz to a course" do
       expect_to_see "Answers - there must be at least 4 answers."
     end
 
-    scenario "question missing", slow: true do
+    scenario "question missing", :js do
       click_on "Create Quiz"
       expect_to_see "Quiz creation failed"
       expect_to_see "Questions requires at least 1 question."
     end
 
-    scenario "all incorrect answers", slow: true do
+    scenario "all incorrect answers", :js do
       add_question(1, with: "How much is 1 + 1?", points: 3) do |question|
         add_answer(1, to: question, with: "incorrect") { mark_incorrect }
         add_answer(2, to: question, with: "incorrect") { mark_incorrect }
@@ -109,8 +97,8 @@ feature "admin adds a quiz to a course" do
     end
   end
 
-  context "client side validations", js: true do
-    scenario "check on quiz", driver: :selenium, slow: true do
+  context "client side validations" do
+    scenario "check on quiz", :js, :slow, driver: :selenium do
       fill_in "Title", with: ""
       click_away
       expect_to_see "This value is required."
@@ -126,7 +114,7 @@ feature "admin adds a quiz to a course" do
       expect_to_not_see "This value is required."
     end
 
-    scenario "check on question", driver: :selenium, slow: true do
+    scenario "check on question", :js, :slow, driver: :selenium do
       fill_in_valid_quiz_attributes
       add_question(1, with: "", points: 3) do
         click_away
@@ -144,7 +132,7 @@ feature "admin adds a quiz to a course" do
       end
     end
 
-    scenario "check on answer", slow: true do
+    scenario "check on answer", :js, :slow do
       fill_in_valid_quiz_attributes
       add_question(1, with: "Some question", points: 3) do |question|
         add_answer(1, to: question, with: "") do

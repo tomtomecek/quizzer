@@ -9,6 +9,7 @@ describe ExamsController do
     set_current_user
     set_permission(current_user, quiz)
   end
+  after { ActionMailer::Base.deliveries.clear }
 
   describe "GET new" do
     let(:enrollment) do
@@ -182,18 +183,27 @@ describe ExamsController do
       end
 
       context "enrollment completion" do
-        it "complets the enrollment" do
-          Fabricate.times(2, :quiz, course: ruby, published: true)
-          Fabricate.times(2,
-                          :exam,
-                          student: current_user,
-                          enrollment: enrollment,
-                          passed: true)
-          patch :complete,
-                id: exam.id,
-                quiz_id: quiz.slug,
-                student_answer_ids: to_ids(ga1)
-          expect(enrollment.reload).to be_completed
+        context "successfull" do
+          before do
+            Fabricate.times(2, :quiz, course: ruby, published: true)
+            Fabricate.times(2,
+                            :exam,
+                            student: current_user,
+                            enrollment: enrollment,
+                            passed: true)
+            patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
+          end
+
+          it "completes the enrollment" do
+            expect(enrollment.reload).to be_completed
+          end
+
+          it "sets the flash info" do
+            is_expected.to set_the_flash[:info]
+          end
         end
 
         it "does not complete the enrollment" do
@@ -208,6 +218,74 @@ describe ExamsController do
                 quiz_id: quiz.slug,
                 student_answer_ids: to_ids(ga1)
           expect(enrollment.reload).to_not be_completed
+        end
+
+        context "paid enrollment" do
+          before do
+            Fabricate.times(2, :quiz, course: ruby, published: true)
+            Fabricate.times(2,
+                            :exam,
+                            student: current_user,
+                            enrollment: enrollment,
+                            passed: true)
+            enrollment.update_columns(paid: true)
+            patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
+          end
+
+          it "creates certificate" do
+            expect(Certificate.count).to eq 1
+          end
+
+          it "sends out email" do
+            expect(ActionMailer::Base.deliveries).to_not be_empty
+          end
+
+          it "sends out email to student" do
+            mail = ActionMailer::Base.deliveries.last
+            expect(mail.to).to eq [current_user.email]
+          end
+
+          it "sends out email with right subject" do
+            mail = ActionMailer::Base.deliveries.last
+            expect(mail.subject).to eq "Your certification is ready!"
+          end
+
+          it "sends out email with certification link" do
+            mail = ActionMailer::Base.deliveries.last.body.encoded
+            cert = Certificate.first
+            expect(mail).to include certificate_path(cert.licence_number)
+          end
+
+          it "adds message to the flash info" do
+            expect(flash[:info]).to match /We sent.+email.+your certification/m
+          end
+        end
+
+        context "free enrollment" do
+          before do
+            Fabricate.times(2, :quiz, course: ruby, published: true)
+            Fabricate.times(2,
+                            :exam,
+                            student: current_user,
+                            enrollment: enrollment,
+                            passed: true)
+            enrollment.update_columns(paid: false)
+            patch :complete,
+                  id: exam.id,
+                  quiz_id: quiz.slug,
+                  student_answer_ids: to_ids(ga1)
+          end
+
+          it "does not send out email" do
+            expect(ActionMailer::Base.deliveries).to be_empty
+          end
+
+          it "does not create certificate" do
+            expect(Certificate.count).to eq 0
+          end
         end
       end
     end

@@ -28,6 +28,12 @@ class ExamsController < ApplicationController
       if @exam.passed?
         if enrollment.is_completed?
           enrollment.update_columns(completed: true)
+          flash[:info] = "You have successfully completed this course!"
+          if enrollment.paid?
+            cert = current_user.certificates.create(enrollment: enrollment)
+            EnrollmentMailer.delay.announce_certificate(current_user, cert)
+            flash[:info] << " We sent you email with instructions about your certification."
+          end
         end
         if @quiz.next_published
           Permission.create(
@@ -38,7 +44,7 @@ class ExamsController < ApplicationController
         end
         flash[:success] = "Congratulations. You have passed the quiz."
       else
-        flash[:warning] = "Sorry, you have to re-attempt the exam."
+        flash[:warning] = "Sorry, you have to re-attempt the quiz."
       end
       redirect_to [@quiz, @exam]
     else

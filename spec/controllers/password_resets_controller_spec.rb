@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PasswordResetsController do
+  after { ActionMailer::Base.deliveries.clear }
 
   describe "GET new" do
     it_behaves_like "require admin sign out" do
@@ -13,7 +14,6 @@ describe PasswordResetsController do
   end
 
   describe "POST create" do
-    after { ActionMailer::Base.deliveries.clear }
     let!(:admin) { Fabricate(:admin, email: "admin@example.com") }
 
     it_behaves_like "require admin sign out" do

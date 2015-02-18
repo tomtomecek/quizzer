@@ -1,14 +1,15 @@
 require 'spec_helper'
 
 describe CertificatesController do
-  let(:ruby) { Fabricate(:course) }
-  before do
-    set_current_user
-    set_enrollment(current_user, ruby)
-  end
 
   describe "POST create" do
+    let(:ruby) { Fabricate(:course) }
     let(:enrollment) { Fabricate(:enrollment) }
+    before do
+      set_current_user
+      set_enrollment(current_user, ruby)
+    end
+
     it_behaves_like "require sign in" do
       let(:action) { post :create, enrollment_id: 1 }
     end
@@ -19,21 +20,22 @@ describe CertificatesController do
 
     context "with valid data" do
       let(:paid) { Fabricate(:enrollment, paid: true, student: current_user) }
+      let(:cert) { Certificate.first }
 
       before { post :create, enrollment_id: paid.id }
 
-      it { is_expected.to redirect_to Certificate.first }
+      it { is_expected.to redirect_to certificate_url(cert.licence_number) }
 
       it "creates certificate" do
         expect(Certificate.count).to eq 1
       end
 
       it "creates certificate under enrollment" do
-        expect(paid.certificate).to eq Certificate.first
+        expect(paid.certificate).to eq cert
       end
 
       it "creates certificate under student" do
-        expect(current_user.certificates.first).to eq Certificate.first
+        expect(current_user.certificates.first).to eq cert
       end
     end
 
@@ -50,9 +52,19 @@ describe CertificatesController do
   end
 
   describe "GET show" do
-    let(:cert) { Fabricate(:certificate, student: current_user) }
-    it_behaves_like "require sign in" do
-      let(:action) { get :show, licence_number: "12313" }
+    let(:alice) { Fabricate(:user) }
+    let(:cert) { Fabricate(:certificate, student: alice) }
+
+    it "sets the @certificate" do
+      get :show, licence_number: cert.licence_number
+      expect(assigns(:certificate)).to eq cert
+    end
+
+    it "allows pdf download" do
+      unless ENV['NO_TRAVIS']
+        get :show, licence_number: cert.licence_number, format: :pdf
+        expect(response.headers['Content-Type']).to eq "application/pdf"
+      end
     end
   end
 end

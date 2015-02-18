@@ -7,29 +7,29 @@ feature 'object management during quiz creation' do
     visit new_quiz_path(course_id: ruby.slug)
   end
 
-  scenario 'admin adds question', js: true do
+  scenario 'admin adds question', :js do
     expect(page).to have_no_css("fieldset")
-    add_question(1, with: "", points: 2)
+    add_question(1, with: "x", points: 2)
     expect(page).to have_css("fieldset")
   end
 
-  scenario 'admin adds answer', js: true, driver: :selenium, slow: true do
+  scenario 'admin adds answer', :js do
     expect(page).to have_no_css("fieldset")
-    add_question(1, with: "", points: 2) do |question|
+    add_question(1, with: "x", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
     end
     expect(page).to have_xpath("//form/fieldset[1]/fieldset[1]")
   end
 
-  scenario 'admin removes question', js: true do
-    add_question(1, with: "", points: 2)
+  scenario 'admin removes question', :js do
+    add_question(1, with: "x", points: 2)
     expect(page).to have_css("fieldset")
     remove_question(1)
     expect(page).to have_no_css("fieldset")
   end
 
-  scenario 'admin removes answer', js: true, driver: :selenium, slow: true do
-    add_question(1, with: "", points: 2) do |question|
+  scenario 'admin removes answer', :js do
+    add_question(1, with: "x", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
     end
     expect(page).to have_xpath("//form/fieldset[1]/fieldset[1]")
