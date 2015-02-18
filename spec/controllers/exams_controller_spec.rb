@@ -9,6 +9,7 @@ describe ExamsController do
     set_current_user
     set_permission(current_user, quiz)
   end
+  after { ActionMailer::Base.deliveries.clear }
 
   describe "GET new" do
     let(:enrollment) do
@@ -233,7 +234,6 @@ describe ExamsController do
                   quiz_id: quiz.slug,
                   student_answer_ids: to_ids(ga1)
           end
-          after { ActionMailer::Base.deliveries.clear }
 
           it "creates certificate" do
             expect(Certificate.count).to eq 1

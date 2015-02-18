@@ -4,11 +4,14 @@ feature "student receives certificate" do
   given(:ruby) { Fabricate(:course) }
   given!(:quiz1) { Fabricate(:quiz, course: ruby, published: true) }
   given!(:quiz2) { Fabricate(:quiz, course: ruby, published: true) }
-  given!(:quiz3) { build_quiz }
+  given!(:quiz3) { build_quizz(ruby) }
   given(:q1) { quiz3.questions.first }
   given(:alice) { User.first }
   given(:cert) { Certificate.first }
-  background { sign_in }
+  background do
+    clear_emails
+    sign_in
+  end
 
   scenario "via email", :js, driver: :selenium do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
@@ -38,11 +41,12 @@ feature "student receives certificate" do
     click_on "Download as PDF"
 
     expect(response_headers['Content-Type']).to eq "application/pdf"
-    expect(response_headers['Content-Disposition']).to include("filename='certificate.pdf'")
+    expect(response_headers['Content-Disposition']).
+      to include "inline; filename=\"certificate_test.pdf\""
   end
 end
 
-def build_quiz
+def build_quizz(ruby)
   Fabricate(:quiz, course: ruby, published: true) do
     questions do 
       [
