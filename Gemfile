@@ -25,8 +25,8 @@ gem 'parsley-rails',      '2.0.7.0'
 gem 'redcarpet',          '3.2.2'
 gem 'pygments.rb',        '0.6.0'
 gem 'stripe',             '1.16.1'
-gem 'pdfkit',             '0.6.2'
-gem 'wkhtmltopdf-binary', '0.9.9.3'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf',         '0.11.0'
 
 group :development do
   gem 'thin',             '1.6.3'
