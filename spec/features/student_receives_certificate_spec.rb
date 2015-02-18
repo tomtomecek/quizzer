@@ -42,17 +42,15 @@ feature "student receives certificate" do
     clear_emails
   end
 
-  scenario "via direct link visit" do
+  scenario "via direct link visit", :no_travis do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
     Fabricate(:certificate, student: alice, enrollment: paid)
     visit certificate_path(cert.licence_number)
 
-    unless ENV['NO_TRAVIS']
-      click_on "Download as PDF"
-      expect(response_headers['Content-Type']).to eq "application/pdf"
-      expect(response_headers['Content-Disposition']).
-        to include "inline; filename=\"certificate_test.pdf\""
-    end
+    click_on "Download as PDF"
+    expect(response_headers['Content-Type']).to eq "application/pdf"
+    expect(response_headers['Content-Disposition']).
+      to include "inline; filename=\"certificate_test.pdf\""
   end
 end
 
