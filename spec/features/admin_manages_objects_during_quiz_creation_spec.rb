@@ -15,10 +15,9 @@ feature 'object management during quiz creation' do
 
   scenario 'admin adds answer', :js do
     expect(page).to have_no_css("fieldset")
-    add_question(1, with: "x", points: 2) do |question|      
+    add_question(1, with: "x", points: 2) do |question|
       add_answer(1, to: question, with: "some answer")
     end
-    
     expect(page).to have_xpath("//form/fieldset[1]/fieldset[1]")
   end
 
