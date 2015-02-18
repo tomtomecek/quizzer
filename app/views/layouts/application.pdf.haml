@@ -1,0 +1,9 @@
+!!! 5
+%html
+  %head
+    %meta(charset="UTF-8")
+    = wicked_pdf_stylesheet_link_tag "certificate-pdf"
+  %body
+    .container
+      %h1 Generate PDF example
+      = yield

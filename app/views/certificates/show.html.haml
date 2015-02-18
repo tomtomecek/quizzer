@@ -1,0 +1,4 @@
+.container
+  .well
+    %h3 This is certificate for #{@certificate.course.title}
+    = link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf")
