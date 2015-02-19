@@ -1,4 +1,13 @@
-.container
-  .well
-    %h3 This is certificate for #{@certificate.course.title}
-    = link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf")
+.logo
+  = image_tag 'tealeaf-logo2.jpg'
+  %br
+  %strong= link_to "gotealeaf.com", 'http://www.gotealeaf.com', class: "tealeaf-link"
+.content
+  .certification_date
+    %span= @certificate.created_at.strftime("%B")
+    %span= @certificate.created_at.strftime("%d, %Y")
+  %h1= @certificate.enrollment.student.username
+  %h3 HAS SUCCESSFULLY COMPLETED THE JOHNS HOPKINS UNIVERSITY'S OFFERING OF
+  %h4= @certificate.course.title
+  %h1 Certificate of Accomplishment.
+= link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf")

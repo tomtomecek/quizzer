@@ -17,11 +17,13 @@ class CertificatesController < ApplicationController
     @certificate = Certificate.find_by(licence_number: params[:licence_number])
 
     respond_to do |format|
-      format.html
+      format.html { render layout: 'layouts/application.pdf.haml' }
       format.pdf do
-        render pdf: "certificate_test",                 # file name
-               layout: 'layouts/application.pdf.haml',  # layout used
-               show_as_html: params[:debug].present?    # allow debuging
+        render pdf:           'certificate_test',
+               layout:        'layouts/application.pdf.haml',
+               show_as_html:  params[:debug].present?,
+               orientation:   'Landscape',
+               page_size:     'Letter'
       end
     end
   end
