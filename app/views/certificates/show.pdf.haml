@@ -1,12 +1,33 @@
 .logo
-  = wicked_pdf_image_tag 'tealeaf-logo2.jpg'
-  %br
-  %strong= link_to "gotealeaf.com", 'http://www.gotealeaf.com', class: "tealeaf-link"
+  %div= wicked_pdf_image_tag 'tealeaf-logo2.jpg'
+  .tealeaf-link
+    = link_to "gotealeaf.com", 'http://www.gotealeaf.com'
 .content
-  .certification_date
-    %span= @certificate.created_at.strftime("%B")
-    %span= @certificate.created_at.strftime("%d, %Y")
-  %h1= @certificate.enrollment.student.username
-  %h3 HAS SUCCESSFULLY COMPLETED THE JOHNS HOPKINS UNIVERSITY'S OFFERING OF
-  %h4= @certificate.course.title
-  %h1 Certificate of Accomplishment.
+  .header
+    .date
+      %span.month= @certificate.created_at.strftime("%B").upcase
+      %span.day_year= @certificate.created_at.strftime("%d, %Y")
+    .certificate_of_accomplishment Certificate of Accomplishment
+    .distinction WITH DISTINCTION
+    .clearfix
+    .licence_number Licence Number: #{link_to @certificate.licence_number, certificate_url(@certificate.licence_number, format: "pdf")}
+  .name= @certificate.enrollment.student.username.upcase
+  .has_successfull HAS SUCCESSFULLY COMPLETED TEALEAF ACADEMY'S COURSE OF
+  .course_presentation
+    .course_image
+      = wicked_pdf_image_tag "ruby2.jpg", size: "460x322"
+    .course
+      .title= @certificate.course.title
+      .description= @certificate.course.description
+  .signatures
+    .signature
+      = wicked_pdf_image_tag "chris-sig.jpg", size: "200x75"
+      %hr
+      .instructor INSTRUCTOR NAME1
+      .academy TEALEAF ACADEMY INSTRUCTOR
+    .signature
+      = wicked_pdf_image_tag "kevin-sig.jpg", size: "200x75"
+      %hr
+      .instructor INSTRUCTOR NAME2
+      .academy TEALEAF ACADEMY INSTRUCTOR
+.seal= wicked_pdf_image_tag "seal.jpg"
