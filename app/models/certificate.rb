@@ -12,6 +12,10 @@ class Certificate < ActiveRecord::Base
     self.licence_number = num
   end
 
+  def file_name
+    "certificate_#{student.username}_#{created_at.strftime('%Y-%m-%d')}"
+  end
+
 private
 
   def generate_token

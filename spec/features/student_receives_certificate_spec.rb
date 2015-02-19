@@ -49,14 +49,13 @@ feature "student receives certificate" do
 
     click_on "Download as PDF"
     expect(response_headers['Content-Type']).to eq "application/pdf"
-    expect(response_headers['Content-Disposition']).
-      to include "inline; filename=\"certificate_test.pdf\""
+    expect(response_headers['Content-Disposition']).to include "inline; filename=\"#{cert.file_name}.pdf\""
   end
 end
 
 def build_quizz(ruby)
   Fabricate(:quiz, course: ruby, published: true) do
-    questions do 
+    questions do
       [
         Fabricate(:question) do
           answers do

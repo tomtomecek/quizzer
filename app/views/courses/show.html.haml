@@ -4,13 +4,13 @@
     %dd= @enrollment.paid? ? "Signature Track" : "Free"
   %dl
     %dt Quizzes:
-    %dd #{@enrollment.passed_exams.count} / #{@course.quizzes.published.count}
+    %dd #{@enrollment.passed_exams.count} / #{@course.published_quizzes.count}
   - if @enrollment.completed? && @enrollment.paid?
     %dl
       %dt Congratulations!
       %dd
         Check out your certification
-        = link_to enrollment_certificates_path(@enrollment), method: :post, target: "_blank" do
+        = link_to certificate_path(@enrollment.certificate.licence_number), method: :post, target: "_blank" do
           here
           %span.glyphicon.glyphicon-new-window
 .container
