@@ -1,0 +1,9 @@
+machine:
+  ruby:
+    version: 2.1.5p273
+  environment:
+    SLOW_SPECS: true
+    NO_TRAVIS: true
+    MAILER_HOST: localhost:52662
+    STRIPE_API_KEY: sk_test_jaNAAogSSLGyWYA90ohSeLCS
+    STRIPE_PUBLISHABLE_KEY: pk_test_X52PaWssAhusIe9fUXjSvjs3
