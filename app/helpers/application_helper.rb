@@ -1,5 +1,6 @@
 module ApplicationHelper
   include MarkdownHelper
+  include LinkedInHelper
 
   def github_sign_in_path
     "/auth/github"
