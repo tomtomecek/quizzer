@@ -8,8 +8,9 @@ module AuthenticationMacros
                                email: "admin@tealeaf.com",
                                password: "secret")
     visit admin_sign_in_path
-    find(:xpath, "//input[@id='email']").set(admin.email)
-    find(:xpath, "//input[@id='password']").set(admin.password)
+    expect(page).to have_content "Email"
+    fill_in "Email", with: admin.email
+    fill_in "Password", with: admin.password
     click_on "Sign in"
   end
 

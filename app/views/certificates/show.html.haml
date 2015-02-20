@@ -1,7 +1,10 @@
 = content_for(:head) do
   = stylesheet_link_tag "pdf2"
 .container
-  = link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf"), class: "btn btn-default col-sm-2"
+  = link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf"), class: "btn btn-default col-sm-2 download-button"
+  - if @certificate.student == current_user
+    = link_to linked_in_url(@certificate) do
+      = image_tag 'AddToProfileButton.png', class: "linkedin-button"
   .content
     .logo
       %div= image_tag 'tealeaf-logo2.jpg'

@@ -61,7 +61,7 @@ feature "student enrolls course" do
         expect(current_email).to have_content "Thank you for your trust in Tealeaf! We confirm the payment - $19.99 for the signature track for course #{ruby.title}."
       end
 
-      scenario "forget to check I agree box" do
+      scenario "forget to check I agree box", :vcr do
         fill_in_card_details(card_number: "4242424242424242")
         click_button "Enroll now!"
         expect_to_see "Honor code must be accepted"
@@ -69,7 +69,7 @@ feature "student enrolls course" do
       end
     end
 
-    context "with declined card", driver: :selenium  do
+    context "with declined card", driver: :selenium do
       scenario "failed enroll card_declined code", :vcr do
         fill_in_card_details(card_number: "4000000000000002")
         check "I agree"
