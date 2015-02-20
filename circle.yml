@@ -1,6 +1,6 @@
 machine:
   ruby:
-    version: 2.1.5p273
+    version: 2.1.5
   environment:
     SLOW_SPECS: true
     NO_TRAVIS: true
