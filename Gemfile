@@ -40,6 +40,8 @@ group :development, :test do
   gem 'pry-nav',            '0.2.4'
   gem 'rspec-rails',        '2.99'
   gem 'wkhtmltopdf-binary', '0.9.9.3'
+  gem 'pry-rescue',         '1.4.1'
+  gem 'pry-stack_explorer', '0.4.9.2'
 end
 
 group :test do
@@ -53,6 +55,7 @@ group :test do
   gem 'codeclimate-test-reporter', '0.4.5', require: nil
   gem 'vcr',                '2.9.3'
   gem 'webmock',            '1.20.4'
+  gem 'rack_session_access', '0.1.1'
 end
 
 group :development, :test, :staging do

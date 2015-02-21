@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe PasswordResetsController do
-  after { ActionMailer::Base.deliveries.clear }
-
   describe "GET new" do
     it_behaves_like "require admin sign out" do
       let(:action) { get :new }
@@ -32,6 +30,7 @@ describe PasswordResetsController do
         "<a href=\"http://localhost:52662/password_reset/#{token}\">"
       end
       before { post :create, email: "admin@example.com" }
+      after { ActionMailer::Base.deliveries.clear }
 
       it { is_expected.to redirect_to confirm_password_reset_url }
 
