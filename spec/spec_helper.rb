@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
+require 'capybara/poltergeist'
 require 'vcr'
 require 'rack_session_access/capybara'
 require 'sidekiq/testing'
@@ -19,7 +20,7 @@ VCR.configure do |c|
   c.ignore_hosts 'codeclimate.com'
 end
 
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 52662
 Capybara.default_wait_time = 3
 
