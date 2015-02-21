@@ -7,6 +7,7 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'vcr'
+require 'rack_session_access/capybara'
 require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 

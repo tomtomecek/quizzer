@@ -49,7 +49,7 @@ feature "student enrolls course" do
       scenario "sucessfull enroll", :vcr do
         expect(page).to have_no_css("input[type=submit]")
         expect(page).to have_css("button[id=stripeSubmit]")
-        expect_to_see "you will receive verified certificate via email"
+        expect_to_see "will receive Certificate of Accomplishment via email"
         fill_in_card_details(card_number: "4242424242424242")
         check "I agree"
         click_button "Enroll now!"

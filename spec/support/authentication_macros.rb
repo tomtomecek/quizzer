@@ -4,6 +4,7 @@ module AuthenticationMacros
   end
 
   def sign_in_admin(admin = nil)
+    page.set_rack_session(user_id: nil)
     admin = admin || Fabricate(:admin,
                                email: "admin@tealeaf.com",
                                password: "secret")
