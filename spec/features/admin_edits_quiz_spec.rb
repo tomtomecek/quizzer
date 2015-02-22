@@ -41,7 +41,10 @@ feature "admin edits a quiz" do
   background do
     sign_in_admin
     visit admin_course_path(ruby)
-    within(:css, "#quiz_#{quiz.id}") { click_on "Edit Quiz" }
+    within(:css, "#quiz_#{quiz.id}") do
+      click_on "Edit Quiz"
+      sleep 0.1
+    end
   end
 
   scenario "admin changes a quiz and publishes it" do
@@ -69,9 +72,11 @@ feature "admin edits a quiz" do
       create_all_answers_for(question)
     end
     click_on "Update Quiz"
+    sleep 0.1
     expect_to_see "Quiz was successfully updated."
     view quiz
-    within(:css, "#question_3") do
+    sleep 0.1
+    within("#question_3") do
       expect_to_see "Answer to life?"
       expect_to_see "9 points"
     end
@@ -83,8 +88,10 @@ feature "admin edits a quiz" do
       select 6
     end
     click_on "Update Quiz"
+    sleep 0.1
     expect_to_see "Quiz was successfully updated."
     view quiz
+    sleep 0.1
     expect_to_not_see "Question: 3"
     within(:css, "#question_2") do
       expect_to_see "Better content is a king"
