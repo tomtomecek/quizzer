@@ -4,7 +4,7 @@ module ExpectationMacros
   end
 
   def expect_to_not_see(text)
-    expect(page).to have_content(text, wait: 3)
+    expect(page).to have_no_content(text)
   end
   alias_method :expect_not_to_see, :expect_to_not_see
 
