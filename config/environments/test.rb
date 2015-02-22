@@ -10,5 +10,4 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   config.active_support.deprecation = :stderr
   config.middleware.use RackSessionAccess::Middleware
-  config.allow_concurrency = false
 end
