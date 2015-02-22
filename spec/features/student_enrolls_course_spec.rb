@@ -8,8 +8,8 @@ feature "student enrolls course" do
     sign_in
   end
 
-  context "for free", :slow do
-    scenario "student enrolls course for free", :js, driver: :selenium do
+  context "for free" do
+    scenario "student enrolls course for free", :js do
       expect_to_see_no_modal
       within(:css, "#course_#{ruby.id}") { click_on "Enroll now" }
 
@@ -17,7 +17,7 @@ feature "student enrolls course" do
         click_on_free
         expect(page).to have_no_css('fieldset.credit_card')
         expect(page).to have_no_css('input[name=stripeToken]')
-        check "I agree"
+        agrees_on_honor_code
         click_on "Enroll now!"
       end
 
@@ -149,4 +149,8 @@ def fill_in_card_details(options = {})
   fill_in "Security Code",      with: "123"
   select month, from: "date_month"
   select year, from: "date_year"
+end
+
+def agrees_on_honor_code
+  find("input[type=checkbox]").trigger('click')
 end
