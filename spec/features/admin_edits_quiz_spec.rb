@@ -46,7 +46,7 @@ feature "admin edits a quiz" do
 
   scenario "admin changes a quiz and publishes it" do
     expect_to_be_in edit_quiz_path(quiz)
-    fill_in "Title",       with: "Hardcore Ruby"
+    fill_in "Title", with: "Hardcore Ruby"
     fill_in "Description", with: "For advanced programmers"
     select "50 %", from: "quiz_passing_percentage"
     check "Published"
@@ -64,27 +64,27 @@ feature "admin edits a quiz" do
     expect_to_see "For advanced programmers"
   end
 
-  scenario "admin adds a question", js: true, slow: true, driver: :selenium do
+  scenario "admin adds a question", :js do
     add_question(3, with: "Answer to life?", points: 9) do |question|
       create_all_answers_for(question)
     end
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
-    within(:css, "#quiz_#{quiz.id}") { click_on "View Quiz" }
+    view quiz
     within(:css, "#question_3") do
       expect_to_see "Answer to life?"
       expect_to_see "9 points"
     end
   end
 
-  scenario "admin changes a question", js: true, slow: true, driver: :selenium do
+  scenario "admin changes a question", :js do
     within_question(2) do
       fill_in "Question", with: "Better content is a king"
       select 6
     end
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
-    within(:css, "#quiz_#{quiz.id}") { click_on "View Quiz" }
+    view quiz
     expect_to_not_see "Question: 3"
     within(:css, "#question_2") do
       expect_to_see "Better content is a king"
@@ -92,35 +92,35 @@ feature "admin edits a quiz" do
     end
   end
 
-  scenario "admin removes a question", :js, :slow do
+  scenario "admin removes a question", :js do
     remove_question(2)
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
-    within(:css, "#quiz_#{quiz.id}") { click_on "View Quiz" }
+    view quiz
     expect_to_not_see "Question: 2"
     expect_to_not_see "How much is 2 + 2?"
     expect_to_not_see "4 points"
   end
 
-  scenario "admin adds an answer", :js, :slow do
+  scenario "admin adds an answer", :js do
     within_question(2) do |question|
       add_answer(5, to: question, with: "new answer") { mark_incorrect }
     end
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
-    within(:css, "#quiz_#{quiz.id}") { click_on "View Quiz" }
+    view quiz
     expect_to_see "new answer"
   end
 
-  scenario "admin removes an answer", :js, :slow do
+  scenario "admin removes an answer", :js do
     remove_answer(5, from: 1)
     click_on "Update Quiz"
     expect_to_see "Quiz was successfully updated."
-    within(:css, "#quiz_#{quiz.id}") { click_on "View Quiz" }
+    view quiz
     expect_to_not_see "delete me"
   end
 
-  scenario "reached answers limit", :js, :slow do
+  scenario "reached answers limit", :js do
     within_question(1) do |question|
       add_answer(6, to: question, with: "an answer")
       add_answer(7, to: question, with: "an answer")
@@ -133,5 +133,12 @@ feature "admin edits a quiz" do
     click_on "Update Quiz"
     expect_to_see "Quiz creation failed -\
       Maximum 10 records are allowed. Got 11 records instead"
+  end
+end
+
+def view(quiz)
+  within(:css, "#quiz_#{quiz.id}") do
+    click_on "View Quiz"
+    sleep 0.1
   end
 end

@@ -16,7 +16,7 @@ feature "admin updates answer from view quiz" do
   end
 
   context "admin edits answer" do
-    scenario "successfull attempt", :js, :slow do
+    scenario "successfull attempt", :js do
       expect_to_see_no_modal
       click_edit_on(answer)
 
@@ -45,7 +45,7 @@ feature "admin updates answer from view quiz" do
       expect(page).to have_css(".modal")
     end
 
-    scenario "redundant flash messages", :js, :slow, driver: :selenium do
+    scenario "redundant flash messages", :js do
       click_edit_on(answer)
 
       within(:css, ".modal") do
@@ -74,7 +74,7 @@ end
 
 def click_edit_on(answer)
   within(:css, "#answer_#{answer.id}") do
-    find(:css, ".fa-edit").click
+    find(:css, ".fa-edit").trigger('click')
   end
 end
 

@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 feature "student goes through whole course", :slow do
-  given(:year) { Time.now.year + 3 }
-  given(:ruby) { Fabricate(:course) }
+  given(:year)  { Time.now.year + 3 }
+  given(:ruby)  { Fabricate(:course) }
+  given(:quiz1) { build_quiz(ruby) }
+  given(:quiz2) { build_quiz(ruby) }
+  given(:quiz3) { build_quiz(ruby) }
+  given!(:q1)   { quiz1.questions.first }
+  given!(:q2)   { quiz2.questions.first }
+  given!(:q3)   { quiz3.questions.first }
   background { clear_emails }
 
-  scenario "full course experience", :js, :vcr, driver: :selenium do
-    quiz1 = build_quiz(ruby)
-    quiz2 = build_quiz(ruby)
-    quiz3 = build_quiz(ruby)
-    q1 = quiz1.questions.first
-    q2 = quiz2.questions.first
-    q3 = quiz3.questions.first
+  scenario "full course experience", :js, :vcr do
     sign_in
     enroll_paid
 
@@ -79,11 +79,11 @@ end
 
 def enroll_paid
   click_on "Enroll now"
-  find(:xpath, "//label[contains(.,'Signature Track')]").click
+  find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
   fill_in "Credit Card Number", with: "4242424242424242"
   fill_in "Security Code", with: "123"
   select "1 - January", from: "date_month"
   select year, from: "date_year"
-  check "I agree"
-  click_on "Enroll now!"
+  find('input[type=checkbox]').trigger('click')
+  find('#stripeSubmit').trigger('click')
 end

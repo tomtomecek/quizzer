@@ -13,7 +13,7 @@ feature "student receives certificate" do
     sign_in
   end
 
-  scenario "via email", :js, driver: :selenium do
+  scenario "via email", :js do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
     Fabricate(:exam,
               passed: true,
@@ -49,7 +49,8 @@ feature "student receives certificate" do
 
     click_on "Download as PDF"
     expect(response_headers['Content-Type']).to eq "application/pdf"
-    expect(response_headers['Content-Disposition']).to include "inline; filename=\"#{cert.file_name}.pdf\""
+    expect(response_headers['Content-Disposition']).to include "inline; \
+filename=\"#{cert.file_name}.pdf\""
   end
 end
 
@@ -69,6 +70,6 @@ def build_quizz(ruby)
 end
 
 def course_completion_message
-  "You have successfully completed this course! We sent you email
- with instructions about your certification"
+  "You have successfully completed this course! We sent you email\
+  with instructions about your certification"
 end

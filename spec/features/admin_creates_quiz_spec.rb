@@ -98,48 +98,40 @@ feature "admin adds a quiz to a course" do
   end
 
   context "client side validations" do
-    scenario "check on quiz", :js, :slow, driver: :selenium do
+    scenario "check on quiz", :js do
       fill_in "Title", with: ""
-      click_away
       expect_to_see "This value is required."
       fill_in "Title", with: "Some title"
-      click_away
       expect_to_not_see "This value is required."
 
       fill_in "Description", with: ""
-      click_away
       expect_to_see "This value is required."
       fill_in "Description", with: "Some description"
-      click_away
       expect_to_not_see "This value is required."
     end
 
-    scenario "check on question", :js, :slow, driver: :selenium do
+    scenario "check on question", :js do
       fill_in_valid_quiz_attributes
       add_question(1, with: "", points: 3) do
-        click_away
         expect_to_see "This value is required."
         fill_in "Question", with: "Some question"
-        click_away
         expect_to_not_see "This value is required."
 
         select "Select Points"
-        click_away
+        find("select").trigger('blur')
+
         expect_to_see "This value is required."
         select 3
-        click_away
         expect_to_not_see "This value is required."
       end
     end
 
-    scenario "check on answer", :js, :slow do
+    scenario "check on answer", :js do
       fill_in_valid_quiz_attributes
       add_question(1, with: "Some question", points: 3) do |question|
         add_answer(1, to: question, with: "") do
-          click_away
           expect_to_see "This value is required."
           fill_in "Answer", with: "Some answer"
-          click_away
           expect_to_not_see "This value is required."
         end
       end
