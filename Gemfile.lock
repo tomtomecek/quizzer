@@ -334,7 +334,7 @@ DEPENDENCIES
   paratrooper (= 2.4.1)
   parsley-rails (= 2.0.7.0)
   pg (= 0.18.1)
-  poltergeist
+  poltergeist (= 1.6.0)
   pry (= 0.10.1)
   pry-nav (= 0.2.4)
   pry-rescue (= 1.4.1)
