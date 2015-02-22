@@ -47,13 +47,16 @@ feature "admin updates answer from view quiz" do
 
     scenario "redundant flash messages", :js do
       click_edit_on(answer)
+      sleep 1
 
       within_modal do
         fill_in "Answer's content", with: "new content"
         click_on "Submit changes"
+        sleep 1
       end
 
       click_edit_on(answer)
+      sleep 1
       within_modal do
         expect_to_not_see "Successfully updated answer"
       end

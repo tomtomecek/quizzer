@@ -43,7 +43,7 @@ feature "admin edits a quiz" do
     visit admin_course_path(ruby)
     within(:css, "#quiz_#{quiz.id}") do
       click_on "Edit Quiz"
-      sleep 0.1
+      sleep 2
     end
   end
 
@@ -72,10 +72,10 @@ feature "admin edits a quiz" do
       create_all_answers_for(question)
     end
     click_on "Update Quiz"
-    sleep 0.1
+    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
-    sleep 0.1
+    sleep 2
     within("#question_3") do
       expect_to_see "Answer to life?"
       expect_to_see "9 points"
@@ -88,10 +88,10 @@ feature "admin edits a quiz" do
       select 6
     end
     click_on "Update Quiz"
-    sleep 0.1
+    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
-    sleep 0.1
+    sleep 2
     expect_to_not_see "Question: 3"
     within(:css, "#question_2") do
       expect_to_see "Better content is a king"
@@ -102,8 +102,10 @@ feature "admin edits a quiz" do
   scenario "admin removes a question", :js do
     remove_question(2)
     click_on "Update Quiz"
+    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
+    sleep 2
     expect_to_not_see "Question: 2"
     expect_to_not_see "How much is 2 + 2?"
     expect_to_not_see "4 points"
@@ -122,8 +124,10 @@ feature "admin edits a quiz" do
   scenario "admin removes an answer", :js do
     remove_answer(5, from: 1)
     click_on "Update Quiz"
+    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
+    sleep 2
     expect_to_not_see "delete me"
   end
 
