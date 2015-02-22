@@ -139,6 +139,6 @@ end
 def view(quiz)
   within(:css, "#quiz_#{quiz.id}") do
     click_on "View Quiz"
-    sleep 0.1
+    sleep 0.5
   end
 end
