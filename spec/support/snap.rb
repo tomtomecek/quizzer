@@ -1,4 +1,4 @@
-def snap!(options={})
+def snap!(options = {})
   path = options.fetch :path, "~/.Trash"
   file = options.fetch :file, "#{Time.now.to_i}.png"
   full = options.fetch :full, true
