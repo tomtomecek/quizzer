@@ -43,7 +43,6 @@ feature "admin edits a quiz" do
     visit admin_course_path(ruby)
     within(:css, "#quiz_#{quiz.id}") do
       click_on "Edit Quiz"
-      sleep 2
     end
   end
 
@@ -67,31 +66,27 @@ feature "admin edits a quiz" do
     expect_to_see "For advanced programmers"
   end
 
-  scenario "admin adds a question", :js do
+  scenario "admin adds a question", :js, :slow, driver: :selenium do
     add_question(3, with: "Answer to life?", points: 9) do |question|
       create_all_answers_for(question)
     end
     click_on "Update Quiz"
-    sleep 2
     expect_to_see "Quiz was successfully updated."
-    view quiz
-    sleep 2
+    click_on "View Quiz"
     within("#question_3") do
       expect_to_see "Answer to life?"
       expect_to_see "9 points"
     end
   end
 
-  scenario "admin changes a question", :js do
+  scenario "admin changes a question", :js, :slow, driver: :selenium do
     within_question(2) do
       fill_in "Question", with: "Better content is a king"
       select 6
     end
     click_on "Update Quiz"
-    sleep 2
     expect_to_see "Quiz was successfully updated."
-    view quiz
-    sleep 2
+    click_on "View Quiz"
     expect_to_not_see "Question: 3"
     within(:css, "#question_2") do
       expect_to_see "Better content is a king"
@@ -102,10 +97,8 @@ feature "admin edits a quiz" do
   scenario "admin removes a question", :js do
     remove_question(2)
     click_on "Update Quiz"
-    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
-    sleep 2
     expect_to_not_see "Question: 2"
     expect_to_not_see "How much is 2 + 2?"
     expect_to_not_see "4 points"
@@ -124,10 +117,8 @@ feature "admin edits a quiz" do
   scenario "admin removes an answer", :js do
     remove_answer(5, from: 1)
     click_on "Update Quiz"
-    sleep 2
     expect_to_see "Quiz was successfully updated."
     view quiz
-    sleep 2
     expect_to_not_see "delete me"
   end
 
