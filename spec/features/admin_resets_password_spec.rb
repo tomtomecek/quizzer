@@ -37,7 +37,7 @@ feature "admin resets password" do
     expect_to_be_in admin_courses_path
   end
 
-  scenario "reset password client side errors check", :js, :slow do
+  scenario "reset password client side errors check", :js do
     admin = Fabricate(:admin,
                       password_reset_token: "123",
                       password_reset_expires_at: 1.hour.from_now)
@@ -50,13 +50,11 @@ feature "admin resets password" do
     expect_to_see "Password must have at least 6 characters"
   end
 
-  scenario "sending pw reset client side errors check", :js, :slow do
+  scenario "sending pw reset client side errors check", :js do
     visit new_password_reset_path
     fill_in "Email", with: ""
-    click_away
     expect_to_see "This value is required"
     fill_in "Email", with: "admin"
-    click_away
     expect_to_see "This value should be a valid email"
   end
 end

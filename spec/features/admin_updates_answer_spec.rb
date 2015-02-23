@@ -16,18 +16,18 @@ feature "admin updates answer from view quiz" do
   end
 
   context "admin edits answer" do
-    scenario "successfull attempt", :js, :slow do
+    scenario "successfull attempt", :js do
       expect_to_see_no_modal
       click_edit_on(answer)
 
       within_modal do
         fill_in "Answer's content", with: ""
-        click_on "Submit changes"
+        submit_changes
         expect_to_see "These errors needs to be fixed:"
         expect_to_see "Content can't be blank"
 
         fill_in "Answer's content", with: "new answer"
-        click_on "Submit changes"
+        submit_changes
       end
 
       expect_to_see_no_modal
@@ -37,24 +37,29 @@ feature "admin updates answer from view quiz" do
 
     scenario "failed attempt none correct", :js do
       click_edit_on(correct_answer)
-      within(:css, ".modal") do
-        uncheck "Tick if answer is correct."
-        click_on "Submit changes"
+      within_modal do
+        untick_checkbox
+        submit_changes
         expect_to_see "At least 1 answer must be correct."
       end
       expect(page).to have_css(".modal")
     end
 
-    scenario "redundant flash messages", :js, :slow, driver: :selenium do
+    scenario "redundant flash messages", :js do
       click_edit_on(answer)
+      sleep 1
 
-      within(:css, ".modal") do
+      within_modal do
         fill_in "Answer's content", with: "new content"
         click_on "Submit changes"
+        sleep 1
       end
 
       click_edit_on(answer)
-      expect_to_not_see "Successfully updated answer"
+      sleep 1
+      within_modal do
+        expect_to_not_see "Successfully updated answer"
+      end
     end
   end
 
@@ -74,7 +79,7 @@ end
 
 def click_edit_on(answer)
   within(:css, "#answer_#{answer.id}") do
-    find(:css, ".fa-edit").click
+    find(:css, ".fa-edit").trigger('click')
   end
 end
 
@@ -82,4 +87,12 @@ def click_delete_on(answer)
   within(:css, "#answer_#{answer.id}") do
     find(:css, ".fa-times-circle").click
   end
+end
+
+def untick_checkbox
+  find('input[type=checkbox]').trigger('click')
+end
+
+def submit_changes
+  find('input[type=submit]').trigger('click')
 end
