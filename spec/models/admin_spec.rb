@@ -6,6 +6,11 @@ describe Admin do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to have_db_index(:email).unique(true) }
 
+  it "allows nil for password" do
+    admin = Fabricate(:admin, password: nil)
+    expect(admin).to be_valid
+  end
+
   describe "#clear_token_and_expires_at!" do
     it "updates password reset to nil" do
       admin = Fabricate(:admin, password_reset_token: "token123")

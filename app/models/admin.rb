@@ -2,7 +2,7 @@ class Admin < ActiveRecord::Base
   has_secure_password validations: false
 
   validates :email, uniqueness: { case_sensitive: false }
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   attr_accessor :remember_token
 
