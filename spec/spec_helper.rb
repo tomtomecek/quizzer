@@ -7,6 +7,7 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'capybara/poltergeist'
+require 'billy/rspec'
 require 'vcr'
 require 'rack_session_access/capybara'
 require 'sidekiq/testing'
@@ -17,22 +18,15 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.configure_rspec_metadata!
   c.ignore_localhost = true
-  c.ignore_hosts 'codeclimate.com'
+  c.ignore_hosts 'codeclimate.com', 'js.stripe.com', 'tiles.services.mozilla.com', 'dtex4kvbppovt.cloudfront.net', 'dummyimage.com'
 end
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(
-    app,
-    inspector: './chrome.sh',
-    js_errors: true
-  )
-end
 Capybara.javascript_driver = :poltergeist
-
-Capybara.server_port = 52662
 Capybara.default_wait_time = 3
+Capybara.server_port = 52662
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
@@ -46,8 +40,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.order = "random"
 
-  config.include(ExpectationMacros)
-  config.include(AuthenticationMacros)
-  config.include(QuizManagementMacros)
-  config.include(ModalMacros)
+  config.include AuthenticationMacros
+  config.include ExpectationMacros, type: :feature
+  config.include ModalMacros, type: :feature
+  config.include QuizManagementMacros, type: :feature
 end
