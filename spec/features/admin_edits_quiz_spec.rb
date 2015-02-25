@@ -140,6 +140,6 @@ end
 
 def view(quiz)
   within(:css, "#quiz_#{quiz.id}") do
-    find('a', text: "View Quiz").trigger('click')
+    find('a', text: "View Quiz").click
   end
 end

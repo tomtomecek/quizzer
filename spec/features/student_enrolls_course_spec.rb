@@ -9,9 +9,9 @@ feature "student enrolls course" do
   end
 
   context "for free" do
-    scenario "student enrolls course for free", :js do
+    scenario "student enrolls course for free", :js, :billy do
       expect_to_see_no_modal
-      within(:css, "#course_#{ruby.id}") { click_on "Enroll now" }
+      within("#course_#{ruby.id}") { click_on "Enroll now" }
 
       within_modal do
         click_on_free
@@ -28,8 +28,8 @@ feature "student enrolls course" do
       expect_to_see "Quizzes: 0 / 3"
     end
 
-    scenario "student does not agree on honor code", :js do
-      within(:css, "#course_#{ruby.id}") { click_on "Enroll now" }
+    scenario "student does not agree on honor code", :js, :billy do
+      within("#course_#{ruby.id}") { click_on "Enroll now" }
 
       within_modal do
         uncheck "I agree"
@@ -46,8 +46,8 @@ feature "student enrolls course" do
     end
 
     context "with valid card" do
-      scenario "sucessfull enroll", :js, :vcr do
-        expect(page).to have_no_css("input[type=submit]", visible: true)
+      scenario "sucessfull enroll", :js, :vcr, :billy do
+        expect(page).to have_no_css("input[type=submit]")
         expect(page).to have_css("button[id=stripeSubmit]")
         expect_to_see "will receive Certificate of Accomplishment via email"
         fill_in_card_details(card_number: "4242424242424242")
@@ -63,7 +63,7 @@ feature "student enrolls course" do
           for course #{ruby.title}."
       end
 
-      scenario "forget to check I agree box", :js, :vcr do
+      scenario "forget to check I agree box", :js, :vcr, :billy do
         fill_in_card_details(card_number: "4242424242424242")
         click_paid_enroll_now
         expect_to_see "Honor code must be accepted"
@@ -72,21 +72,21 @@ feature "student enrolls course" do
     end
 
     context "with declined card" do
-      scenario "failed enroll card_declined code", :js, :vcr do
+      scenario "failed enroll card_declined code", :js, :vcr, :billy do
         fill_in_card_details(card_number: "4000000000000002")
         agree_on_honor_code
         click_paid_enroll_now
         expect_to_see "Your card was declined."
       end
 
-      scenario "failed enroll incorrect_cvc code", :js, :vcr do
+      scenario "failed enroll incorrect_cvc code", :js, :vcr, :billy do
         fill_in_card_details(card_number: "4000000000000127")
         agree_on_honor_code
         click_paid_enroll_now
         expect_to_see "Your card's security code is incorrect."
       end
 
-      scenario "failed enroll expired_card code", :js, :vcr do
+      scenario "failed enroll expired_card code", :js, :vcr, :billy do
         fill_in_card_details(
           card_number: "4000000000000069",
           month: "2 - February",
@@ -96,7 +96,7 @@ feature "student enrolls course" do
         expect_to_see "Your card has expired."
       end
 
-      scenario "failed enroll processing_error code", :js, :vcr do
+      scenario "failed enroll processing_error code", :js, :vcr, :billy do
         fill_in_card_details(card_number: "4000000000000119")
         agree_on_honor_code
         click_paid_enroll_now
@@ -105,23 +105,25 @@ feature "student enrolls course" do
       end
     end
 
-    scenario "invalid card", :js do
-      fill_in_card_details(card_number: "123")
-      click_paid_enroll_now
-      expect_to_see "This card number looks invalid."
-    end
+    context "with invalid card" do
+      scenario "invalid card", :js, :vcr, :billy do
+        fill_in_card_details(card_number: "123")
+        click_paid_enroll_now
+        expect_to_see "This card number looks invalid."
+      end
 
-    scenario "invalid expiration date", :js do
-      fill_in_card_details(
-        card_number: "4000000000000069",
-        month: "1 - January",
-        year: "2015")
-      click_paid_enroll_now
-      expect_to_see "Your card's expiration month is invalid."
+      scenario "invalid expiration date", :js, :vcr, :billy do
+        fill_in_card_details(
+          card_number: "4000000000000069",
+          month: "1 - January",
+          year: "2015")
+        click_paid_enroll_now
+        expect_to_see "Your card's expiration month is invalid."
+      end
     end
   end
 
-  scenario "modal removed when cancelled", :js do
+  scenario "modal removed when cancelled", :js, :billy do
     click_enroll(ruby)
     within_modal { click_on_close_button }
     expect_to_see_no_modal
@@ -133,7 +135,9 @@ feature "student enrolls course" do
 end
 
 def click_enroll(course)
-  within(:css, "#course_#{course.id}") { click_on "Enroll now" }
+  within("#course_#{course.id}") do
+    find("a", text: 'Enroll now').trigger('click')
+  end
 end
 
 def click_on_free
@@ -148,10 +152,6 @@ def click_on_close_button
   find(:button, "Close").trigger('click')
 end
 
-def click_on_signature_track
-  find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
-end
-
 def fill_in_card_details(options = {})
   year = options[:year] || Time.now.year + 3
   month = options[:month] || "4 - April"
@@ -159,6 +159,10 @@ def fill_in_card_details(options = {})
   fill_in "Security Code",      with: "123"
   select month, from: "date_month"
   select year, from: "date_year"
+end
+
+def click_on_signature_track
+  find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
 end
 
 def agree_on_honor_code
