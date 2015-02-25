@@ -1,5 +1,5 @@
 class AdminsController < AdminController
-  before_action :require_instructor, only: [:new, :create]
+  before_action :require_instructor, only: [:index, :new, :create]
 
   def index
   end
@@ -11,10 +11,11 @@ class AdminsController < AdminController
   def create
     @admin = Admin.new(admin_params)
     if @admin.save
+      @admin.generate_activation_token!
       AdminMailer.delay.send_activation_link(@admin)
       redirect_to management_admins_path
     else
-
+      render :new
     end
   end
 

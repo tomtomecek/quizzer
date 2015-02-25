@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe AdminsController do
 
+  describe "GET index" do
+    it_behaves_like "require admin sign in" do
+      let(:action) { get :index }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { get :index }
+    end
+  end
+
   describe "GET new" do
     it_behaves_like "require admin sign in" do
       let(:action) { get :new }
@@ -31,6 +41,8 @@ describe AdminsController do
 
     context "with valid data" do
       let(:kevin) { Fabricate(:instructor) }
+      let(:mail) { ActionMailer::Base.deliveries.last }
+      let(:admin) { Admin.last }
       before { set_current_admin(kevin) }
 
       it "redirects to admins management" do
@@ -44,9 +56,14 @@ describe AdminsController do
         }.to change { Admin.count }.by(1)
       end
 
+      it "creates a new admin with activation token" do
+        post :create, admin: Fabricate.attributes_for(:admin)
+        expect(admin.activation_token).to_not be nil
+      end
+
       it "does not activate the admin" do
         post :create, admin: Fabricate.attributes_for(:admin)
-        expect(Admin.first).to_not be_activated
+        expect(admin).to_not be_activated
       end
 
       it "sends out an email" do
@@ -60,7 +77,7 @@ describe AdminsController do
       end
 
       it "sends out verification back-link" do
-        mail = ActionMailer::Base.deliveries.last
+        post :create, admin: Fabricate.attributes_for(:admin)
         expect(mail.body.encoded).to include activate_admin_path(admin.activation_token)
       end
     end
