@@ -27,6 +27,7 @@ end
 
 shared_examples "require instructor sign in" do
   it "redirects to root url" do
+    clear_current_admin
     teaching_assisant = Fabricate(:teaching_assistant)
     set_current_admin(teaching_assisant)
     action
