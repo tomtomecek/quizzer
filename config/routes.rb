@@ -28,6 +28,12 @@ Rails.application.routes.draw do
     resources :exams, only: [:index, :show]
   end
 
+  resources :admins, only: [:new, :create] do
+    collection do
+      get "/management", to: "admins#index"
+    end
+  end
+
   resources :enrollments, only: [:new, :create]
   get "/certificates/:licence_number", to: "certificates#show", as: :certificate
 
