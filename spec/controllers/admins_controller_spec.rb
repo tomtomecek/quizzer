@@ -30,35 +30,38 @@ describe AdminsController do
     end
 
     context "with valid data" do
+      let(:kevin) { Fabricate(:instructor) }
+      before { set_current_admin(kevin) }
+
       it "redirects to admins management" do
-        kevin = Fabricate(:instructor)
-        set_current_admin(kevin)
         post :create, admin: Fabricate.attributes_for(:admin)
         expect(response).to redirect_to management_admins_path
       end
 
       it "creates a new admin" do
-        kevin = Fabricate(:instructor)
-        set_current_admin(kevin)
         expect {
           post :create, admin: Fabricate.attributes_for(:admin)
         }.to change { Admin.count }.by(1)
       end
 
       it "does not activate the admin" do
+        post :create, admin: Fabricate.attributes_for(:admin)
         expect(Admin.first).to_not be_activated
       end
 
       it "sends out an email" do
+        post :create, admin: Fabricate.attributes_for(:admin)
         expect(ActionMailer::Base.deliveries).not_to be_empty
       end
 
       it "sends out email to admins email" do
+        post :create, admin: Fabricate.attributes_for(:admin)
         expect(mail.to).to eq [admin.email]
       end
 
       it "sends out verification back-link" do
-        # expect(mail.body.encoded).to include confirm_admin_path(admin.)
+        mail = ActionMailer::Base.deliveries.last
+        expect(mail.body.encoded).to include activate_admin_path(admin.activation_token)
       end
     end
 
