@@ -16,7 +16,7 @@ module AuthenticationMacros
   end
 
   def set_current_user(user = nil)
-    user = user || Fabricate(:user)
+    user ||= Fabricate(:user)
     session[:user_id] = user.id
   end
 
