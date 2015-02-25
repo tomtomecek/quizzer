@@ -1,8 +1,12 @@
 class Admin < ActiveRecord::Base
   has_secure_password validations: false
 
-  validates :email, uniqueness: { case_sensitive: false }
+
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]{2,}\z/i
+  validates :email, format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }, allow_nil: true
+  validates :role, inclusion: { in: %w(Instructor Teaching\ assistant) }
 
   attr_accessor :remember_token
 
@@ -35,6 +39,10 @@ class Admin < ActiveRecord::Base
 
   def instructor?
     role == "instructor"
+  end
+
+  def generate_activation_token!
+    update_columns(activation_token: generate_token)
   end
 
 private

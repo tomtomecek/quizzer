@@ -5,10 +5,33 @@ describe Admin do
   it { is_expected.to ensure_length_of(:password).is_at_least(6) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to have_db_index(:email).unique(true) }
+  it "validates role" do
+    is_expected.to validate_inclusion_of(:role).
+                   in_array(%w(Instructor Teaching\ assistant))
+  end
+
+  it "allows email format" do
+    is_expected.to allow_value('user@example.com', 'TEST.A@abc.in',
+      'user.ab.dot@test.ds.info', 'foo-bar2@baz2.com').for(:email)
+  end
+
+  it "does not allow email format" do
+    is_expected.to_not allow_value('foo@bar', "'z\\foo@ex.com", 'foobar.com',
+      'foo@bar.c', 'foo..bar@ex.com', '>!?#@ex.com', 'mel,bour@ne.aus')
+      .for(:email)
+  end
 
   it "allows nil for password" do
     admin = Fabricate(:admin, password: nil)
     expect(admin).to be_valid
+  end
+
+  describe "#generate_activation_token!" do
+    it "sets activation token" do
+      admin = Fabricate(:admin, activation_token: nil)
+      admin.generate_activation_token!
+      expect(admin.activation_token).to_not be nil
+    end
   end
 
   describe "#clear_token_and_expires_at!" do
