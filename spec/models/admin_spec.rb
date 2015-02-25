@@ -3,6 +3,8 @@ require "spec_helper"
 describe Admin do
   it { is_expected.to have_secure_password }
   it { is_expected.to ensure_length_of(:password).is_at_least(6) }
+  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  it { is_expected.to have_db_index(:email).unique(true) }
 
   describe "#clear_token_and_expires_at!" do
     it "updates password reset to nil" do
@@ -64,6 +66,18 @@ describe Admin do
     it "returns false if remember digest is nil" do
       admin.forget!
       expect(admin.authenticated?(token)).to be false
+    end
+  end
+
+  describe "#instructor?" do
+    it "returns true when admin is instructor" do
+      kevin = Fabricate(:instructor, role: "instructor")
+      expect(kevin).to be_instructor
+    end
+
+    it "returns false when admin is not instructor" do
+      brandon = Fabricate(:instructor, role: "teaching assistant")
+      expect(brandon).not_to be_instructor
     end
   end
 end
