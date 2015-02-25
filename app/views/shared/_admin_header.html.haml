@@ -3,6 +3,8 @@
     .navbar-header
       %a.navbar-brand(href="") Quizzer
     %ul.nav.navbar-nav.navbar-right
+      - if current_admin.instructor?
+        %li= link_to "Admin Management", admins_path, class: "btn btn-default"
       %li= link_to "Dashboard", '', class: "btn btn-default"
       %li= link_to "Courses", admin_courses_path, class: "btn btn-default"
       %li= link_to "Exams", admin_exams_path, class: "btn btn-default"
