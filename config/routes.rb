@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :exams, only: [:index, :show]
   end
 
+  get "/:activation_token", to: "admins#activate", as: :activate_admin
   resources :admins, only: [:new, :create] do
     collection do
       get "/management", to: "admins#index"
