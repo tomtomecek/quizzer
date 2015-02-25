@@ -1,6 +1,7 @@
 class Admin < ActiveRecord::Base
   has_secure_password validations: false
 
+  validates :email, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
 
   attr_accessor :remember_token
@@ -30,6 +31,10 @@ class Admin < ActiveRecord::Base
   def authenticated?(token)
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(token)
+  end
+
+  def instructor?
+    role == "instructor"
   end
 
 private
