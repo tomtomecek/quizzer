@@ -27,6 +27,6 @@ module ApplicationHelper
   end
 
   def roles
-    ['Teaching Assistant', 'Instructor']
+    ['Teaching assistant', 'Instructor']
   end
 end
