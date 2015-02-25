@@ -1,0 +1,7 @@
+.container
+  .col-sm-offset-2
+    = bootstrap_form_for @admin, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9" do |f|
+      = f.email_field :email, label: "Email:"
+      = f.select :role, roles, label: "Admin role:", prompt: "Select Role", required: true, 'data-parsley-trigger' => 'blur'
+      = f.form_group do
+        = f.submit "Add new admin"
