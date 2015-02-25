@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe AdminsController do
+  let(:kevin) { Fabricate(:instructor) }
+  before { set_current_admin(kevin) }
 
   describe "GET index" do
     it_behaves_like "require admin sign in" do
@@ -9,6 +11,13 @@ describe AdminsController do
 
     it_behaves_like "require instructor sign in" do
       let(:action) { get :index }
+    end
+
+    it "sets the @admins" do
+      brandon = Fabricate(:teaching_assistant)
+      albert = Fabricate(:teaching_assistant)
+      get :index
+      expect(assigns(:admins)).to match_array [kevin, brandon, albert]
     end
   end
 
@@ -22,8 +31,6 @@ describe AdminsController do
     end
 
     it "sets the @admin" do
-      kevin = Fabricate(:instructor)
-      set_current_admin(kevin)
       get :new
       expect(assigns(:admin)).to be_new_record
       expect(assigns(:admin)).to be_instance_of Admin
@@ -40,10 +47,8 @@ describe AdminsController do
     end
 
     context "with valid data" do
-      let(:kevin) { Fabricate(:instructor) }
       let(:mail) { ActionMailer::Base.deliveries.last }
       let(:admin) { Admin.last }
-      before { set_current_admin(kevin) }
 
       it "redirects to admins management" do
         post :create, admin: Fabricate.attributes_for(:admin)
@@ -83,15 +88,10 @@ describe AdminsController do
     end
 
     context "with invalid data" do
-      before do
-        kevin = Fabricate(:instructor)
-        set_current_admin(kevin)
-      end
+      before { post :create, admin: { email: "no match", role: "whatever" } }
 
-      it "renders the :new" do
-        post :create, admin: { email: "no match", role: "whatever" }
-        expect(response).to render_template :new
-      end
+      it { is_expected.to render_template :new }
+      it { is_expected.to set_the_flash.now[:danger] }
 
       it "does not create an admin" do
         expect {
@@ -100,13 +100,8 @@ describe AdminsController do
       end
 
       it "sets the @admin" do
-        post :create, admin: { email: "no match", role: "whatever" }
         expect(assigns(:admin)).to be_new_record
         expect(assigns(:admin)).to be_instance_of Admin
-      end
-
-      it "sets the flash danger" do
-        expect(flash.now[:danger]).to be_present
       end
 
       it "does not set the email" do

@@ -2,6 +2,7 @@ class AdminsController < AdminController
   before_action :require_instructor, only: [:index, :new, :create]
 
   def index
+    @admins = Admin.all
   end
 
   def new
@@ -15,6 +16,7 @@ class AdminsController < AdminController
       AdminMailer.delay.send_activation_link(@admin)
       redirect_to management_admins_path
     else
+      flash.now[:danger] = "Admin account was not created, check errors below:"
       render :new
     end
   end
