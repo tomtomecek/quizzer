@@ -38,7 +38,7 @@ class Admin < ActiveRecord::Base
   end
 
   def instructor?
-    role == "instructor"
+    role == "Instructor"
   end
 
   def generate_activation_token!

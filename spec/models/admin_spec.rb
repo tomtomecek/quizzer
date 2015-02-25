@@ -99,12 +99,12 @@ describe Admin do
 
   describe "#instructor?" do
     it "returns true when admin is instructor" do
-      kevin = Fabricate(:instructor, role: "instructor")
+      kevin = Fabricate(:instructor, role: "Instructor")
       expect(kevin).to be_instructor
     end
 
     it "returns false when admin is not instructor" do
-      brandon = Fabricate(:instructor, role: "teaching assistant")
+      brandon = Fabricate(:instructor, role: "Teaching assistant")
       expect(brandon).not_to be_instructor
     end
   end
