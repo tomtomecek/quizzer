@@ -1,0 +1,66 @@
+---
+:scope: 
+:url: https://js.stripe.com:443/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default899488&stripe_xdm_p=1
+:body: ''
+:status: 200
+:method: get
+:headers:
+  Date: Tue, 24 Feb 2015 17:14:40 GMT
+  Server: nginx
+  Content-Type: text/html
+  Last-Modified: Mon, 09 Feb 2015 23:04:35 GMT
+  ETag: '"54d93d03-459"'
+  Strict-Transport-Security: max-age=31556926; includeSubDomains
+  Content-Length: '1113'
+  Accept-Ranges: bytes
+  Via: 1.1 varnish
+  Age: '1747'
+  X-Served-By: cache-fra1245-FRA
+  X-Cache: HIT
+  X-Cache-Hits: '1'
+  Vary: Accept-Encoding
+  Cache-Control: public, max-age=300
+  Connection: close
+:content: |
+  <!doctype html>
+  <html>
+  <head>
+  <title>Stripe Internal Communication Channel</title>
+  <script>
+  if ('postMessage' in window) {
+    var stripeTrack = function(type) {
+      var timestamp = Math.round(new Date().getTime() / 1000);
+      var report = (new Image()).src = "https://q.stripe.com?event=stripejs-error&type=" +
+        encodeURIComponent(type) +
+        "&timestamp=" + timestamp +
+        "&payment_user_agent=channel.html";
+    };
+
+    if (window.parent === window) {
+      stripeTrack('ChannelParentError');
+      window.Stripe = {earlyError: true};
+    }
+    else {
+      window.onload = function() {
+        var matches = window.location.search.match(/(\?|&)stripe_xdm_e=([^&]+)/);
+        if (matches && matches.length >= 3) {
+          var outerdomain = decodeURIComponent(matches[2]);
+          try {
+            window.parent.postMessage('stripe:ack', outerdomain);
+          }
+          catch(e) {
+            stripeTrack('ChannelAckError-' + e.toString());
+          }
+        }
+        else {
+          stripeTrack('ChannelUrlError');
+        }
+      }
+    }
+  }
+  </script>
+  </head>
+  <body>
+  <script src="https://js.stripe.com/v2/"></script>
+  </body>
+  </html>
