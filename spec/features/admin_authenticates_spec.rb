@@ -75,7 +75,7 @@ def expect_to_not_have_sign_out_link_for_student
   expect(page).to have_no_xpath("//a[@href='/sign_out']")
 end
 
-def navigate_to_admin_login(admin)
+def navigate_to_admin_login(_admin)
   visit root_path
   click_on "Administration"
 end
