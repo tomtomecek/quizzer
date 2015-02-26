@@ -22,7 +22,6 @@ describe Admin::ActivationsController do
   end
 
   describe "POST create" do
-
     context "with valid token" do
       let(:admin) do
         Fabricate(:admin,
@@ -30,6 +29,7 @@ describe Admin::ActivationsController do
                   activation_token: "12345",
                   activated: false)
       end
+
       context "with valid password" do
         before do
           post :create,
