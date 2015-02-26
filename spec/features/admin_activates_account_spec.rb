@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "admin activates account" do
-  given(:kevin) { Fabricate(:instructor) }
+  given(:kevin) { Fabricate(:instructor, activated: true) }
   given(:email) { "new_admin@email.com" }
   given(:admin) { Admin.last }
   given(:activation_path) { admin_activation_path(admin.activation_token) }

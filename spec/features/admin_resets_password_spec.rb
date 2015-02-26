@@ -4,7 +4,10 @@ feature "admin resets password" do
   background { clear_emails }
 
   scenario "admin forgot password and resets it" do
-    admin = Fabricate(:admin, email: "admin@example.com", password: "old_pswd")
+    admin = Fabricate(:admin,
+                      email: "admin@example.com",
+                      password: "old_pswd",
+                      activated: true)
     visit admin_sign_in_path
     click_on "Forgot password?"
 
