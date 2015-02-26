@@ -24,7 +24,9 @@ Rails.application.routes.draw do
     post "/sign_in", to: "sessions#create"
     delete "/sign_out", to: "sessions#destroy"
     get "/activation/:activation_token", to: "activations#new", as: :activation
-    post "/activation/:activation_token", to: "activations#create", as: :activations
+    post "/activation/:activation_token",
+         to: "activations#create",
+         as: :activations
 
     resources :courses, only: [:index, :show]
     resources :exams, only: [:index, :show]
