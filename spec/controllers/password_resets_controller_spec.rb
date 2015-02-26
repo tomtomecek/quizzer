@@ -101,11 +101,6 @@ describe PasswordResetsController do
         get :edit, token: "wrong"
         expect(response).to redirect_to root_url
       end
-
-      it "redirects to root url with blank token" do
-        get :edit, token: ""
-        expect(response).to redirect_to root_url
-      end
     end
 
     context "with expired token" do
@@ -144,7 +139,7 @@ describe PasswordResetsController do
       end
 
       it { is_expected.to redirect_to admin_sign_in_url }
-      it { is_expected.to set_the_flash[:success] }
+      it { is_expected.to set_flash[:success] }
 
       it "updates to new password" do
         expect(admin.reload.authenticate("new_password")).to be admin
@@ -175,7 +170,7 @@ describe PasswordResetsController do
       end
 
       it { is_expected.to redirect_to root_url }
-      it { is_expected.to set_the_flash[:danger] }
+      it { is_expected.to set_flash[:danger] }
 
       it "does not update to new password" do
         expect(admin.reload.authenticate("new_password")).to be false

@@ -47,6 +47,7 @@ describe AdminsController do
     end
 
     context "with valid data" do
+      after { ActionMailer::Base.deliveries.clear }
       let(:mail) { ActionMailer::Base.deliveries.last }
       let(:admin) { Admin.last }
 
@@ -66,6 +67,11 @@ describe AdminsController do
         expect(admin.activation_token).to_not be nil
       end
 
+      it "sets the flash success" do
+        post :create, admin: Fabricate.attributes_for(:admin)
+        expect(flash[:success]).to be_present
+      end
+
       it "does not activate the admin" do
         post :create, admin: Fabricate.attributes_for(:admin)
         expect(admin).to_not be_activated
@@ -83,7 +89,8 @@ describe AdminsController do
 
       it "sends out verification back-link" do
         post :create, admin: Fabricate.attributes_for(:admin)
-        expect(mail.body.encoded).to include activate_admin_path(admin.activation_token)
+        activation_url = admin_activation_path(admin.activation_token)
+        expect(mail.body.encoded).to include activation_url
       end
     end
 
@@ -91,7 +98,7 @@ describe AdminsController do
       before { post :create, admin: { email: "no match", role: "whatever" } }
 
       it { is_expected.to render_template :new }
-      it { is_expected.to set_the_flash.now[:danger] }
+      it { is_expected.to set_flash.now[:danger] }
 
       it "does not create an admin" do
         expect {
