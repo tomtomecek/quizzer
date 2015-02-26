@@ -44,9 +44,7 @@ describe EnrollmentsController do
           expect(response.body).to include(ajax_redirect)
         end
 
-        it "sets the flash success" do
-          expect(flash.keep[:success]).to be_present
-        end
+        it { is_expected.to set_flash[:success] }
 
         it "creates an enrollment" do
           expect(Enrollment.count).to eq 1
@@ -91,10 +89,7 @@ describe EnrollmentsController do
           }
         end
 
-        it "renders the :new template" do
-          expect(response).to render_template :new
-        end
-
+        it { is_expected.to render_template :new }
         it "does not create an enrollment" do
           expect(Enrollment.count).to eq 0
         end
@@ -138,10 +133,7 @@ describe EnrollmentsController do
           expect(response.body).to include(ajax_redirect)
         end
 
-        it "sets the flash success" do
-          expect(flash.keep[:success]).to be_present
-        end
-
+        it { is_expected.to set_flash[:success] }
         it "creates enrollment" do
           expect(Enrollment.count).to eq 1
         end
@@ -191,13 +183,9 @@ describe EnrollmentsController do
         end
         after { ActionMailer::Base.deliveries.clear }
 
-        it "renders the :new template" do
-          expect(response).to render_template :new
-        end
+        it { is_expected.to render_template :new }
 
-        it "sets the flash danger" do
-          expect(flash.now[:danger]).to be_present
-        end
+        it { is_expected.to set_flash.now[:danger] }
 
         it "does not create enrollment" do
           expect(Enrollment.count).to eq 0

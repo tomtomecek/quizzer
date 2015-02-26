@@ -5,18 +5,17 @@ module AuthenticationMacros
 
   def sign_in_admin(admin = nil)
     page.set_rack_session(user_id: nil)
-    admin = admin || Fabricate(:admin,
-                               email: "admin@tealeaf.com",
-                               password: "secret")
+    admin ||= Fabricate(:admin,
+                        email: "admin@tealeaf.com",
+                        password: "secret")
     visit admin_sign_in_path
-    expect(page).to have_content "Email"
     fill_in "Email", with: admin.email
     fill_in "Password", with: admin.password
     click_on "Sign in"
   end
 
   def set_current_user(user = nil)
-    user = user || Fabricate(:user)
+    user ||= Fabricate(:user)
     session[:user_id] = user.id
   end
 

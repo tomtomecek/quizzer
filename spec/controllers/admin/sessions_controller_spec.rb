@@ -24,8 +24,8 @@ describe Admin::SessionsController do
         end
 
         it { is_expected.to redirect_to admin_courses_url }
-        it { is_expected.to set_session(:admin_id).to(admin.id) }
-        it { is_expected.to set_the_flash[:success] }
+        it { is_expected.to set_session[:admin_id].to(admin.id) }
+        it { is_expected.to set_flash[:success] }
 
         it "does not create remember digest" do
           expect(admin.reload.remember_digest).to be nil
@@ -58,7 +58,7 @@ describe Admin::SessionsController do
       before { post :create, email: "no match", password: "secret" }
 
       it { is_expected.to render_template :new }
-      it { is_expected.to set_the_flash.now[:danger] }
+      it { is_expected.to set_flash.now[:danger] }
     end
   end
 
@@ -75,8 +75,8 @@ describe Admin::SessionsController do
       end
 
       it { is_expected.to redirect_to root_url }
-      it { is_expected.to set_the_flash[:success] }
-      it { is_expected.to set_session(:admin_id).to(nil) }
+      it { is_expected.to set_flash[:success] }
+      it { is_expected.to_not set_session[:admin_id] }
     end
 
     context "with remember me cookies" do

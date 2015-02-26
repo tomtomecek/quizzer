@@ -1,0 +1,11 @@
+!!! 5
+%html
+  %body
+    %p Welcome on Tealeaf Academy Quizzer board,
+    %br
+    %p
+      we are sending you activation link to activate your account. Please validate and activate your account here:
+
+    %p= link_to admin_activation_url(@admin.activation_token), admin_activation_url(@admin.activation_token)
+
+    %p Tealeaf Academy

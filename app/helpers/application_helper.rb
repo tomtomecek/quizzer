@@ -25,4 +25,8 @@ module ApplicationHelper
     arr = 0.step(100, 5).to_a
     arr.map { |n| ["#{n} %", n] }
   end
+
+  def roles
+    ['Teaching assistant', 'Instructor']
+  end
 end

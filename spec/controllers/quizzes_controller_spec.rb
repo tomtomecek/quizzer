@@ -51,7 +51,7 @@ describe QuizzesController do
       end
 
       it { is_expected.to redirect_to [:admin, course] }
-      it { is_expected.to set_the_flash[:success] }
+      it { is_expected.to set_flash[:success] }
 
       it "creates the quiz" do
         expect(Quiz.count).to eq 1
@@ -102,7 +102,7 @@ describe QuizzesController do
         end
 
         it { is_expected.to render_template :new }
-        it { is_expected.to set_the_flash.now[:danger] }
+        it { is_expected.to set_flash.now[:danger] }
 
         it "sets the @quiz" do
           expect(assigns(:quiz)).to be_new_record
@@ -155,7 +155,7 @@ describe QuizzesController do
                         }
         end
 
-        it { is_expected.to set_the_flash.now[:info] }
+        it { is_expected.to set_flash.now[:info] }
         it { is_expected.to render_template :new }
       end
     end
@@ -226,7 +226,7 @@ describe QuizzesController do
       end
 
       it { is_expected.to redirect_to admin_course_url(quiz.course) }
-      it { is_expected.to set_the_flash[:success] }
+      it { is_expected.to set_flash[:success] }
 
       it "updates the quiz" do
         expect(quiz.reload.title).to eq("Pro ruby")
@@ -260,7 +260,7 @@ describe QuizzesController do
         end
 
         it { expect(response).to render_template :edit }
-        it { is_expected.to set_the_flash.now[:danger] }
+        it { is_expected.to set_flash.now[:danger] }
         it "sets the @quiz" do
           expect(assigns(:quiz)).to eq quiz
         end

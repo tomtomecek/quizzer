@@ -202,7 +202,7 @@ describe ExamsController do
           end
 
           it "sets the flash info" do
-            is_expected.to set_the_flash[:info]
+            is_expected.to set_flash[:info]
           end
         end
 
@@ -301,7 +301,7 @@ describe ExamsController do
       end
 
       it { is_expected.to render_template :new }
-      it { is_expected.to set_the_flash.now[:danger] }
+      it { is_expected.to set_flash.now[:danger] }
 
       it "sets the @quiz" do
         expect(assigns(:quiz)).to eq(quiz)

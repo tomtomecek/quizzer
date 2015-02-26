@@ -3,7 +3,7 @@ require "spec_helper"
 describe SessionsController do
   before { request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] }
 
-  describe "GET #create" do
+  describe "GET create" do
     context "when no account" do
       it "creates an user account" do
         get :create, provider: "github"
@@ -36,7 +36,7 @@ describe SessionsController do
     end
   end
 
-  describe "DELETE #destroy" do
+  describe "DELETE destroy" do
     context "when authenticated" do
       before do
         set_current_user
@@ -44,8 +44,8 @@ describe SessionsController do
       end
 
       it { is_expected.to redirect_to root_url }
-      it { is_expected.to set_session(:user_id).to nil }
-      it { is_expected.to set_the_flash[:success] }
+      it { is_expected.to set_session[:user_id].to nil }
+      it { is_expected.to set_flash[:success] }
     end
 
     it_behaves_like "require sign in" do
