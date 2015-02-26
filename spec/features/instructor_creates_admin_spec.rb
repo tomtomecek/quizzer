@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "instructor creates an admin account" do
-  given(:kevin) { Fabricate(:instructor) }
+  given(:kevin) { Fabricate(:instructor, activated: true) }
   background do
     sign_in_admin(kevin)
   end

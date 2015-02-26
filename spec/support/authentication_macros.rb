@@ -7,7 +7,8 @@ module AuthenticationMacros
     page.set_rack_session(user_id: nil)
     admin ||= Fabricate(:admin,
                         email: "admin@tealeaf.com",
-                        password: "secret")
+                        password: "secret",
+                        activated: true)
     visit admin_sign_in_path
     fill_in "Email", with: admin.email
     fill_in "Password", with: admin.password

@@ -7,18 +7,24 @@ describe Admin do
   it { is_expected.to have_db_index(:email).unique(true) }
   it "validates role" do
     is_expected.to validate_inclusion_of(:role).
-                   in_array(%w(Instructor Teaching\ assistant))
+      in_array(%w(Instructor Teaching\ assistant))
   end
 
   it "allows email format" do
-    is_expected.to allow_value('user@example.com', 'TEST.A@abc.in',
-      'user.ab.dot@test.ds.info', 'foo-bar2@baz2.com').for(:email)
+    is_expected.to allow_value('user@example.com',
+                               'TEST.A@abc.in',
+                               'user.ab.dot@test.ds.info',
+                               'foo-bar2@baz2.com').for(:email)
   end
 
   it "does not allow email format" do
-    is_expected.to_not allow_value('foo@bar', "'z\\foo@ex.com", 'foobar.com',
-      'foo@bar.c', 'foo..bar@ex.com', '>!?#@ex.com', 'mel,bour@ne.aus')
-      .for(:email)
+    is_expected.to_not allow_value('foo@bar',
+                                   "'z\\foo@ex.com",
+                                   'foobar.com',
+                                   'foo@bar.c',
+                                   'foo..bar@ex.com',
+                                   '>!?#@ex.com',
+                                   'mel,bour@ne.aus').for(:email)
   end
 
   it "allows nil for password" do
