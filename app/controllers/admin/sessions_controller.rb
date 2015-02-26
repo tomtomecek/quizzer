@@ -7,14 +7,17 @@ class Admin::SessionsController < ApplicationController
 
   def create
     admin = Admin.find_by(email: params[:email])
-
-    if admin && admin.authenticate(params[:password])
+    if admin && admin.activated? && admin.authenticate(params[:password])
       session[:admin_id] = admin.id
       remember admin if remember_me_checked?
       flash[:success] = "Login was successful!"
       redirect_to admin_courses_url
     else
-      flash.now[:danger] = "Incorrect email or password. Please try again."
+      if admin && !admin.activated?
+        flash.now[:info] = "Your account has not been activated yet."
+      else
+        flash.now[:danger] = "Incorrect email or password. Please try again."
+      end
       render :new
     end
   end
