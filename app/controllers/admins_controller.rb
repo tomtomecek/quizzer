@@ -14,6 +14,8 @@ class AdminsController < AdminController
     if @admin.save
       @admin.generate_activation_token!
       AdminMailer.delay.send_activation_link(@admin)
+      flash[:success] = "New admin account was created, email was sent with\
+ instructions"
       redirect_to management_admins_path
     else
       flash.now[:danger] = "Admin account was not created, check errors below:"
