@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Admin do
   it { is_expected.to have_secure_password }
-  it { is_expected.to ensure_length_of(:password).is_at_least(6) }
+  it { is_expected.to validate_length_of(:password).is_at_least(6) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to have_db_index(:email).unique(true) }
   it "validates role" do
