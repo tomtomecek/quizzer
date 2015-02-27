@@ -23,7 +23,7 @@ feature "admin activates account" do
   context "checks errors" do
     background do
       open_email(email)
-      current_email.click_on activation_path
+      current_email.click_link activation_path
     end
 
     scenario "username errors", :js do
@@ -31,8 +31,7 @@ feature "admin activates account" do
       submit_with(username: "", password: "strongPassword")
       expect_to_see "This value is required."
       submit_with(username: "brandon", password: "strongPassword")
-      click_on "Enter Tealeaf Academy Quizzer"
-      expect_to_see "Username has already been taken."
+      expect_to_see "User Name has already been taken"
     end
 
     scenario "password errors", :js do
