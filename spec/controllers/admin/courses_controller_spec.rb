@@ -3,6 +3,24 @@ require "spec_helper"
 describe Admin::CoursesController do
   before { set_current_admin }
 
+  describe "GET new" do
+    let(:kevin) { Fabricate(:instructor, activated: true) }
+    it_behaves_like "require admin sign in" do
+      let(:action) { get :new }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { get :new }
+    end
+
+    it "sets the @course" do
+      set_current_admin(kevin)
+      get :new
+      expect(assigns(:course)).to be_new_record
+      expect(assigns(:course)).to be_instance_of Course
+    end
+  end
+
   describe "GET index" do
     it_behaves_like "require admin sign in" do
       let(:action) { get :index }
