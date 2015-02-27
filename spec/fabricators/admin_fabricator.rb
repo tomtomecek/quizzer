@@ -1,5 +1,5 @@
 Fabricator(:admin) do
-  email { Faker::Internet.email }
+  email { sequence(:email) { |i| "admin#{i}@example.com" } }
   password { "password" }
   role { ["Teaching assistant", "Instructor"].sample }
 end

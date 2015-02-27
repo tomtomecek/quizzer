@@ -1,10 +1,11 @@
-Admin.create!(email: "ta@example.com", password: "123456", role: "TA")
-Admin.create!(
-  email: "instructor@example.com",
-  password: "123456",
-  role: "instructor"
-)
-
+Admin.create!(username: "teaching assistant",
+              email: "ta@example.com",
+              password: "123456",
+              role: "Teaching assistant")
+Admin.create!(username: "instructor",
+              email: "instructor@example.com",
+              password: "123456",
+              role: "Instructor")
 ruby = Course.create!(
   title: "Introduction to Ruby and Web development",
   description: Faker::Lorem.paragraph(10))

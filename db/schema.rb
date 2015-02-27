@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225135849) do
+ActiveRecord::Schema.define(version: 20150227144442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,11 @@ ActiveRecord::Schema.define(version: 20150225135849) do
     t.string   "remember_digest"
     t.boolean  "activated",                 default: false
     t.string   "activation_token"
+    t.string   "username"
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  add_index "admins", ["username"], name: "index_admins_on_username", unique: true, using: :btree
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -50,10 +52,17 @@ ActiveRecord::Schema.define(version: 20150225135849) do
   end
 
   create_table "courses", force: true do |t|
-    t.string "title"
-    t.text   "description"
-    t.string "slug"
+    t.string  "title"
+    t.text    "description"
+    t.string  "slug"
+    t.string  "duration"
+    t.integer "instructor_id"
+    t.integer "min_quiz_count"
+    t.string  "image_path"
+    t.boolean "published",      default: false
   end
+
+  add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
 
   create_table "enrollments", force: true do |t|
     t.integer  "course_id"

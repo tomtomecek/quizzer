@@ -1,7 +1,9 @@
 class Admin < ActiveRecord::Base
   has_secure_password validations: false
 
+  has_many :courses, foreign_key: "instructor_id"
 
+  validates :username, uniqueness: { case_sensitive: false }, allow_nil: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]{2,}\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
@@ -43,6 +45,10 @@ class Admin < ActiveRecord::Base
 
   def generate_activation_token!
     update_columns(activation_token: generate_token)
+  end
+
+  def self.instructors
+    where(role: "Instructor")
   end
 
 private

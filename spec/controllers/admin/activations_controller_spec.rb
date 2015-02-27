@@ -25,16 +25,17 @@ describe Admin::ActivationsController do
     context "with valid token" do
       let(:admin) do
         Fabricate(:admin,
+                  username: nil,
                   password: nil,
                   activation_token: "12345",
                   activated: false)
       end
 
-      context "with valid password" do
+      context "with valid data" do
         before do
           post :create,
                activation_token: admin.activation_token,
-               password: "password"
+               admin: { username: "brandon", password: "password" }
         end
 
         it { is_expected.to redirect_to admin_courses_url }
@@ -54,11 +55,11 @@ describe Admin::ActivationsController do
         end
       end
 
-      context "with invalid password" do
+      context "with invalid data" do
         before do
           post :create,
                activation_token: admin.activation_token,
-               password: "wrong"
+               admin: { username: "", password: "wrong" }
         end
 
         it { is_expected.to render_template :new }
@@ -86,7 +87,12 @@ describe Admin::ActivationsController do
     context "with invalid token" do
       before do
         Fabricate(:admin, activation_token: "12345")
-        post :create, activation_token: "123", password: "password"
+        post :create,
+             activation_token: "123",
+             admin: {
+               username: "bash",
+               password: "password"
+             }
       end
 
       it { is_expected.to redirect_to admin_sign_in_url }

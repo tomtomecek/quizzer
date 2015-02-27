@@ -29,4 +29,8 @@ module ApplicationHelper
   def roles
     ['Teaching assistant', 'Instructor']
   end
+
+  def instructors_select_options
+    Admin.instructors.map { |a| [a.username, a.id] }
+  end
 end

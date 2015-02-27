@@ -1,7 +1,10 @@
 .container
   .col-sm-offset-2.col-sm-7
-    = bootstrap_form_tag(url: admin_activation_path, method: :post, layout: :horizontal, label_col: "col-sm-3", column_col: "col-sm-5", html: { "data-parsley-validate" => ''}) do |f|
+    = bootstrap_form_for @admin, url: admin_activation_path, method: :post, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-5", html: { "data-parsley-validate" => ''} do |f|
+      = f.form_group label_col: "col-sm-3", control_col: "col-sm-9" do
+        %h3 Administrator Activation
       = hidden_field_tag :activation_token, @admin.activation_token
+      = f.text_field :username, label: "User Name", required: true
       = f.password_field :password, required: true, "data-parsley-minlength" => "6", "data-parsley-minlength-message" => "Password must have at least 6 characters."
-      = f.form_group do
-        = f.submit "Enter Tealeaf Academy Quizzer"
+      = f.form_group label_col: "col-sm-3", control_col: "col-sm-9" do
+        = f.submit "Enter Tealeaf Academy Quizzer", style: "padding: 6px 25px;"
