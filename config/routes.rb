@@ -28,7 +28,7 @@ Rails.application.routes.draw do
          to: "activations#create",
          as: :activations
 
-    resources :courses, only: [:index, :show]
+    resources :courses, only: [:new, :index, :show]
     resources :exams, only: [:index, :show]
   end
 
