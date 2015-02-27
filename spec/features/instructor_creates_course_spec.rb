@@ -5,7 +5,7 @@ feature "instructor creates a new course" do
   background { sign_in_admin kevin }
 
   scenario "standard course creation", :js do
-    navigate_to_new_course
+    visit new_admin_course_path
     fill_in "Title", with: "HTML and CSS basics"
     fill_in "Description", with: "front end course"
     fill_in "Duration", with: "4 weeks"
@@ -18,7 +18,7 @@ feature "instructor creates a new course" do
   end
 
   scenario "check error messages", :js do
-    navigate_to_new_course
+    visit new_admin_course_path
     validate_required_error_message_for("Title")
     validate_required_error_message_for("Description")
     validate_required_error_message_for("Duration")

@@ -10,6 +10,7 @@ module AuthenticationMacros
                         password: "secret",
                         activated: true)
     visit admin_sign_in_path
+    expect(page).to have_content "Email"
     fill_in "Email", with: admin.email
     fill_in "Password", with: admin.password
     click_on "Sign in"
