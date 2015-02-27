@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
-  before_create :generate_slug  
+  before_create :generate_slug
 
+  belongs_to :instructor, class_name: "Admin"
   has_many :quizzes, -> { order(:created_at) }
   has_many :enrollments
 
