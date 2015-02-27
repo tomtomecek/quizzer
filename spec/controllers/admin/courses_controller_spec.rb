@@ -21,6 +21,57 @@ describe Admin::CoursesController do
     end
   end
 
+  describe "POST create" do
+    let(:kevin) { Fabricate(:instructor, activated: true) }
+    it_behaves_like "require admin sign in" do
+      let(:action) { post :create, course: Fabricate.attributes_for(:course) }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { post :create, course: Fabricate.attributes_for(:course) }
+    end
+
+    context "with valid data" do
+      before do
+        set_current_admin(kevin)
+        post :create, course: Fabricate.attributes_for(:course, instructor: kevin)
+      end
+      it { is_expected.to redirect_to admin_courses_url }
+      it { is_expected.to set_flash[:success] }
+      it "creates a course" do
+        expect(Course.count).to eq 1
+      end
+
+      it "creats a course under admin" do
+        expect(kevin.courses.count).to eq 1
+      end
+    end
+
+    context "with invalid data" do
+      before do
+        set_current_admin(kevin)
+        post :create,
+             course: {
+               instructor_id: kevin.id,
+               title: "",
+               description: "",
+               min_quiz_count: ""
+             }
+      end
+
+      it { is_expected.to render_template :new }
+      it { is_expected.to set_flash.now[:danger] }
+      it "sets the @course" do
+        expect(assigns(:course)).to be_new_record
+        expect(assigns(:course)).to be_instance_of Course
+      end
+
+      it "does not create a course" do
+        expect(Course.count).to eq 0
+      end
+    end
+  end
+
   describe "GET index" do
     it_behaves_like "require admin sign in" do
       let(:action) { get :index }
