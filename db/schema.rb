@@ -56,12 +56,13 @@ ActiveRecord::Schema.define(version: 20150227144442) do
     t.text    "description"
     t.string  "slug"
     t.string  "duration"
-    t.integer "admin_id"
+    t.integer "instructor_id"
     t.integer "min_quiz_count"
     t.string  "image_path"
+    t.boolean "published",      default: false
   end
 
-  add_index "courses", ["admin_id"], name: "index_courses_on_admin_id", using: :btree
+  add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
 
   create_table "enrollments", force: true do |t|
     t.integer  "course_id"

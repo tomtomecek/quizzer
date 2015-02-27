@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Course do
+  it { is_expected.to belong_to(:instructor).class_name("Admin") }
   it { is_expected.to have_many(:quizzes).order(:created_at) }
   it { is_expected.to have_many(:enrollments) }
   it { is_expected.to validate_presence_of(:description) }
