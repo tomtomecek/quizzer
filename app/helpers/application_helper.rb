@@ -31,6 +31,6 @@ module ApplicationHelper
   end
 
   def instructors_select_options
-    Admin.instructors.collect { |a| [a.username, a.id] }
+    Admin.instructors.map { |a| [a.username, a.id] }
   end
 end

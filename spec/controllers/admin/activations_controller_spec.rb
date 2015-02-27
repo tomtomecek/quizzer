@@ -59,7 +59,7 @@ describe Admin::ActivationsController do
         before do
           post :create,
                activation_token: admin.activation_token,
-               admin: { username: "" , password: "wrong" }
+               admin: { username: "", password: "wrong" }
         end
 
         it { is_expected.to render_template :new }
