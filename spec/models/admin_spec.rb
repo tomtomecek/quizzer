@@ -4,6 +4,8 @@ describe Admin do
   it { is_expected.to have_secure_password }
   it { is_expected.to validate_length_of(:password).is_at_least(6) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  it { is_expected.to validate_uniqueness_of(:username).case_insensitive }
+  it { is_expected.to have_db_index(:username).unique(true) }
   it { is_expected.to have_db_index(:email).unique(true) }
   it "validates role" do
     is_expected.to validate_inclusion_of(:role).
@@ -29,6 +31,12 @@ describe Admin do
 
   it "allows nil for password" do
     admin = Fabricate(:admin, password: nil)
+    expect(admin).to be_valid
+  end
+
+  it "allows nil for username" do
+    Fabricate(:admin, username: nil)
+    admin = Fabricate(:admin, username: nil)
     expect(admin).to be_valid
   end
 
