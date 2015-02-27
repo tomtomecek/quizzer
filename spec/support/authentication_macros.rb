@@ -39,7 +39,8 @@ module AuthenticationMacros
   end
 
   def set_current_admin(admin = nil, options = {})
-    admin ||= Fabricate(:admin)
+    clear_current_admin
+    admin ||= Fabricate(:admin, activated: true)
     if admin && options[:remember_me]
       admin.remember
       cookies.permanent.signed[:admin_id] = admin.id
