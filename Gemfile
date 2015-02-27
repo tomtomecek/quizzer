@@ -28,7 +28,7 @@ gem 'pygments.rb',          '0.6.0'
 gem 'stripe',               '1.16.1'
 gem 'wicked_pdf',           '0.11.0'
 gem 'mini_magick',          '4.1.0'
-gem 'fog-aws',              '0.1.1'
+gem 'fog',                  '~> 1.28', require: "fog/aws/storage"
 gem 'carrierwave',          '0.10.0'
 
 group :development do
