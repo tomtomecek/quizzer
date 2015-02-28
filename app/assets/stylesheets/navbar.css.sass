@@ -1,7 +1,12 @@
+$dark-gray: #6c6965
 $teal-light: rgba(119, 240, 240, 0.9)
 $teal: #77f0f0
-$tealeaf-green: #16a085
+$tealeaf-green: rgba(18, 117, 112, 0.7)
 $tealeaf-light: #46bcb8
+nav.admin-navbar
+  background-color: $tealeaf-green
+  position: relative
+
 .navbar
   border-radius: 0px
   margin-bottom: 0px
@@ -47,7 +52,7 @@ $tealeaf-light: #46bcb8
     > li
       margin-left: 5px
       > a
-        color: #6c6965
+        color: $dark-gray
         -webkit-transition: all 0.2s ease
         -moz-transition: all 0.2s ease
         -ms-transition: all 0.2s ease
@@ -55,8 +60,7 @@ $tealeaf-light: #46bcb8
         transition: all 0.2s ease
         &:hover, &:focus
           border: 2px solid $teal
-          padding: 25px
-          font-size: 20px
+          padding: 15px 15px
           color: white
           background-color: $tealeaf-light
 .fa-github

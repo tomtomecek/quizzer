@@ -1,6 +1,6 @@
 = content_for :head do
   = javascript_include_tag "admin/quiz.js", 'data-turbolinks-track' => true
-.container
+%section.container
   .col-sm-9
     %h2= @quiz.title
     = preserve do

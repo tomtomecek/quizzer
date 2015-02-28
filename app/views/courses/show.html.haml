@@ -1,53 +1,54 @@
-.well.col-sm-2
-  %dl
-    %dt Enrollment:
-    %dd= @enrollment.paid? ? "Signature Track" : "Free"
-  %dl
-    %dt Quizzes:
-    %dd #{@enrollment.passed_exams.count} / #{@course.published_quizzes.count}
-  - if @enrollment.completed? && @enrollment.paid?
+%section
+  .well.col-sm-2
     %dl
-      %dt Congratulations!
-      %dd
-        Check out your certification
-        = link_to certificate_path(@enrollment.certificate.licence_number), target: "_blank" do
-          here
-          %span.glyphicon.glyphicon-new-window
-.container
-  .page-header
-    %h1 Welcome to #{@course.title}
-  .col-sm-7.quizzes
-    - @course.published_quizzes.each do |quiz|
-      .row{ id: "quiz_#{quiz.id}" }
-        %h3= quiz.title
-        %br
-        %p= quiz.description
-        %br
-        - if current_user.has_permission?(quiz)
-          - if current_user.examined_from?(quiz)
-            - if current_user.passed_exam?(quiz)
-              = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-success btn-lg col-sm-12" do
-                %span.glyphicon.glyphicon-ok-circle
-                Exam passed
-              .clearfix
-            - elsif current_user.failed_exam?(quiz)
-              = link_to '', class: "btn btn-warning btn-lg col-sm-12" do
-                %span.glyphicon.glyphicon-repeat
-                Re-attempt
-              .clearfix
+      %dt Enrollment:
+      %dd= @enrollment.paid? ? "Signature Track" : "Free"
+    %dl
+      %dt Quizzes:
+      %dd #{@enrollment.passed_exams.count} / #{@course.published_quizzes.count}
+    - if @enrollment.completed? && @enrollment.paid?
+      %dl
+        %dt Congratulations!
+        %dd
+          Check out your certification
+          = link_to certificate_path(@enrollment.certificate.licence_number), target: "_blank" do
+            here
+            %span.glyphicon.glyphicon-new-window
+  .container
+    .page-header
+      %h1 Welcome to #{@course.title}
+    .col-sm-7.quizzes
+      - @course.published_quizzes.each do |quiz|
+        .row{ id: "quiz_#{quiz.id}" }
+          %h3= quiz.title
+          %br
+          %p= quiz.description
+          %br
+          - if current_user.has_permission?(quiz)
+            - if current_user.examined_from?(quiz)
+              - if current_user.passed_exam?(quiz)
+                = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-success btn-lg col-sm-12" do
+                  %span.glyphicon.glyphicon-ok-circle
+                  Exam passed
+                .clearfix
+              - elsif current_user.failed_exam?(quiz)
+                = link_to '', class: "btn btn-warning btn-lg col-sm-12" do
+                  %span.glyphicon.glyphicon-repeat
+                  Re-attempt
+                .clearfix
+              - else
+                = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
+                  %span.glyphicon.glyphicon-play-circle
+                  Continue in Quiz
+                .clearfix
             - else
-              = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
+              = link_to new_quiz_exam_path(quiz), class: "btn btn-primary btn-lg col-sm-12" do
                 %span.glyphicon.glyphicon-play-circle
-                Continue in Quiz
+                Start Quiz
               .clearfix
           - else
-            = link_to new_quiz_exam_path(quiz), class: "btn btn-primary btn-lg col-sm-12" do
-              %span.glyphicon.glyphicon-play-circle
-              Start Quiz
+            = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
+              %span.glyphicon.glyphicon-ban-circle
+              You have to pass previous quiz first.
             .clearfix
-        - else
-          = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
-            %span.glyphicon.glyphicon-ban-circle
-            You have to pass previous quiz first.
-          .clearfix
-        %hr(style="padding: 5px 0px;")
+          %hr(style="padding: 5px 0px;")

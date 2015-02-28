@@ -1,7 +1,12 @@
 <% if @answer.valid? %>
   $('#answerFormModal').modal('hide');
   $('#question_<%= @answer.question.id %>_answers').html('<%= j render partial: "answers/answer", collection: @answer.question.answers %>');
-  $('#flash_messages').html('<%= j render "shared/flash_messages" %>');
+  $('html, body').animate({
+    scrollTop: $(".navbar").offset().top
+  }, 1000);
+  var $flashTop = $('#flash-message-top');
+  $flashTop.html('<%= j render "shared/flash_messages" %>');
+  $flashTop.delay('3000').slideUp('slow');
 <% else %>
   $('.answer_errors').html("<%= j render 'shared/errors', obj: @answer %>");
 <% end %>

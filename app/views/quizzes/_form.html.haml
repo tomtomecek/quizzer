@@ -4,7 +4,7 @@
   = form_for @quiz, html: { class: "form-horizontal", role: "form", 'data-parsley-validate' => '' } do |f|
     .form_group
       .col-sm-offset-2
-        %h1 #{@quiz.new_record? ? "Add new" : "Edit"} quiz
+        %h1(style="margin-left: 5px") #{@quiz.new_record? ? "Add new" : "Edit"} quiz
       = hidden_field_tag :course_id, @quiz.course.slug if @quiz.new_record?
     .form-group
       = f.label :title, class: "col-sm-2 control-label"
@@ -16,7 +16,7 @@
         = f.text_area :description, rows: 3, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
     .form-group
       = f.label :passing_percentage, class: "col-sm-2 control-label"
-      .col-sm-4
+      .col-sm-2
         = f.select :passing_percentage, passing_percentage_array, {prompt: "Select Percentage"}, { class: "form-control", required: true, 'data-parsley-trigger' => 'blur'}
     .form-group
       .col-sm-offset-2.col-sm-8

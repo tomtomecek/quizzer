@@ -1,5 +1,7 @@
-.container
+%section.container
   = bootstrap_form_for [:admin, @course], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6", html: { 'data-parsley-validate' => '' } do |f|
+    .col-sm-offset-2
+      %h1(style='margin-left: 5px') New course
     = f.text_field :title, required: true, "data-parsley-trigger" => "blur"
     = f.text_area :description, rows: 5, required: true, "data-parsley-trigger" => "blur"
     = f.text_field :duration, control_col: "col-sm-3", required: true, "data-parsley-trigger" => "blur"
