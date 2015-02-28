@@ -1,11 +1,13 @@
 class Course < ActiveRecord::Base
-  before_create :generate_slug
+  mount_uploader :image_cover, ImageUploader
 
   belongs_to :instructor, class_name: "Admin"
   has_many :quizzes, -> { order(:created_at) }
   has_many :enrollments
 
   validates :description, presence: true
+
+  before_create :generate_slug
 
   def starting_quiz
     quizzes.published.find_by(position: 1)

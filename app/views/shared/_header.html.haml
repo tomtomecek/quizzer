@@ -1,7 +1,7 @@
 %nav.navbar.navbar-default.layout(role="navigation")
   .container
     .navbar-header
-      %a.navbar-brand(href="") Quizzer
+      = link_to "Quizzer", root_path, class: "navbar-brand"
     %ul.nav.navbar-nav.navbar-right
       - if logged_in?
         %li= link_to current_user.username, '', class: "btn btn-default"

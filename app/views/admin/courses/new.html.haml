@@ -5,6 +5,6 @@
     = f.text_field :duration, control_col: "col-sm-3", required: true, "data-parsley-trigger" => "blur"
     = f.select :instructor_id, instructors_select_options, { prompt: "Select Instructors", label: "Instructors" }, { required: true, "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Course must have at least 1 instructor." }
     = f.number_field :min_quiz_count, control_col: "col-sm-3", label: "Quizzes to pass", required: true, "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Set minimum amount of quizzes to pass."
-    = f.file_field :image_path, label: "Image"
+    = f.file_field :image_cover, label: "Image"
     = f.form_group do
       = f.submit "Create Course"

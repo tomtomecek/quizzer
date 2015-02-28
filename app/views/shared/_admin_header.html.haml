@@ -1,7 +1,7 @@
 %nav.navbar.navbar-default.layout(role="navigation")
   .container
     .navbar-header
-      %a.navbar-brand(href="") Quizzer
+      = link_to "Quizzer", root_path, class: "navbar-brand"
     %ul.nav.navbar-nav.navbar-right
       - if current_admin.instructor?
         %li= link_to "Admin Management", management_admins_path, class: "btn btn-default"

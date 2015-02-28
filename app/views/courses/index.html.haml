@@ -7,7 +7,10 @@
   .col-sm-7
     - @courses.each do |course|
       .row{ id: "course_#{course.id}" }
-        %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image")
+        - if course.image_cover_url.nil?
+          %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image")
+        - else
+          = image_tag course.image_cover_url, alt: course.title, class: "img-responsive"
         %h3= course.title
         %br
         %p.bg-primary
