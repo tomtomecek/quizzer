@@ -7,7 +7,8 @@ describe ImageUploader do
 
   before do
     ImageUploader.enable_processing = true
-    uploader.store!(File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
+    uploader.store!(File.open(File.join(Rails.root, "\
+spec/support/images/ruby_on_rails.jpg")))
   end
 
   after do
