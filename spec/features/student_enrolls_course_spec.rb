@@ -7,6 +7,7 @@ feature "student enrolls course" do
     Fabricate.times(3, :quiz, course: ruby, published: true)
     sign_in
   end
+  after { clear_emails }
 
   context "for free" do
     scenario "student enrolls course for free", :js, :billy do

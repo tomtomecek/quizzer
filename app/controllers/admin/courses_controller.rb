@@ -34,7 +34,7 @@ private
              :instructor_id,
              :min_quiz_count,
              :duration,
-             :image_path)
+             :image_cover)
   end
 
   def require_instructor

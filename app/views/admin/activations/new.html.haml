@@ -1,4 +1,4 @@
-.container
+%section.container
   .col-sm-offset-2.col-sm-7
     = bootstrap_form_for @admin, url: admin_activation_path, method: :post, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-5", html: { "data-parsley-validate" => ''} do |f|
       = f.form_group label_col: "col-sm-3", control_col: "col-sm-9" do

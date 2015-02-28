@@ -1,5 +1,5 @@
-$('#answer_<%= @id %>').before('<%= j render "shared/flash_messages" %>')
-$('.flash_messages').delay(2000).slideUp('slow');
+$('#answer_<%= @id %>').before('<%= j render "shared/flash_messages" %>');
+$('.flash-messages').delay(2000).slideUp('slow');
 <% if @destroyed %>
   $('#answer_<%= @id %>').delay(1500).hide('slow', function() {
     $(this).remove();

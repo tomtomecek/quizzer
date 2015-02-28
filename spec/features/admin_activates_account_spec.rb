@@ -7,6 +7,7 @@ feature "admin activates account" do
   given(:activation_path) { admin_activation_path(admin.activation_token) }
 
   background do
+    clear_emails
     sign_in_admin(kevin)
     create_admin_account(email: email)
   end

@@ -1,16 +1,26 @@
-%nav.navbar.navbar-default.layout(role="navigation")
+%nav.navbar.navbar-default
   .container
     .navbar-header
-      %a.navbar-brand(href="") Quizzer
-    %ul.nav.navbar-nav.navbar-right
-      - if logged_in?
-        %li= link_to current_user.username, '', class: "btn btn-default"
-        %li
-          = link_to sign_out_path, method: :delete, class: "btn btn-default" do
-            %i.fa.fa-sign-out
-            Sign out
-      - else
-        %li
-          = link_to github_sign_in_path, class: "btn btn-default" do
-            %i.fa.fa-github.fa-2x
-            %span.sign_in_btn_text Sign in with GitHub
+      %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#navbar-collapse")
+        %span(class="sr-only") Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to root_path, class: "navbar-brand" do
+        %i.fa.fa-leaf
+        Quizzer
+    .collapse.navbar-collapse#navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if logged_in?
+          %li= link_to current_user.username, '', class: "btn btn-default"
+          %li
+            = link_to sign_out_path, method: :delete, class: "btn btn-default" do
+              %i.fa.fa-sign-out
+              Sign out
+        - else
+          %li
+            = link_to github_sign_in_path, class: "btn btn-default" do
+              %i.fa.fa-github
+              %span.sign_in_btn_text Sign in with GitHub
+  .container= render 'shared/flash_messages'
+    

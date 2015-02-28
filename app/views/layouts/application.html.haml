@@ -7,14 +7,12 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    = render 'shared/shim'
     = yield :head
   %body
     - if logged_in_admin?
       = render 'shared/admin_header'
     - else
       = render 'shared/header'
-    .container
-      #flash_messages
-        = render 'shared/flash_messages'
     = yield
     = render 'shared/footer'
