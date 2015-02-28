@@ -1,3 +1,4 @@
+$white: white
 $dark-gray: #6c6965
 $teal-light: rgba(119, 240, 240, 0.9)
 $teal: #77f0f0
@@ -61,10 +62,28 @@ nav.admin-navbar
         &:hover, &:focus
           border: 2px solid $teal
           padding: 15px 15px
-          color: white
+          color: $white
           background-color: $tealeaf-light
+  .navbar-toggle .icon-bar
+    background-color: $white
+  .navbar-collapse, .navbar-form
+    border-color: $tealeaf-green
+  .navbar-toggle
+    border: 2px solid $teal
+    border-radius: 4px
+    position: relative
+    float: right
+    margin-right: 15px
+    padding: 17px 23px
+    margin-top: 38px
+    margin-right: 38px
+    margin-bottom: 8px
+    background-color: $tealeaf-light
+    &:hover, &:focus
+      background-color: $tealeaf-green
 .fa-github
   font-size: 1.5em
 .sign_in_btn_text
   margin-left: 15px
   font-size: 1.5em
+

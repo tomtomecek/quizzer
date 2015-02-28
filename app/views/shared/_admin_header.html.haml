@@ -1,19 +1,25 @@
-%nav.navbar.navbar-default.layout.admin-navbar(role="navigation")
+%nav.navbar.navbar-default.admin-navbar
   .container
     .navbar-header
+      %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#navbar-collapse")
+        %span(class="sr-only") Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
       = link_to root_path, class: "navbar-brand" do
         %i.fa.fa-leaf
         Quizzer
-    %ul.nav.navbar-nav.navbar-right
-      - if current_admin.instructor?
-        %li= link_to "Admin Management", management_admins_path, class: "btn btn-default"
-      %li= link_to "Dashboard", '', class: "btn btn-default"
-      %li= link_to "Courses", admin_courses_path, class: "btn btn-default"
-      %li= link_to "Exams", admin_exams_path, class: "btn btn-default"
-      %li= link_to "Enrollments", '', class: "btn btn-default"
-      %li= link_to current_admin.email, '', class: "btn btn-default"
-      %li
-        = link_to admin_sign_out_path, method: :delete, class: "btn btn-default" do
-          %i.fa.fa-sign-out
-          Sign out
+    .collapse.navbar-collapse#navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if current_admin.instructor?
+          %li= link_to "Admin Management", management_admins_path, class: "btn btn-default"
+        %li= link_to "Dashboard", '', class: "btn btn-default"
+        %li= link_to "Courses", admin_courses_path, class: "btn btn-default"
+        %li= link_to "Exams", admin_exams_path, class: "btn btn-default"
+        %li= link_to "Enrollments", '', class: "btn btn-default"
+        %li= link_to current_admin.email, '', class: "btn btn-default"
+        %li
+          = link_to admin_sign_out_path, method: :delete, class: "btn btn-default" do
+            %i.fa.fa-sign-out
+            Sign out
   .container#flash-message-top= render 'shared/flash_messages'
