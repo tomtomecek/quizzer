@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature "admin resets password" do
   background { clear_emails }
+  after { clear_emails }
 
   scenario "admin forgot password and resets it" do
     admin = Fabricate(:admin,

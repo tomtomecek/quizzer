@@ -39,11 +39,13 @@ feature "student performs an exams" do
   given!(:q3) { week1.questions.last }
 
   background do
+    clear_emails
     sign_in
     student = User.first
     enr = Fabricate(:enrollment, course: ruby, student: student, paid: false)
     Fabricate(:permission, student: student, quiz: week1, enrollment: enr)
   end
+  after { clear_emails }
 
   scenario "student checks course page and enters a course" do
     visit courses_path

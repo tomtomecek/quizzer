@@ -12,6 +12,7 @@ feature "student receives certificate" do
     clear_emails
     sign_in
   end
+  after { clear_emails }
 
   scenario "via email", :js do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
@@ -39,7 +40,6 @@ feature "student receives certificate" do
     current_email.click_link "here"
 
     expect_to_be_in certificate_path(cert.licence_number)
-    clear_emails
   end
 
   scenario "via direct link visit", :no_travis do

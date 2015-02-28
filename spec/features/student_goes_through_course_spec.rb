@@ -10,6 +10,7 @@ feature "student goes through whole course", :slow do
   given!(:q2)   { quiz2.questions.first }
   given!(:q3)   { quiz3.questions.first }
   background { clear_emails }
+  after { clear_emails }
 
   scenario "full course experience", :js, :vcr do
     sign_in
@@ -56,7 +57,6 @@ feature "student goes through whole course", :slow do
       expect_to_see "Quizzes: 3 / 3"
       expect_to_see "Congratulations! Check out your certification"
     end
-    clear_emails
   end
 end
 

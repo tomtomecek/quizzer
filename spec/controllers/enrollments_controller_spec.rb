@@ -181,7 +181,6 @@ describe EnrollmentsController do
             paid: "1"
           }
         end
-        after { ActionMailer::Base.deliveries.clear }
 
         it { is_expected.to render_template :new }
 
