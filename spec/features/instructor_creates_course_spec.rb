@@ -10,7 +10,7 @@ feature "instructor creates a new course" do
     fill_in "Title", with: "HTML and CSS basics"
     fill_in "Description", with: "front end course"
     fill_in "Duration", with: "4 weeks"
-    select "Kevin", from: "Instructors"
+    select "Kevin", from: "Instructor"
     fill_in "Quizzes to pass", with: "4"
     attach_file 'Image', 'spec/support/images/ruby_on_rails.jpg'
 
@@ -27,7 +27,7 @@ feature "instructor creates a new course" do
     validate_required_error_message_for("Description")
     validate_required_error_message_for("Duration")
 
-    select "Select Instructors", from: "Instructors"
+    select "Select one", from: "Instructor"
 
     fill_in "Quizzes to pass", with: ""
     expect_to_see "Set minimum amount of quizzes to pass."
