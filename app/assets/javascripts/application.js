@@ -16,5 +16,4 @@
 //= require parsley
 //= require bootstrap
 //= require navbar
-//= require flash
 //= require turbolinks
