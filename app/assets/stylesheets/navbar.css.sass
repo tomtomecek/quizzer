@@ -1,0 +1,66 @@
+$teal-light: rgba(119, 240, 240, 0.9)
+$teal: #77f0f0
+$tealeaf-green: #16a085
+$tealeaf-light: #46bcb8
+.navbar
+  border-radius: 0px
+  margin-bottom: 0px
+  background-color: transparent
+  border: none
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  z-index: 100
+.fix-bar
+  background-color: rgba(18, 117, 112, 0.7)
+  -webkit-box-shadow: 0 10px 3px 3px rgba(18, 117, 112, 0.7)
+  box-shadow: 0 10px 3px 3px rgba(18, 117, 112, 0.7)
+.navbar-default  
+  .navbar-brand
+    color: white
+    padding: 35px 15px
+    min-height: 120px
+    font-size: 4em
+    -webkit-transition: all 1s ease
+    -moz-transition: all 1s ease
+    -ms-transition: all 1s ease
+    -o-transition: all 1s ease
+    transition: all 1s ease
+    &:hover
+      color: white
+      text-shadow: 0 0 25px $teal-light
+      i
+        margin-right: 5px
+        -webkit-transition: all 1s ease
+        -moz-transition: all 1s ease
+        -ms-transition: all 1s ease
+        -o-transition: all 1s ease
+        transition: all 1s ease
+        -moz-transform: rotate(-45deg)
+        -webkit-transform: rotate(-45deg)
+        -o-transform: rotate(-45deg)
+        -ms-transform: rotate(-45deg)
+        transform: rotate(-45deg)
+  .navbar-nav
+    margin-top: 40px
+    > li
+      margin-left: 5px
+      > a
+        color: #6c6965
+        -webkit-transition: all 0.2s ease
+        -moz-transition: all 0.2s ease
+        -ms-transition: all 0.2s ease
+        -o-transition: all 0.2s ease
+        transition: all 0.2s ease
+        &:hover, &:focus
+          border: 2px solid $teal
+          padding: 25px
+          font-size: 20px
+          color: white
+          background-color: $tealeaf-light
+.fa-github
+  font-size: 1.5em
+.sign_in_btn_text
+  margin-left: 15px
+  font-size: 1.5em

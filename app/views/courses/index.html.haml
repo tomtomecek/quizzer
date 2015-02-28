@@ -3,6 +3,16 @@
   :javascript
     Stripe.setPublishableKey('#{ENV["STRIPE_PUBLISHABLE_KEY"]}');
   = javascript_include_tag 'enroll'
+.tealeaf-banner
+  .container.after-nav
+    .ta-leaf
+      %span.ta-title Tealeaf Academy
+      - if @courses.any?
+        %span
+          %em presents
+        %ul.no-bullets
+          - @courses.each do |course|
+            %li= course.title
 .container
   .col-sm-7
     - @courses.each do |course|

@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require parsley
 //= require bootstrap
+//= require navbar
 //= require turbolinks
