@@ -1,3 +1,11 @@
+chris = Admin.create!(username: "Chris",
+                      email: "chris@example.com",
+                      password: "123456",
+                      role: "Instructor")
+kevin = Admin.create!(username: "Kevin",
+                      email: "kevin@example.com",
+                      password: "123456",
+                      role: "Instructor")
 Admin.create!(username: "teaching assistant",
               email: "ta@example.com",
               password: "123456",
@@ -6,15 +14,30 @@ Admin.create!(username: "instructor",
               email: "instructor@example.com",
               password: "123456",
               role: "Instructor")
-ruby = Course.create!(
-  title: "Introduction to Ruby and Web development",
-  description: Faker::Lorem.paragraph(10))
-Course.create!(
-  title: "Rapid Prototyping with Ruby on Rails",
-  description: Faker::Lorem.paragraph(10))
-Course.create!(
-  title: "Build Robust and Production Quality Applications",
-  description: Faker::Lorem.paragraph(10))
+ruby = Course.new(title: "Introduction to Ruby and Web development",
+                  description: Faker::Lorem.paragraph(9),
+                  instructor: chris,
+                  duration: "4 weeks",
+                  min_quiz_count: 4,
+                  published: true)
+ruby.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby.jpg")))
+ruby.save!
+rails = Course.new(title: "Rapid Prototyping with Ruby on Rails",
+                   description: Faker::Lorem.paragraph(9),
+                   instructor: chris,
+                   duration: "4 weeks",
+                   min_quiz_count: 4,
+                   published: true)
+rails.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
+rails.save!
+tdd = Course.new(title: "Build Robust and Production Quality Applications",
+                 description: Faker::Lorem.paragraph(9),
+                 instructor: kevin,
+                 min_quiz_count: 8,
+                 duration: "8 weeks",
+                 published: true)
+tdd.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/tdd.jpg")))
+tdd.save!
 
 QUIZ_NAMES = [
   "Week 1 - Procedural Programming",
