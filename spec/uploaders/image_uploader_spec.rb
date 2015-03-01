@@ -18,7 +18,7 @@ spec/support/images/ruby_on_rails.jpg")))
 
   context 'the certificate version' do
     it "scales down a course image to be exactly 460 by 322 pixels" do
-      expect(uploader.certificate).to have_dimensions(460, 322)
+      expect(uploader.certificate).to be_no_larger_than(460, 322)
     end
   end
 
