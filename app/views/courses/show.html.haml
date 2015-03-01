@@ -1,9 +1,17 @@
-.tealeaf-banner
+.jumbotron.tealeaf
   .container.after-nav
     .ta-leaf
-      %span.ta-title= @course.title
+      .ta-title= @course.title
+      - if @enrollment.completed? && @enrollment.paid?
+        .ta-subtitle
+          Your PDF certificate is ready:
+          = link_to certificate_path(@enrollment.certificate.licence_number, format: "pdf") do
+            = image_tag "certificate-seal.jpg", alt: "certificate", size: "75x75"
+        .linked_in_button
+          = link_to linked_in_url(@enrollment.certificate) do
+            = image_tag 'AddToProfileButton.png', class: "linkedin-button"
 .col-sm-2
-  %aside.well(style="margin: 10px 15px")
+  %aside.well(style="margin: 10px 15px; min-width: 170px")
     %dl
       %dt Enrollment:
       %dd= @enrollment.paid? ? "Signature Track" : "Free"
@@ -29,22 +37,22 @@
         - if current_user.has_permission?(quiz)
           - if current_user.examined_from?(quiz)
             - if current_user.passed_exam?(quiz)
-              = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-success btn-lg col-sm-12" do
+              = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
                 %span.glyphicon.glyphicon-ok-circle
                 Exam passed
               .clearfix
             - elsif current_user.failed_exam?(quiz)
-              = link_to '', class: "btn btn-warning btn-lg col-sm-12" do
+              = link_to '', class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
                 %span.glyphicon.glyphicon-repeat
                 Re-attempt
               .clearfix
             - else
-              = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg col-sm-12" do
+              = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
                 %span.glyphicon.glyphicon-play-circle
                 Continue in Quiz
               .clearfix
           - else
-            = link_to new_quiz_exam_path(quiz), class: "btn btn-primary btn-lg col-sm-12" do
+            = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
               %span.glyphicon.glyphicon-play-circle
               Start Quiz
             .clearfix

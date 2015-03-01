@@ -16,6 +16,7 @@
 @import bootstrap
 @import font-awesome
 @import navbar
+@import modal
 
 body
   font-family: "Crete Round", Georgia, "Times New Roman", Times, serif
@@ -24,6 +25,21 @@ section
 .row
   margin-left: 0
   margin-right: 0
+.btn-tealeaf, .btn-tealeaf:active
+  color: $dark-gray
+  -webkit-transition: all 0.2s ease
+  -moz-transition: all 0.2s ease
+  -ms-transition: all 0.2s ease
+  -o-transition: all 0.2s ease
+  transition: all 0.2s ease
+  &:hover
+    border: 2px solid $teal
+    color: $white
+    background-color: $tealeaf-light
+  &:focus
+    border: 2px solid $teal
+    color: $white
+    background-color: $tealeaf-light
 section.ui
   margin-top: 70px
 footer

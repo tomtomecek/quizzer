@@ -3,14 +3,14 @@
   :javascript
     Stripe.setPublishableKey('#{ENV["STRIPE_PUBLISHABLE_KEY"]}');
   = javascript_include_tag 'enroll'
-.tealeaf-banner
+.jumbotron.tealeaf
   .container.after-nav
     .ta-leaf
       %span.ta-title Tealeaf Academy
       - if @courses.any?
         %span
           %em presents
-        %ul.no-bullets
+        %ul.course-list.no-bullets
           - @courses.each do |course|
             %li= course.title
 .container
@@ -28,11 +28,11 @@
             = markdown course.description
         %br
         - if logged_in? && current_user.has_enrolled?(course)
-          = link_to course, class: "btn btn-default btn-lg col-sm-12" do
+          = link_to course, class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
             %span.glyphicon.glyphicon-play-circle
             Continue with exams
         - elsif logged_in?
-          = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg col-sm-12", remote: true do
+          = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg btn-tealeaf col-sm-12", remote: true do
             %span.glyphicon.glyphicon-log-in
             Enroll now
         .clearfix
