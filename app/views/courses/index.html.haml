@@ -36,6 +36,10 @@
             = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg btn-tealeaf col-sm-12", remote: true do
               %span.glyphicon.glyphicon-log-in
               Enroll now
+          - else
+            = link_to github_sign_in_path, class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
+              %i.fa.fa-github
+              %span.sign_in_btn_text Sign in with GitHub
           .clearfix
       .col-sm-5
         .course-details-wrapper
