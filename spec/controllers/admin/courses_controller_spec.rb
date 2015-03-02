@@ -149,7 +149,7 @@ describe Admin::CoursesController do
     end
 
     context "with invalid data" do
-       before do
+      before do
         patch :update, id: ruby.slug, course: {
           title: "Different title",
           description: "Different desription",

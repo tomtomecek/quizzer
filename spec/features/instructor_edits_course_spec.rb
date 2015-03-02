@@ -61,5 +61,6 @@ def validate_course_update(ruby)
   expect_to_see "7 weeks"
   expect_to_see "Kevin Wang"
   expect_to_see "front end course"
-  expect(page).to have_css("img[src='#{ruby.reload.image_cover_url}']", visible: true)
+  url = ruby.reload.image_cover_url
+  expect(page).to have_css("img[src='#{url}']", visible: true)
 end
