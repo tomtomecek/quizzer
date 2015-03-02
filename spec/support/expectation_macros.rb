@@ -1,11 +1,11 @@
 module ExpectationMacros
-  def expect_to_see(text)
-    expect(page).to have_content(text)
+  def expect_to_see(text, options = {})
+    expect(page).to have_content(text, options)
   end
 
-  def expect_to_not_see(text)
+  def expect_to_not_see(text, options = {})
     sleep 0.1
-    expect(page).to have_no_content(text)
+    expect(page).to have_no_content(text, options)
   end
   alias_method :expect_not_to_see, :expect_to_not_see
 
