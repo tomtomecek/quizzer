@@ -46,6 +46,7 @@ end
 
 def create_admin_account(options = {})
   visit new_admin_path
+  fill_in "Full Name", with: "New Admin"
   fill_in "Email:", with: options[:email]
   role = options[:role] || "Teaching assistant"
   select role, from: "Admin role:"

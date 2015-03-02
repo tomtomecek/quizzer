@@ -25,6 +25,7 @@ feature "instructor creates an admin account" do
 end
 
 def fill_in_email_select_role_and_submit(options = {})
+  fill_in "Full Name:", with: "New Admin"
   fill_in "Email:", with: "new_admin@email.com"
   select options[:role], from: "Admin role:"
   click_on "Add new admin"

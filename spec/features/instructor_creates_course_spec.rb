@@ -11,7 +11,8 @@ feature "instructor creates a new course" do
     fill_in "Description", with: "front end course"
     fill_in "Duration", with: "4 weeks"
     select "Kevin", from: "Instructor"
-    fill_in "Quizzes to pass", with: "4"
+    fill_in "Quizzes to pass", with: "3"
+    fill_in "Certificate (in $)", with: "19.99"
     attach_file 'Image', 'spec/support/images/ruby_on_rails.jpg'
 
     click_on "Create Course"
@@ -27,13 +28,19 @@ feature "instructor creates a new course" do
     validate_required_error_message_for("Description")
     validate_required_error_message_for("Duration")
 
+    fill_in "Certificate (in $)", with: ""
+    expect_to_see "Each course must have a certificate value."
+    fill_in "Certificate (in $)", with: "-1"
+    expect_to_see "Minimum dollar amount of certificate is 0.01"
+
     select "Select one", from: "Instructor"
+    click_on "Create Course"
+    expect_to_see "Course must have at least 1 instructor."
 
     fill_in "Quizzes to pass", with: ""
     expect_to_see "Set minimum amount of quizzes to pass."
-
-    click_on "Create Course"
-    expect_to_see "Course must have at least 1 instructor."
+    fill_in "Quizzes to pass", with: "2"
+    expect_to_see "Minimum amount of quizzes to pass is 3."
   end
 end
 
