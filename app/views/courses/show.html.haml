@@ -5,27 +5,21 @@
       - if @enrollment.completed? && @enrollment.paid?
         .ta-subtitle
           Your PDF certificate is ready:
-          = link_to certificate_path(@enrollment.certificate.licence_number, format: "pdf") do
+          = link_to certificate_path(@enrollment.certificate.licence_number) do
             = image_tag "certificate-seal.jpg", alt: "certificate", size: "75x75"
         .linked_in_button
           = link_to linked_in_url(@enrollment.certificate) do
             = image_tag 'AddToProfileButton.png', class: "linkedin-button"
-.col-sm-2
-  %aside.well
-    %dl
-      %dt Enrollment:
-      %dd= @enrollment.paid? ? "Signature Track" : "Free"
-    %dl
-      %dt Quizzes:
-      %dd #{@enrollment.passed_exams.count} / #{@course.published_quizzes.count}
-    - if @enrollment.completed? && @enrollment.paid?
-      %dl
-        %dt Congratulations!
-        %dd
-          Check out your certification
-          = link_to certificate_path(@enrollment.certificate.licence_number), target: "_blank" do
-            here
-            %span.glyphicon.glyphicon-new-window
+    .student-enrollment-infobar
+      .enrollment-info
+        %span.head Enrollment:
+        %span.tail= @enrollment.paid? ? "Signature Track" : "Free"
+      .student-quiz-progress
+        %span.head Quizzes:
+        %span.tail #{@enrollment.passed_exams.count} / #{@course.published_quizzes.count}
+      .progress
+        .progress-bar(role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"){style: "width: #{pretty_percentage(@enrollment.completion_percentage)}"}
+          = pretty_percentage(@enrollment.completion_percentage, display: true)
 %section.quizzes.container
   - @course.published_quizzes.each do |quiz|
     .row{ id: "quiz_#{quiz.id}" }
@@ -58,7 +52,7 @@
                 Start Quiz
               .clearfix
           - else
-            = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
+            = link_to '', class: "btn btn-default btn-lg col-sm-12 disabled" do
               %span.glyphicon.glyphicon-ban-circle
               You have to pass previous quiz first.
             .clearfix
@@ -69,15 +63,27 @@
               %i.fa.fa-info-circle.fa-2x
               %header Quiz Information
               .clearfix
-            .info
-              %span.head Questions
-              %span.tail= quiz.questions.count
-            .info
-              %span.head Passing percentage
-              %span.tail #{quiz.passing_percentage} %
-            .info
-              %span.head Total Score
-              %span.tail= quiz.total_score
+            .col-sm-6.nullify-padding
+              .info
+                %span.head Questions
+                %span.tail= quiz.questions.count
+              .info
+                %span.head Passing score
+                %span.tail #{quiz.passing_percentage} %
+              .info
+                %span.head Total Score
+                %span.tail= quiz.total_score
+            .col-sm-6.nullify-padding
+              .info
+                %span.head Attempts
+                %span.tail= quiz.questions.count
+              .info
+                %span.head Timed
+                %span.tail No
+              .info
+                %span.head Your best score
+                %span.tail 1000
+            .clearfix
           .quiz-tags
             %span.head
               %i.fa.fa-tags

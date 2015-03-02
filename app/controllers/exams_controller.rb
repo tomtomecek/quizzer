@@ -27,6 +27,7 @@ class ExamsController < ApplicationController
       @exam.grade!
       if @exam.passed?
         if enrollment.is_completed?
+
           enrollment.update_columns(completed: true)
           flash[:info] = "You have successfully completed this course!"
           if enrollment.paid?

@@ -6,6 +6,10 @@ class Enrollment < ActiveRecord::Base
   has_one :certificate
 
   validates :honor_code, acceptance: true
+  validates :student_id, uniqueness: {
+                           scope: :course_id,
+                           message: 'You have already enrolled.'
+                         }
 
   def passed_exams
     exams.passed
@@ -15,10 +19,14 @@ class Enrollment < ActiveRecord::Base
     reached_minimum_passed_exams? && passed_through_all_quizzes?
   end
 
+  def completion_percentage
+    passed_exams.count * 100 / course.published_quizzes.count
+  end
+
 private
 
   def reached_minimum_passed_exams?
-    passed_exams.count >= 3
+    passed_exams.count >= course.min_quiz_count
   end
 
   def passed_through_all_quizzes?

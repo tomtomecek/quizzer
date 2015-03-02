@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ExamsController do
-  let(:ruby) { Fabricate(:course) }
+  let(:ruby) { Fabricate(:course, min_quiz_count: 3, published: true) }
   let(:quiz) do
     Fabricate(:quiz, published: true, passing_percentage: 10, course: ruby)
   end

@@ -1,8 +1,13 @@
+.jumbotron.tealeaf
+  .container.after-nav
+    .ta-leaf
+      %h1= @quiz.title
+      %h2 Score: #{@exam.score} from #{@quiz.total_score} points
+      = link_to course_path(@quiz.course), class: "btn btn-default btn-lg btn-tealeaf btn-back" do
+        %span.glyphicon.glyphicon-chevron-left
+        Course area
 %section.container
   .col-sm-9
-    %h2 Results for: #{@quiz.title}
-    %h3 Score: #{@exam.score} from #{@quiz.total_score} points
-    %br
     - @exam.generated_questions.each_with_index do |gq, idx|
       .panel.panel-info{ id: "question_#{gq.question.id}" }
         .panel-heading
@@ -35,4 +40,6 @@
           - else
             %em One of the answers was wrong or missing.
   .col-sm-9
-    = link_to "Back to course area", course_path(@quiz.course), class: "btn btn-default"
+    = link_to course_path(@quiz.course), class: "btn btn-default btn-lg btn-tealeaf" do
+      %span.glyphicon.glyphicon-chevron-left
+      Course area
