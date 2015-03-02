@@ -4,7 +4,20 @@ describe Course do
   it { is_expected.to belong_to(:instructor).class_name("Admin") }
   it { is_expected.to have_many(:quizzes).order(:created_at) }
   it { is_expected.to have_many(:enrollments) }
+  it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:description) }
+  it { is_expected.to validate_presence_of(:price_cents) }
+  it { is_expected.to validate_presence_of(:min_quiz_count) }
+  it "validates min quiz count" do
+    is_expected.to validate_numericality_of(:min_quiz_count).
+                     only_integer.
+                     is_greater_than_or_equal_to(3)
+  end
+  it "validates price in cents" do
+    is_expected.to validate_numericality_of(:price_cents).
+                     only_integer.
+                     is_greater_than(0)
+  end
 
   describe "#generate_slug" do
     it "creates course with slug based on title" do
@@ -51,6 +64,25 @@ describe Course do
     it "returns [] for no published quizzes" do
       Fabricate(:quiz, published: false, course: course)
       expect(course.published_quizzes).to match_array []
+    end
+  end
+
+  describe "#price_dollars=" do
+    it "converts dollars to cents" do
+      ruby = Course.new(price_dollars: "19.99")
+      expect(ruby.price_cents).to eq 1999
+    end
+  end
+
+  describe "#price_dollars" do
+    it "converts cents to dollars" do
+      ruby = Course.new(price_cents: 1999)
+      expect(ruby.price_dollars).to eq 19.99
+    end
+
+    it "returns nil if price_cents is nil" do
+      ruby = Course.new
+      expect(ruby.price_dollars).to eq nil
     end
   end
 end

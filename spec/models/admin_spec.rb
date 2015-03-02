@@ -3,6 +3,9 @@ require "spec_helper"
 describe Admin do
   it { is_expected.to have_secure_password }
   it { is_expected.to have_many(:courses).with_foreign_key(:instructor_id) }
+  it { is_expected.to validate_presence_of(:first_name) }
+  it { is_expected.to validate_presence_of(:last_name) }
+  it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_length_of(:password).is_at_least(6) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to validate_uniqueness_of(:username).case_insensitive }
@@ -31,14 +34,34 @@ describe Admin do
   end
 
   it "allows nil for password" do
-    admin = Fabricate(:admin, password: nil)
+    admin = Fabricate.build(:admin, password: nil)
     expect(admin).to be_valid
   end
 
   it "allows nil for username" do
     Fabricate(:admin, username: nil)
-    admin = Fabricate(:admin, username: nil)
+    admin = Fabricate.build(:admin, username: nil)
     expect(admin).to be_valid
+  end
+
+  describe "#full_name" do
+    it "gets full name based on first and last name" do
+      kevin = Admin.new(first_name: "Kevin",
+                        last_name: "Wang")
+      expect(kevin.full_name).to eq "Kevin Wang"
+    end
+  end
+
+  describe "#full_name=" do
+    let(:kevin) { Admin.new(full_name: "Kevin Wang") }
+
+    it "sets the first name" do
+      expect(kevin.first_name).to eq "Kevin"
+    end
+
+    it "sets the last name" do
+      expect(kevin.last_name).to eq "Wang"
+    end
   end
 
   describe "#generate_activation_token!" do
@@ -114,12 +137,12 @@ describe Admin do
 
   describe "#instructor?" do
     it "returns true when admin is instructor" do
-      kevin = Fabricate(:instructor, role: "Instructor")
+      kevin = Fabricate.build(:instructor, role: "Instructor")
       expect(kevin).to be_instructor
     end
 
     it "returns false when admin is not instructor" do
-      brandon = Fabricate(:instructor, role: "Teaching assistant")
+      brandon = Fabricate.build(:instructor, role: "Teaching assistant")
       expect(brandon).not_to be_instructor
     end
   end

@@ -5,7 +5,11 @@ class Course < ActiveRecord::Base
   has_many :quizzes, -> { order(:created_at) }
   has_many :enrollments
 
-  validates :description, presence: true
+  validates :title, :description, :price_cents, :min_quiz_count, presence: true
+  validates :price_cents, :min_quiz_count, numericality: {
+                                             only_integer: true,
+                                             greater_than_or_equal_to: 3
+                                           }
 
   before_create :generate_slug
 
@@ -33,6 +37,14 @@ class Course < ActiveRecord::Base
     slug
   end
   
+  def price_dollars=(dollars)
+    self.price_cents = (dollars.to_d * 100).to_i
+  end
+
+  def price_dollars
+    price_cents / 100.0 if price_cents
+  end
+
 private
   
   def slugify(the_slug)
