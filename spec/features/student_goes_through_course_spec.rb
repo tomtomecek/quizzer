@@ -27,7 +27,7 @@ feature "student goes through whole course" do
     click_on "Submit Answers"
     expect_to_see "Congratulations. You have passed the quiz."
     within(".jumbotron") { click_on "Course area" }
-    
+
     within(".jumbotron") { expect_to_see "Quizzes: 1 / 3" }
     within("#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within("#quiz_#{quiz3.id}") do
@@ -38,7 +38,7 @@ feature "student goes through whole course" do
     click_on "Submit Answers"
     expect_to_see "Congratulations. You have passed the quiz."
     within(".jumbotron") { click_on "Course area" }
-    
+
     within(".jumbotron") { expect_to_see "Quizzes: 2 / 3" }
     within("#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within("#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
