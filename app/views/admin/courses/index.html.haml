@@ -11,13 +11,13 @@
     %table.table
       %thead
         %tr
-          %th(width="60%") Title
-          %th(width="40%") Actions
+          %th(width="80%") Title
+          %th(width="20%") Actions
       %tbody
         - @courses.each do |course|
           %tr
             %td
               %strong= link_to course.title, [:admin, course]
             %td
-              = link_to "Edit", ''
+              = link_to "Edit", [:edit, :admin, course] 
               = link_to "Publish", ''

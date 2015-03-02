@@ -15,7 +15,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  process resize_to_fit: [667, 320]
+  process resize_to_fill: [667, 320]
 
   version :certificate do
     process resize_to_fit: [460, 322]

@@ -1,5 +1,6 @@
 class Admin::CoursesController < AdminController
-  before_action :require_instructor, only: [:new, :create]
+  before_action :require_instructor, only: [:new, :create, :edit, :update]
+  before_action :find_course, only: [:show, :edit, :update]
 
   def new
     @course = Course.new
@@ -20,8 +21,18 @@ class Admin::CoursesController < AdminController
     @courses = Course.all
   end
 
-  def show
-    @course = Course.find_by(slug: params[:id])
+  def show; end
+
+  def edit; end
+
+  def update
+    if @course.update(course_params)
+      flash[:success] = "Successfully updated the course #{@course.title}"
+      redirect_to admin_courses_url
+    else
+      flash[:danger] = "These errors needs to be fixed:"
+      render :edit
+    end
   end
 
 private
@@ -36,6 +47,10 @@ private
              :duration,
              :price_dollars,
              :image_cover)
+  end
+
+  def find_course
+    @course = Course.find_by(slug: params[:id])
   end
 
   def require_instructor
