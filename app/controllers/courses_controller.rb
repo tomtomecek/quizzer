@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
   before_action :require_enrollment, only: [:show]
 
   def index
-    @courses = Course.all
+    @courses = Course.published
   end
 
   def show

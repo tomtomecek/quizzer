@@ -1,13 +1,15 @@
+%section.push
+.container
+  .page-header
+    %h1 New course
 %section.container
-  = bootstrap_form_for [:admin, @course], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6", html: { 'data-parsley-validate' => '' } do |f|
-    .col-sm-offset-2
-      %h1(style='margin-left: 5px') New course
+  = bootstrap_form_for [:admin, @course], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-5", html: { 'data-parsley-validate' => '' } do |f|
     = f.text_field :title, required: true, "data-parsley-trigger" => "blur"
     = f.text_area :description, rows: 5, required: true, "data-parsley-trigger" => "blur"
     = f.text_field :duration, control_col: "col-sm-3", required: true, "data-parsley-trigger" => "blur"
-    = f.select :instructor_id, instructors_select_options, { prompt: "Select one", label: "Instructor" }, { required: true, "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Course must have at least 1 instructor." }
+    = f.select :instructor_id, instructors_select_options, { prompt: "Select one", label: "Instructor", control_col: "col-sm-3" }, { required: true, "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Course must have at least 1 instructor." }
     = f.number_field :min_quiz_count, control_col: "col-sm-3", label: "Quizzes to pass", required: true, "data-parsley-min" => "3", "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Set minimum amount of quizzes to pass.", "data-parsley-min-message" => "Minimum amount of quizzes to pass is 3."
-    = f.number_field :price_dollars, label: "Certificate (in $)", placeholder: "Must be greater than 0", required: true, "data-parsley-min" => "0", "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Each course must have a certificate value.", "data-parsley-min-message" => "Minimum dollar amount of certificate is 0.01."
+    = f.number_field :price_dollars, label: "Certificate (in $)", control_col: "col-sm-3", placeholder: "Must be greater than 0", required: true, "data-parsley-min" => "0", "data-parsley-trigger" => "blur", "data-parsley-required-message" => "Each course must have a certificate value.", "data-parsley-min-message" => "Minimum dollar amount of certificate is 0.01."
     = f.file_field :image_cover, label: "Image"
     = f.form_group do
-      = f.submit "Create Course"
+      = f.submit "Create Course", class: "btn btn-default btn-lg btn-tealeaf col-sm-12"

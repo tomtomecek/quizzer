@@ -18,7 +18,7 @@ class Admin::CoursesController < AdminController
   end
 
   def index
-    @courses = Course.all
+    @courses = Course.order(:id)
   end
 
   def show; end

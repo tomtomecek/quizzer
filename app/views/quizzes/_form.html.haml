@@ -1,37 +1,34 @@
 = content_for :head do
   = javascript_include_tag "admin/quiz.js", 'data-turbolinks-track' => true
-.container
-  = form_for @quiz, html: { class: "form-horizontal", role: "form", 'data-parsley-validate' => '' } do |f|
-    .form_group
-      .col-sm-offset-2
-        %h1(style="margin-left: 5px") #{@quiz.new_record? ? "Add new" : "Edit"} quiz
-      = hidden_field_tag :course_id, @quiz.course.slug if @quiz.new_record?
-    .form-group
-      = f.label :title, class: "col-sm-2 control-label"
-      .col-sm-8
-        = f.text_field :title, class: "form-control", required: true, 'data-parsley-trigger' => 'blur'
-    .form-group
-      = f.label :description, class: "col-sm-2 control-label"
-      .col-sm-8
-        = f.text_area :description, rows: 3, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
-    .form-group
-      = f.label :passing_percentage, class: "col-sm-2 control-label"
-      .col-sm-2
-        = f.select :passing_percentage, passing_percentage_array, {prompt: "Select Percentage"}, { class: "form-control", required: true, 'data-parsley-trigger' => 'blur'}
-    .form-group
-      .col-sm-offset-2.col-sm-8
-        = f.check_box :published
-        = f.label :published
-    - if @quiz.errors.messages[:questions]
-      .alert.alert-danger.col-sm-offset-2.col-sm-8
-        - f.object.errors.full_messages.each do |e|
-          %p= e
-    = f.fields_for :questions do |builder|
-      = render 'question_fields', f: builder
-    .inserter
-    .form-group
-      .col-sm-offset-2.col-sm-8
-        = link_to_add_fields "Add Question", f, :questions, class: "add_question_link"
-    .form-group
-      .col-sm-offset-2.col-sm-8
-        = f.submit @quiz.new_record? ? "Create Quiz" : "Update Quiz", class: "btn btn-default"
+= form_for @quiz, html: { class: "form-horizontal", role: "form", 'data-parsley-validate' => '' } do |f|
+  .form_group
+    = hidden_field_tag :course_id, @quiz.course.slug if @quiz.new_record?
+  .form-group
+    = f.label :title, class: "col-sm-2 control-label"
+    .col-sm-8
+      = f.text_field :title, class: "form-control", required: true, 'data-parsley-trigger' => 'blur'
+  .form-group
+    = f.label :description, class: "col-sm-2 control-label"
+    .col-sm-8
+      = f.text_area :description, rows: 3, class: "form-control resize_vertical", required: true, 'data-parsley-trigger' => 'blur'
+  .form-group
+    = f.label :passing_percentage, class: "col-sm-2 control-label"
+    .col-sm-2
+      = f.select :passing_percentage, passing_percentage_array, {prompt: "Select Percentage"}, { class: "form-control", required: true, 'data-parsley-trigger' => 'blur'}
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      = f.check_box :published
+      = f.label :published
+  - if @quiz.errors.messages[:questions]
+    .alert.alert-danger.col-sm-offset-2.col-sm-8
+      - f.object.errors.full_messages.each do |e|
+        %p= e
+  = f.fields_for :questions do |builder|
+    = render 'question_fields', f: builder
+  .inserter
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      = link_to_add_fields "Add Question", f, :questions, class: "add_question_link"
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      = f.submit @quiz.new_record? ? "Create Quiz" : "Update Quiz", class: "btn btn-default btn-lg btn-tealeaf"

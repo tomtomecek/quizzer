@@ -3,10 +3,10 @@ require "spec_helper"
 describe CoursesController do
   describe "GET index" do
     it "sets the @courses" do
-      course1 = Fabricate(:course)
-      course2 = Fabricate(:course)
+      ruby = Fabricate(:course, published: true, created_at: 2.hours.ago)
+      rails = Fabricate(:course, published: true, created_at: Time.now)
       get :index
-      expect(assigns(:courses)).to match_array [course1, course2]
+      expect(assigns(:courses)).to eq [ruby, rails]
     end
   end
 

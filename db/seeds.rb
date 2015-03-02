@@ -22,36 +22,27 @@ Admin.create!(username: "instructor",
               role: "Instructor",
               full_name: "Instructor Default",
               activated: true)
-ruby = Course.new(title: "Introduction to Ruby and Web development",
+ruby = Course.create!(title: "Introduction to Ruby and Web development",
                   description: Faker::Lorem.paragraph(9),
                   instructor: chris,
                   duration: "4 weeks",
                   min_quiz_count: 4,
                   price_cents: 1999,
                   published: true)
-ruby.image_cover.store!(
-  File.open(File.join(Rails.root, "spec/support/images/ruby.jpg")))
-ruby.save!
-rails = Course.new(title: "Rapid Prototyping with Ruby on Rails",
+rails = Course.create!(title: "Rapid Prototyping with Ruby on Rails",
                    description: Faker::Lorem.paragraph(9),
                    instructor: chris,
                    duration: "4 weeks",
                    min_quiz_count: 4,
                    price_cents: 1999,
                    published: true)
-rails.image_cover.store!(
-  File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
-rails.save!
-tdd = Course.new(title: "Build Robust and Production Quality Applications",
+tdd = Course.create!(title: "Build Robust and Production Quality Applications",
                  description: Faker::Lorem.paragraph(9),
                  instructor: kevin,
                  min_quiz_count: 8,
                  duration: "8 weeks",
                  price_cents: 3999,
                  published: true)
-tdd.image_cover.store!(
-  File.open(File.join(Rails.root, "spec/support/images/tdd.jpg")))
-tdd.save!
 
 QUIZ_NAMES = [
   "Week 1 - Procedural Programming",
@@ -59,74 +50,75 @@ QUIZ_NAMES = [
   "Week 3 - HTTP & Sinatra",
   "Week 4 - Ajax & jQuery"
 ]
-
-QUIZ_NAMES.each do |quiz_name|
-  q = ruby.quizzes.build do |quiz|
-    quiz.title              = quiz_name
-    quiz.description        = Faker::Lorem.paragraph(5)
-    quiz.published          = true
-    quiz.passing_percentage = 60
-    quiz.questions.build do |question|
-      question.content = "How much is 1 + 1"
-      question.points  = 2
-      3.times do
-        question.answers.build do |answer|
-          answer.content = "correct answer is 2"
-          answer.correct = true
+[ruby, rails, tdd].each do |course|
+  QUIZ_NAMES.each do |quiz_name|
+    q = course.quizzes.build do |quiz|
+      quiz.title              = quiz_name
+      quiz.description        = Faker::Lorem.paragraph(5)
+      quiz.published          = true
+      quiz.passing_percentage = 60
+      quiz.questions.build do |question|
+        question.content = "How much is 1 + 1"
+        question.points  = 2
+        3.times do
+          question.answers.build do |answer|
+            answer.content = "correct answer is 2"
+            answer.correct = true
+          end
+          question.answers.build do |answer|
+            answer.content = "incorrect answer - whatever"
+            answer.content = false
+          end
         end
-        question.answers.build do |answer|
-          answer.content = "incorrect answer - whatever"
-          answer.content = false
+      end
+
+      quiz.questions.build do |question|
+        question.content = "How much is 2 + 2"
+        question.points  = 4
+        3.times do
+          question.answers.build do |answer|
+            answer.content = "correct answer is 4"
+            answer.correct = true
+          end
+          question.answers.build do |answer|
+            answer.content = "incorrect answer - whatever"
+            answer.content = false
+          end
+        end
+      end
+
+      quiz.questions.build do |question|
+        question.content = "How much is 3 + 3"
+        question.points  = 5
+        3.times do
+          question.answers.build do |answer|
+            answer.content = "correct answer is 6"
+            answer.correct = true
+          end
+          question.answers.build do |answer|
+            answer.content = "incorrect answer - whatever"
+            answer.content = false
+          end
+        end
+      end
+
+      quiz.questions.build do |question|
+        question.content = "How much is 4 + 4"
+        question.points  = 10
+        3.times do
+          question.answers.build do |answer|
+            answer.content = "correct answer is 8"
+            answer.correct = true
+          end
+          question.answers.build do |answer|
+            answer.content = "incorrect answer - whatever"
+            answer.content = false
+          end
         end
       end
     end
-
-    quiz.questions.build do |question|
-      question.content = "How much is 2 + 2"
-      question.points  = 4
-      3.times do
-        question.answers.build do |answer|
-          answer.content = "correct answer is 4"
-          answer.correct = true
-        end
-        question.answers.build do |answer|
-          answer.content = "incorrect answer - whatever"
-          answer.content = false
-        end
-      end
-    end
-
-    quiz.questions.build do |question|
-      question.content = "How much is 3 + 3"
-      question.points  = 5
-      3.times do
-        question.answers.build do |answer|
-          answer.content = "correct answer is 6"
-          answer.correct = true
-        end
-        question.answers.build do |answer|
-          answer.content = "incorrect answer - whatever"
-          answer.content = false
-        end
-      end
-    end
-
-    quiz.questions.build do |question|
-      question.content = "How much is 4 + 4"
-      question.points  = 10
-      3.times do
-        question.answers.build do |answer|
-          answer.content = "correct answer is 8"
-          answer.correct = true
-        end
-        question.answers.build do |answer|
-          answer.content = "incorrect answer - whatever"
-          answer.content = false
-        end
-      end
-    end
+    q.save(validate: false)
   end
-  q.save(validate: false)
 end
 
 Quiz.published.each_with_index do |published_quiz, idx|

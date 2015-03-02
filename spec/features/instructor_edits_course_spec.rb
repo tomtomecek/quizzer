@@ -14,7 +14,7 @@ feature "instructor edits course" do
   scenario "successfull edit" do
     click_on "Courses"
     click_on "Edit"
-    expect_to_see "Edit course #{ruby.title}"
+    expect_to_see "Editing #{ruby.title}"
 
     fill_in "Title", with: "HTML and CSS basics"
     fill_in "Description", with: "front end course"

@@ -1,30 +1,36 @@
 = content_for :head do
   = javascript_include_tag "admin/quiz.js", 'data-turbolinks-track' => true
-%section.container
-  .col-sm-9
-    %h2= @quiz.title
-    = preserve do
-      = markdown @quiz.description
-    %h4 Minimum passing score is on #{pluralize(@quiz.passing_percentage, "percent")}
-    %br
-    - @quiz.questions.each_with_index do |question, idx|
-      .panel.panel-info{ id: "question_#{question.id}" }
-        .panel-heading
-          .row.panel-title
-            %h3.pull-left
-              %span.label.label-primary= "Question: #{idx + 1}"
-            %h3.pull-right
-              %span.label.label-primary= pluralize(question.points, "point")
-            .clearfix
-          %hr.question_horizontal_line
-          .row.question-content-view-quiz
-            = preserve do
-              = markdown(question.content)
-        .panel-body
-          %div{ id: "question_#{question.id}_answers" }
-            = render partial: 'answers/answer', collection: question.answers
-      %hr
-    .form-group
-      .col-sm-8
-        = link_to "Back", admin_course_path(@quiz.course), class: "btn btn-default btn-lg"
+%section.push
+  .container
+    .view-quiz
+      .col-sm-9
+        .page-header
+          %h1= @quiz.title
+          = preserve do
+            = markdown @quiz.description
+          %h3 Minimum passing score is on #{pluralize(@quiz.passing_percentage, "percent")}
+      .col-sm-9
+        - @quiz.questions.each_with_index do |question, idx|
+          .panel.panel-info{ id: "question_#{question.id}" }
+            .panel-heading
+              .row.panel-title
+                %h3.pull-left
+                  %span.label.label-primary= "Question: #{idx + 1}"
+                %h3.pull-right
+                  %span.label.label-primary= pluralize(question.points, "point")
+                .clearfix
+              %hr.question_horizontal_line
+              .row.question-content-view-quiz
+                = preserve do
+                  = markdown(question.content)
+            .panel-body
+              %div{ id: "question_#{question.id}_answers" }
+                = render partial: 'answers/answer', collection: question.answers
+          %hr
+      .form-group
+        .col-sm-8
+          = link_to admin_course_path(@quiz.course), class: "btn btn-default btn-lg btn-tealeaf" do
+            %span.glyphicon.glyphicon-chevron-left
+            Courses area
+      .clearfix
 .hook

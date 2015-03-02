@@ -1,28 +1,33 @@
-%section.container
-  .col-sm-9
-    %h2= @quiz.title
-    %br
-    = form_for [@quiz, @exam], url: complete_quiz_exam_path(@quiz, @exam) do |f|
-      - @exam.generated_questions.each_with_index do |q, idx|
-        .panel.panel-info{ id: "question_#{q.question.id}" }
-          .panel-heading
-            .row.panel-title
-              %h3.pull-left
-                %span.label.label-info= "Question: #{idx + 1}"
-              %h3.pull-right
-                %span.label.label-info= pluralize(q.points, "point")
-              .clearfix
-            %hr.question_horizontal_line
-            .row
-              = preserve do
-                = markdown(q.content)
-          .panel-body
-            - q.generated_answers.each do |a|
-              .exam.input-group
-                .input-group-addon
-                  = check_box_tag "student_answer_ids[]", a.id, false, id: "answer_#{a.answer.id}"
-                .form-control-static
-                  %label{for: "answer_#{a.answer.id}"}
-                    = preserve do
-                      = markdown(a.content)
-      = f.submit "Submit Answers", class: "btn btn-default btn-tealeaf"
+.jumbotron.tealeaf.exam
+  .container.after-nav
+    .ta-leaf
+      .ta-title= @quiz.title
+      .ta-title Attempt 1
+      .ta-subtitle Minimum score to pass #{@quiz.passing_percentage}%
+    .col-sm-9
+      = form_for [@quiz, @exam], url: complete_quiz_exam_path(@quiz, @exam) do |f|
+        - @exam.generated_questions.each_with_index do |q, idx|
+          .panel.panel-info{ id: "question_#{q.question.id}" }
+            .panel-heading
+              .row.panel-title
+                %h3.pull-left
+                  %span.label.label-info= "Question: #{idx + 1}"
+                %h3.pull-right
+                  %span.label.label-info= pluralize(q.points, "point")
+                .clearfix
+              %hr.question_horizontal_line
+              .row
+                = preserve do
+                  = markdown(q.content)
+            .panel-body
+              - q.generated_answers.each do |a|
+                .exam.input-group
+                  .input-group-addon
+                    = check_box_tag "student_answer_ids[]", a.id, false, id: "answer_#{a.answer.id}"
+                  .form-control-static
+                    %label{for: "answer_#{a.answer.id}"}
+                      = preserve do
+                        = markdown(a.content)
+        = f.submit "Submit Answers", class: "btn btn-default btn-lg btn-tealeaf col-sm-12"
+    .col-sm-3
+      = image_tag "clock.png", class: "img-responsive clock"

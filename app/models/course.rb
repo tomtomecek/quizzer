@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   belongs_to :instructor, class_name: "Admin"
   has_many :quizzes, -> { order(:created_at) }
   has_many :enrollments
+  scope :published, -> { where(published: true).order(:id) }
 
   validates :title, :description, :price_cents, :min_quiz_count, presence: true
   validates :min_quiz_count,
