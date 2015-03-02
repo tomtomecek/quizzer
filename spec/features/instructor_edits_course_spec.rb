@@ -8,7 +8,7 @@ feature "instructor edits course" do
               activated: true)
   end
 
-  given!(:ruby) { Fabricate(:course) }
+  given!(:ruby) { Fabricate(:course, published: true) }
   background { sign_in_admin(kevin) }
 
   scenario "successfull edit" do

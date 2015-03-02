@@ -15,7 +15,10 @@
   .has_successfull HAS SUCCESSFULLY COMPLETED TEALEAF ACADEMY'S COURSE OF
   .course_presentation
     .course_image
-      = wicked_pdf_image_tag @certificate.course.image_cover.certificate.url, size: "460x322"
+      - if @certificate.course.image_cover.certificate.url
+        = wicked_pdf_image_tag @certificate.course.image_cover.certificate.url, size: "460x322"
+      - else
+        = wicked_pdf_image_tag "ruby2.jpg", size: "460x322"
     .course
       .title= @certificate.course.title
       .description= @certificate.course.description

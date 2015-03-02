@@ -12,7 +12,7 @@ feature "admin checks on exams" do
     Fabricate(:exam, student: jake, quiz: week1_rails)
     sign_in_admin
 
-    within(:css, ".navbar") { click_on "Exams" }
+    within(".navbar") { click_on "Exams" }
     expect_to_be_in admin_exams_path
     expect(find("tbody")).to have_css("tr", count: 2)
 

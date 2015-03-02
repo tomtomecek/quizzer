@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature "student performs an exams" do
-  given!(:ruby)  { Fabricate(:course, title: "Introduction to Ruby") }
-  given!(:rails) { Fabricate(:course, title: "Rapid Prototyping") }
+  given!(:ruby)  { create_course(title: "Introduction to Ruby") }
+  given!(:rails) { create_course(title: "Rapid Prototyping") }
   given!(:week1) do
     Fabricate(:quiz,
               course: ruby,
@@ -107,4 +107,8 @@ def correct(n = 1, options = {})
   else
     Fabricate.times(n, :correct, content: options[:content])
   end
+end
+
+def create_course(options = {})
+  Fabricate(:course, title: options[:title] , published: true)
 end
