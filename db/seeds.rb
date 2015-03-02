@@ -1,24 +1,33 @@
 chris = Admin.create!(username: "Chris",
                       email: "chris@example.com",
                       password: "123456",
-                      role: "Instructor")
+                      role: "Instructor",
+                      full_name: "Chris Lee",
+                      activated: true)
 kevin = Admin.create!(username: "Kevin",
                       email: "kevin@example.com",
                       password: "123456",
-                      role: "Instructor")
+                      role: "Instructor",
+                      full_name: "Kevin Wang",
+                      activated: true)
 Admin.create!(username: "teaching assistant",
               email: "ta@example.com",
               password: "123456",
-              role: "Teaching assistant")
+              role: "Teaching assistant",
+              full_name: "TA Default",
+              activated: true)
 Admin.create!(username: "instructor",
               email: "instructor@example.com",
               password: "123456",
-              role: "Instructor")
+              role: "Instructor",
+              full_name: "Instructor Default",
+              activated: true)
 ruby = Course.new(title: "Introduction to Ruby and Web development",
                   description: Faker::Lorem.paragraph(9),
                   instructor: chris,
                   duration: "4 weeks",
                   min_quiz_count: 4,
+                  price_cents: 1999,
                   published: true)
 ruby.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby.jpg")))
 ruby.save!
@@ -27,6 +36,7 @@ rails = Course.new(title: "Rapid Prototyping with Ruby on Rails",
                    instructor: chris,
                    duration: "4 weeks",
                    min_quiz_count: 4,
+                   price_cents: 1999,
                    published: true)
 rails.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
 rails.save!
@@ -35,6 +45,7 @@ tdd = Course.new(title: "Build Robust and Production Quality Applications",
                  instructor: kevin,
                  min_quiz_count: 8,
                  duration: "8 weeks",
+                 price_cents: 3999,
                  published: true)
 tdd.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/tdd.jpg")))
 tdd.save!
