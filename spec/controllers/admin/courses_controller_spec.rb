@@ -98,4 +98,22 @@ describe Admin::CoursesController do
       expect(assigns(:course)).to eq course
     end
   end
+
+  describe "GET edit" do
+    let(:kevin) { Fabricate(:instructor, activated: true) }
+    let(:ruby) { Fabricate(:course) }
+    it_behaves_like "require admin sign in" do
+      let(:action) { get :edit, id: ruby.slug }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { get :edit, id: ruby.slug }
+    end
+
+    it "sets the @course" do
+      set_current_admin(kevin)
+      get :edit, id: ruby.slug
+      expect(assigns(:course)).to eq ruby
+    end
+  end
 end
