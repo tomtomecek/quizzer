@@ -26,7 +26,7 @@ class AdminsController < AdminController
 private
 
   def admin_params
-    params.require(:admin).permit(:email, :role)
+    params.require(:admin).permit(:full_name, :email, :role)
   end
 
   def require_instructor
