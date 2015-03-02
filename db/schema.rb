@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301114456) do
+ActiveRecord::Schema.define(version: 20150301204830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150301114456) do
     t.integer "min_quiz_count"
     t.string  "image_cover"
     t.boolean "published",      default: false
+    t.integer "price_cents"
   end
 
   add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
