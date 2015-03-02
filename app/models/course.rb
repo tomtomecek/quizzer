@@ -6,10 +6,16 @@ class Course < ActiveRecord::Base
   has_many :enrollments
 
   validates :title, :description, :price_cents, :min_quiz_count, presence: true
-  validates :price_cents, :min_quiz_count, numericality: {
-                                             only_integer: true,
-                                             greater_than_or_equal_to: 3
-                                           }
+  validates :min_quiz_count,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 3
+            }
+  validates :price_cents, numericality: {
+                            only_integer: true,
+                            greater_than: 0
+                          }
+
 
   before_create :generate_slug
 
