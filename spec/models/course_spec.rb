@@ -10,13 +10,13 @@ describe Course do
   it { is_expected.to validate_presence_of(:min_quiz_count) }
   it "validates min quiz count" do
     is_expected.to validate_numericality_of(:min_quiz_count).
-                     only_integer.
-                     is_greater_than_or_equal_to(3)
+      only_integer.
+      is_greater_than_or_equal_to(3)
   end
   it "validates price in cents" do
     is_expected.to validate_numericality_of(:price_cents).
-                     only_integer.
-                     is_greater_than(0)
+      only_integer.
+      is_greater_than(0)
   end
 
   describe "#generate_slug" do
