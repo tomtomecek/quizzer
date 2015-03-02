@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "student goes through whole course", :slow do
+feature "student goes through whole course" do
   given(:year)  { Time.now.year + 3 }
-  given(:ruby)  { Fabricate(:course) }
+  given(:ruby)  { Fabricate(:course, published: true, min_quiz_count: 3) }
   given(:quiz1) { build_quiz(ruby) }
   given(:quiz2) { build_quiz(ruby) }
   given(:quiz3) { build_quiz(ruby) }
@@ -12,11 +12,10 @@ feature "student goes through whole course", :slow do
   background { clear_emails }
   after { clear_emails }
 
-  scenario "full course experience", :js, :vcr do
+  scenario "full course experience", :js, :billy, :vcr do
     sign_in
     enroll_paid
-
-    within(:css, ".well") { expect_to_see "Quizzes: 0 / 3" }
+    within(:css, ".jumbotron") { expect_to_see "Quizzes: 0 / 3" }
     within(:css, "#quiz_#{quiz2.id}") do
       expect_to_see "You have to pass previous quiz first"
     end
@@ -27,9 +26,9 @@ feature "student goes through whole course", :slow do
     within_exam_question(q1) { check("Correct Answer") }
     click_on "Submit Answers"
     expect_to_see "Congratulations. You have passed the quiz."
-    click_on "Back to course area"
-
-    within(:css, ".well") { expect_to_see "Quizzes: 1 / 3" }
+    within(".jumbotron") { click_on "Course area" }
+    
+    within(:css, ".jumbotron") { expect_to_see "Quizzes: 1 / 3" }
     within(:css, "#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz3.id}") do
       expect_to_see "You have to pass previous quiz first"
@@ -38,9 +37,9 @@ feature "student goes through whole course", :slow do
     within_exam_question(q2) { check("Correct Answer") }
     click_on "Submit Answers"
     expect_to_see "Congratulations. You have passed the quiz."
-    click_on "Back to course area"
-
-    within(:css, ".well") { expect_to_see "Quizzes: 2 / 3" }
+    within(".jumbotron") { click_on "Course area" }
+    
+    within(:css, ".jumbotron") { expect_to_see "Quizzes: 2 / 3" }
     within(:css, "#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz3.id}") { click_on "Start Quiz" }
@@ -48,14 +47,15 @@ feature "student goes through whole course", :slow do
     within_exam_question(q3) { check("Correct Answer") }
     click_on "Submit Answers"
     expect_to_see "Congratulations. You have passed the quiz."
-    click_on "Back to course area"
+    within(".jumbotron") { click_on "Course area" }
 
     within(:css, "#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
     within(:css, "#quiz_#{quiz3.id}") { expect_to_see "Exam passed" }
-    within(:css, ".well") do
+    within(:css, ".jumbotron") do
       expect_to_see "Quizzes: 3 / 3"
-      expect_to_see "Congratulations! Check out your certification"
+      expect_to_see "Your PDF certificate is ready:"
+      expect(page).to have_css('img.linkedin-button', visible: true)
     end
   end
 end

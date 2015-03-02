@@ -1,12 +1,12 @@
 ---
 :scope: 
 :url: https://api.stripe.com:443/v1/tokens
-:body: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fe171cde&card[number]=4000000000000069&card[cvc]=123&card[exp_year]=2015&card[exp_month]=2
+:body: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=4242424242424242&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
 :status: 200
 :method: post
 :headers:
   Server: nginx
-  Date: Tue, 24 Feb 2015 17:14:55 GMT
+  Date: Mon, 02 Mar 2015 16:39:49 GMT
   Content-Type: application/json
   Content-Length: '689'
   Connection: close
@@ -15,26 +15,26 @@
   Access-Control-Allow-Origin: https://js.stripe.com
   Access-Control-Max-Age: '300'
   Cache-Control: no-cache, no-store
-  Request-Id: req_l0Tw8fscxfPQ8jZf
+  Request-Id: req_8Tr1L5UbaX5jb4UB
   Stripe-Version: '2015-02-10'
   Timing-Allow-Origin: https://js.stripe.com
   Strict-Transport-Security: max-age=31556926; includeSubDomains
 :content: |
   {
-    "id": "tok_15ZmGpC58PH9OiW9UipJnvzT",
+    "id": "tok_15bwa9C58PH9OiW9qerZh1UU",
     "livemode": false,
-    "created": 1424798095,
+    "created": 1425314389,
     "used": false,
     "object": "token",
     "type": "card",
     "card": {
-      "id": "card_15ZmGpC58PH9OiW9sGpZrioY",
+      "id": "card_15bwa9C58PH9OiW9Z8rSUHkn",
       "object": "card",
-      "last4": "0069",
+      "last4": "4242",
       "brand": "Visa",
       "funding": "credit",
-      "exp_month": 2,
-      "exp_year": 2015,
+      "exp_month": 4,
+      "exp_year": 2018,
       "country": "US",
       "name": null,
       "address_line1": null,

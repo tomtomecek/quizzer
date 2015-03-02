@@ -1,29 +1,29 @@
 ---
 :scope: 
 :url: https://api.stripe.com:443/v1/tokens
-:body: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fe171cde&card[number]=123&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
+:body: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=4000000000000069&card[cvc]=123&card[exp_year]=2015&card[exp_month]=1
 :status: 402
 :method: post
 :headers:
   Server: nginx
-  Date: Tue, 24 Feb 2015 17:14:47 GMT
+  Date: Mon, 02 Mar 2015 16:39:54 GMT
   Content-Type: application/json
-  Content-Length: '149'
+  Content-Length: '167'
   Connection: close
   Access-Control-Allow-Credentials: 'true'
   Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
   Access-Control-Allow-Origin: https://js.stripe.com
   Access-Control-Max-Age: '300'
   Cache-Control: no-cache, no-store
-  Request-Id: req_Qf7JGFMnwGX0AmG3
+  Request-Id: req_mxt8JDa30b6NXCpe
   Stripe-Version: '2015-02-10'
   Timing-Allow-Origin: https://js.stripe.com
 :content: |
   {
     "error": {
-      "message": "This card number looks invalid.",
+      "message": "Your card's expiration month is invalid.",
       "type": "card_error",
-      "param": "number",
-      "code": "invalid_number"
+      "param": "exp_month",
+      "code": "invalid_expiry_month"
     }
   }

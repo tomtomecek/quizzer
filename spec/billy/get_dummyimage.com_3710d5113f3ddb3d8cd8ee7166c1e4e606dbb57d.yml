@@ -6,12 +6,12 @@
 :method: get
 :headers:
   Server: nginx/1.4.4
-  Date: Tue, 24 Feb 2015 17:14:40 GMT
+  Date: Mon, 02 Mar 2015 16:38:46 GMT
   Content-Type: image/png
   Connection: close
   Cache-control: max-age=7776000
-  Expires: Mon, 25 May 2015 17:14:40 +0000
-  Last-Modified: Wed, 26 Nov 2014 17:14:40 GMT
+  Expires: Sun, 31 May 2015 16:38:46 +0000
+  Last-Modified: Tue, 02 Dec 2014 16:38:46 GMT
 :content: !binary |-
   iVBORw0KGgoAAAANSUhEUgAAApsAAAFABAMAAAABraomAAAAG1BMVEUAAAD/
   //8fHx9fX19/f3+/v7/f39+fn58/Pz/pm04NAAAKxElEQVR4nO2cPXvbNheG

@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: UTF-8
-      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fe171cde&card[number]=4000000000000119&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
+      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=4000000000000119&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
     headers:
       Accept:
       - application/json
       Referer:
-      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default947844&stripe_xdm_p=1
+      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default45080&stripe_xdm_p=1
       Origin:
       - https://js.stripe.com
       User-Agent:
@@ -32,7 +32,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 24 Feb 2015 17:14:53 GMT
+      - Mon, 02 Mar 2015 16:39:59 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -50,7 +50,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_viBrcV8corEseVwO
+      - req_tf6qrjF05EbocEmW
       Stripe-Version:
       - '2015-02-10'
       Timing-Allow-Origin:
@@ -61,14 +61,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_15ZmGnC58PH9OiW9nFDeiWo7",
+          "id": "tok_15bwaJC58PH9OiW9cZL3chsZ",
           "livemode": false,
-          "created": 1424798093,
+          "created": 1425314399,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_15ZmGnC58PH9OiW96c4EmyDW",
+            "id": "card_15bwaIC58PH9OiW9Han4QbCF",
             "object": "card",
             "last4": "0119",
             "brand": "Visa",
@@ -91,13 +91,13 @@ http_interactions:
           "client_ip": "85.248.153.200"
         }
     http_version: 
-  recorded_at: Tue, 24 Feb 2015 17:14:53 GMT
+  recorded_at: Mon, 02 Mar 2015 16:39:59 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=1999&currency=usd&card=tok_15ZmGnC58PH9OiW9nFDeiWo7
+      string: amount=1999&currency=usd&card=tok_15bwaJC58PH9OiW9cZL3chsZ
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -123,7 +123,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 24 Feb 2015 17:14:54 GMT
+      - Mon, 02 Mar 2015 16:39:59 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -141,7 +141,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_7x4f8VCPD3Z0ogpB
+      - req_IuqcHrQKp5SCPMO7
       Stripe-Version:
       - '2015-02-10'
     body:
@@ -152,9 +152,9 @@ http_interactions:
             "message": "An error occurred while processing your card. Try again in a little bit.",
             "type": "card_error",
             "code": "processing_error",
-            "charge": "ch_15ZmGoC58PH9OiW909NgrMp0"
+            "charge": "ch_15bwaJC58PH9OiW9uvcJgQYj"
           }
         }
     http_version: 
-  recorded_at: Tue, 24 Feb 2015 17:14:54 GMT
+  recorded_at: Mon, 02 Mar 2015 16:40:00 GMT
 recorded_with: VCR 2.9.3
