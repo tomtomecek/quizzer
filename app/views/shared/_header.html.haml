@@ -12,6 +12,7 @@
     .collapse.navbar-collapse#navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if logged_in?
+          %li=# link_to "My Exams", exams_path, class: "btn btn-default"
           %li
             = link_to '', class: "btn btn-default" do
               = image_tag current_user.avatar_url, class: "student-avatar", alt: "avatar", size: "20x20"

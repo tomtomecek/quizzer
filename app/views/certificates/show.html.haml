@@ -7,17 +7,16 @@
         Certificate of Accomplishment
         %br
         #{@certificate.course.title}
-.container
+%section.container.certificate-wrapper
   = link_to "Download as PDF", certificate_path(@certificate.licence_number, format: "pdf"), class: "btn btn-default btn-tealeaf col-sm-2 download-button"
   - if @certificate.student == current_user
     = link_to linked_in_url(@certificate) do
-      = image_tag 'AddToProfileButton.png', class: "linkedin-button"
+      = image_tag 'AddToProfileButton.png', class: "linkedin-button2"
   .content
     .logo
       %div= image_tag 'tealeaf-logo2.jpg'
       .clearfix
-      .tealeaf-link
-        = link_to "gotealeaf.com", 'http://www.gotealeaf.com'
+      .tealeaf-link= link_to "gotealeaf.com", 'http://www.gotealeaf.com'
     .date
       %span.month= @certificate.created_at.strftime("%B").upcase
       %span.day_year= @certificate.created_at.strftime("%d, %Y")
@@ -29,7 +28,7 @@
     .has_successfull HAS SUCCESSFULLY COMPLETED TEALEAF ACADEMY'S COURSE OF
     .course_presentation
       .course_image
-        = image_tag "ruby2.jpg", size: "460x322"
+        = image_tag @certificate.course.image_cover.certificate.url, alt: "course image"
       .course
         .title= @certificate.course.title
         .description= @certificate.course.description
@@ -39,7 +38,7 @@
         .signature
           = image_tag "chris-sig.jpg", size: "200x75"
           %hr
-          .instructor INSTRUCTOR NAME1
+          .instructor= @certificate.course.instructor.full_name
           .academy TEALEAF ACADEMY INSTRUCTOR
         .signature
           = image_tag "kevin-sig.jpg", size: "200x75"

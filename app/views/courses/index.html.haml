@@ -9,32 +9,54 @@
       %span.ta-title Tealeaf Academy
       - if @courses.any?
         %span
-          %em presents
+          %em(style="display: none") presents
         %ul.course-list.no-bullets
           - @courses.each do |course|
-            %li= course.title
+            %li(style="display: none")= course.title
 .container
-  .col-sm-7
-    - @courses.each do |course|
-      .row{ id: "course_#{course.id}" }
-        - if course.image_cover_url.nil?
-          %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image")
-        - else
-          = image_tag(course.image_cover_url, alt: course.title, class: "img-responsive")
-        %h3= course.title
-        %br
-        %p.bg-primary
-          = preserve do
-            = markdown course.description
-        %br
-        - if logged_in? && current_user.has_enrolled?(course)
-          = link_to course, class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
-            %span.glyphicon.glyphicon-play-circle
-            Continue with exams
-        - elsif logged_in?
-          = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg btn-tealeaf col-sm-12", remote: true do
-            %span.glyphicon.glyphicon-log-in
-            Enroll now
-        .clearfix
-        %hr
+  - @courses.each do |course|
+    .row{ id: "course_#{course.id}" }
+      .col-sm-7
+        .course-main-wrapper
+          - if course.image_cover_url.nil?
+            %img.img-responsive(src="http://dummyimage.com/667x320/000/fff.png&text=Course+image" alt="Course Image")
+          - else
+            = image_tag(course.image_cover_url, alt: course.title, class: "img-responsive")
+          %h3= course.title
+          %br
+          %p.bg-primary
+            = preserve do
+              = markdown course.description
+          %br
+          - if logged_in? && current_user.has_enrolled?(course)
+            = link_to course, class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
+              %span.glyphicon.glyphicon-play-circle
+              Continue with exams
+          - elsif logged_in?
+            = link_to new_enrollment_path(course_id: course.id), class: "btn btn-default btn-lg btn-tealeaf col-sm-12", remote: true do
+              %span.glyphicon.glyphicon-log-in
+              Enroll now
+          .clearfix
+      .col-sm-5
+        .course-details-wrapper
+          .instructor-image
+            = image_tag "chris.jpg", alt: "course.instructor.full_name", size: "150x150", class: "img-responsive"
+          .course-info
+            .info
+              %span.head Instructor
+              %span.tail.instructor-name= course.instructor.full_name
+            .info
+              %span.head Duration
+              %span.tail= course.duration
+            .info
+              %span.head Quizzes to pass
+              %span.tail= course.min_quiz_count
+            .info
+              %span.head Technology
+              %span.tail tags, tags, tags, tags, tags
+          .course-price
+            = image_tag "certification_award.jpg", alt: "Certificate", size: "50x50", class: "img-responsive"
+            %span.head Price
+            %span.tail= number_to_currency course.price_dollars
+    %hr
 .enrollments_hook
