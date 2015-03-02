@@ -1,6 +1,7 @@
 %footer
   .container.copy-rights
     .pull-left
-      Copyright © 2015 - All Right Reserved - Tealeaf Academy | #{link_to "Administration", admin_sign_in_path}
+      Copyright © 2015 - All Right Reserved - Tealeaf Academy
+      = "| #{link_to "Administration", admin_sign_in_path}".html_safe unless logged_in_admin?
     .pull-right
       Made by Tomas Tomecek
