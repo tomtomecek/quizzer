@@ -22,4 +22,39 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "#pretty_percentage" do
+    it "returns 0% if no exams are passed" do
+      enr = double('enrollment', completion_percentage: 0)
+      expect(helper.pretty_percentage(enr.completion_percentage)).to eq "0%"
+    end
+
+    it "returns 50% when completion is 50" do
+      enr = double('enrollment', completion_percentage: 50)
+      expect(helper.pretty_percentage(enr.completion_percentage)).to eq "50%"
+    end
+
+    it "returns 100% when all exams are passed" do
+      enr = double('enrollment', completion_percentage: 100)
+      expect(helper.pretty_percentage(enr.completion_percentage)).to eq "100%"
+    end
+
+    context "display true" do
+      it "returns completed if display option is given" do
+        enr = double('enrollment', completion_percentage: 66)
+        expect(helper.pretty_percentage(
+          enr.completion_percentage,
+          display: true
+        )).to eq "66%"
+      end
+
+      it "returns completed if display option is given" do
+        enr = double('enrollment', completion_percentage: 100)
+        expect(helper.pretty_percentage(
+          enr.completion_percentage,
+          display: true
+        )).to eq "Completed"
+      end
+    end
+  end
 end

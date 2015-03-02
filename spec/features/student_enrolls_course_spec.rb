@@ -95,7 +95,7 @@ feature "student enrolls course" do
           year: "2015")
         agree_on_honor_code
         click_paid_enroll_now
-        expect_to_see "Your card has expired."
+        expect_to_see "Your card's expiration month is invalid."
       end
 
       scenario "failed enroll processing_error code", :js, :vcr, :billy do

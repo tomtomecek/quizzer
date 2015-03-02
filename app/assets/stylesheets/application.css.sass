@@ -9,6 +9,7 @@ $tealeaf-green: rgba(18, 117, 112, 0.7)
 $tealeaf-light: #46bcb8
 $teal-shadow: #36FFFF
 $white: white
+
 /*
  *= require_self
  */
@@ -29,6 +30,7 @@ $white: white
 @import navbar
 @import modal
 @import student
+@import progressbar
 
 body
   font-family: "Crete Round", Georgia, "Times New Roman", Times, serif
@@ -56,6 +58,8 @@ section
     background-color: $tealeaf-light
 section.ui
   margin-top: 70px
+section.push
+  margin-top: 150px
 footer
   min-height: 54px
   background-color: #f8f8f8
@@ -77,3 +81,5 @@ footer
   @extend .has-error
   .form-control 
     color: $state-danger-text
+.nullify-padding
+  padding: 0

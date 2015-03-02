@@ -33,4 +33,12 @@ module ApplicationHelper
   def instructors_select_options
     Admin.instructors.map { |a| [a.username, a.id] }
   end
+
+  def pretty_percentage(percentage, options = {})
+    if options[:display]
+      percentage == 100 ? "Completed" : "#{percentage}%"
+    else
+      "#{percentage}%"
+    end
+  end
 end

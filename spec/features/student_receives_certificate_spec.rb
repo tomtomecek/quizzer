@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "student receives certificate" do
-  given(:ruby) { Fabricate(:course) }
+  given(:ruby) { Fabricate(:course, published: true, min_quiz_count: 3) }
   given!(:quiz1) { Fabricate(:quiz, course: ruby, published: true) }
   given!(:quiz2) { Fabricate(:quiz, course: ruby, published: true) }
   given!(:quiz3) { build_quizz(ruby) }

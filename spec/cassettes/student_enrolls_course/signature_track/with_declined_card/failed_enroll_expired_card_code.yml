@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: UTF-8
-      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fe171cde&card[number]=4000000000000069&card[cvc]=123&card[exp_year]=2015&card[exp_month]=2
+      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=4000000000000069&card[cvc]=123&card[exp_year]=2015&card[exp_month]=2
     headers:
       Accept:
       - application/json
       Referer:
-      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default318822&stripe_xdm_p=1
+      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default35528&stripe_xdm_p=1
       Origin:
       - https://js.stripe.com
       User-Agent:
@@ -26,17 +26,17 @@ http_interactions:
       - en-US,*
   response:
     status:
-      code: 200
-      message: OK
+      code: 402
+      message: Payment Required
     headers:
       Server:
       - nginx
       Date:
-      - Tue, 24 Feb 2015 17:14:55 GMT
+      - Mon, 02 Mar 2015 16:40:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '689'
+      - '167'
       Connection:
       - close
       Access-Control-Allow-Credentials:
@@ -50,112 +50,22 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_l0Tw8fscxfPQ8jZf
+      - req_PJiDJWpMqGRAWG8Q
       Stripe-Version:
       - '2015-02-10'
       Timing-Allow-Origin:
       - https://js.stripe.com
-      Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
-    body:
-      encoding: UTF-8
-      string: |
-        {
-          "id": "tok_15ZmGpC58PH9OiW9UipJnvzT",
-          "livemode": false,
-          "created": 1424798095,
-          "used": false,
-          "object": "token",
-          "type": "card",
-          "card": {
-            "id": "card_15ZmGpC58PH9OiW9sGpZrioY",
-            "object": "card",
-            "last4": "0069",
-            "brand": "Visa",
-            "funding": "credit",
-            "exp_month": 2,
-            "exp_year": 2015,
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "unchecked",
-            "address_line1_check": null,
-            "address_zip_check": null,
-            "dynamic_last4": null
-          },
-          "client_ip": "85.248.153.200"
-        }
-    http_version: 
-  recorded_at: Tue, 24 Feb 2015 17:14:55 GMT
-- request:
-    method: post
-    uri: https://api.stripe.com/v1/charges
-    body:
-      encoding: US-ASCII
-      string: amount=1999&currency=usd&card=tok_15ZmGpC58PH9OiW9UipJnvzT
-    headers:
-      Accept:
-      - "*/*; q=0.5, application/xml"
-      Accept-Encoding:
-      - gzip, deflate
-      User-Agent:
-      - Stripe/v1 RubyBindings/1.16.1
-      Authorization:
-      - Bearer sk_test_jaNAAogSSLGyWYA90ohSeLCS
-      Content-Type:
-      - application/x-www-form-urlencoded
-      X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.16.1","lang":"ruby","lang_version":"2.1.5 p273 (2014-11-13)","platform":"x86_64-darwin13.0","publisher":"stripe","uname":"Darwin
-        Tomass-MacBook-Pro.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64"}'
-      Content-Length:
-      - '58'
-  response:
-    status:
-      code: 402
-      message: Payment Required
-    headers:
-      Server:
-      - nginx
-      Date:
-      - Tue, 24 Feb 2015 17:14:56 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '186'
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Max-Age:
-      - '300'
-      Cache-Control:
-      - no-cache, no-store
-      Request-Id:
-      - req_L2YCx3yhFoB3Lj5h
-      Stripe-Version:
-      - '2015-02-10'
     body:
       encoding: UTF-8
       string: |
         {
           "error": {
-            "message": "Your card has expired.",
+            "message": "Your card's expiration month is invalid.",
             "type": "card_error",
             "param": "exp_month",
-            "code": "expired_card",
-            "charge": "ch_15ZmGqC58PH9OiW9tnVqkT7K"
+            "code": "invalid_expiry_month"
           }
         }
     http_version: 
-  recorded_at: Tue, 24 Feb 2015 17:14:56 GMT
+  recorded_at: Mon, 02 Mar 2015 16:40:01 GMT
 recorded_with: VCR 2.9.3

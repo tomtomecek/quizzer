@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.stripe.com/v1/tokens
     body:
       encoding: UTF-8
-      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fe171cde&card[number]=123&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
+      string: key=pk_test_X52PaWssAhusIe9fUXjSvjs3&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=123&card[cvc]=123&card[exp_year]=2018&card[exp_month]=4
     headers:
       Accept:
       - application/json
       Referer:
-      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default707596&stripe_xdm_p=1
+      - https://js.stripe.com/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default133342&stripe_xdm_p=1
       Origin:
       - https://js.stripe.com
       User-Agent:
@@ -32,7 +32,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 24 Feb 2015 17:14:47 GMT
+      - Mon, 02 Mar 2015 16:39:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -50,7 +50,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_Qf7JGFMnwGX0AmG3
+      - req_koHz7Lx2agffG83u
       Stripe-Version:
       - '2015-02-10'
       Timing-Allow-Origin:
@@ -67,5 +67,5 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Tue, 24 Feb 2015 17:14:48 GMT
+  recorded_at: Mon, 02 Mar 2015 16:39:53 GMT
 recorded_with: VCR 2.9.3
