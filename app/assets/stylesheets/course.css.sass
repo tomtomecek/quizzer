@@ -6,6 +6,7 @@
   background-size: cover
   margin-bottom: 30px
   width: 100%
+  min-height: 423px
   position: relative
   padding-bottom: 15px
   .after-nav
@@ -34,12 +35,59 @@
       color: white
       font-size: 3em
       img
+        border-radius: 50%
         margin-left: 20px
-
+        -webkit-box-shadow: 6px 6px 6px 0 $teal-shadow
+        box-shadow: 6px 6px 6px 0 $teal-shadow
 .linkedin-button
   margin: 10px 13px
   padding: 19px 22px
   background-color: white
   border-radius: 4px
-  -webkit-box-shadow: 6px 6px 6px 0 #36FFFF
-  box-shadow: 6px 6px 6px 0 #36FFFF
+  -webkit-box-shadow: 6px 6px 6px 0 $teal-shadow
+  box-shadow: 6px 6px 6px 0 $teal-shadow
+.linkedin-button2
+  margin: 10px 13px
+.course-main-wrapper
+  margin-bottom: 40px
+.course-details-wrapper
+  background-color: $cloudy
+  padding: 35px 30px 15px
+  margin: 0 0 10px 10px
+  .instructor-image
+    margin: 0px auto 40px
+    overflow: hidden
+    max-width: 150px
+    img
+      border-color: $cloudy
+  .course-info
+    margin-bottom: 30px
+    .info
+      font-size: 18px
+      line-height: 1.6
+      margin-bottom: 10px
+      > span.head
+        font-weight: bold
+        margin-right: 10px
+        float: left
+        min-width: 36px
+      span.tail.instructor-name
+        color: $carrot-small
+      > span.tail
+        color: $silver
+        display: block
+        overflow: hidden
+  .course-price
+    margin-bottom: 30px
+    font-weight: bold
+    letter-spacing: 1px
+    img
+      margin-right: 10px
+    .img-responsive
+      display: inline
+    > span.head
+      font-size: 25px
+      margin-right: 15px
+    > span.tail
+      color: $azure
+      font-size: 33px

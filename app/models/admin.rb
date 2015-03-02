@@ -3,6 +3,7 @@ class Admin < ActiveRecord::Base
 
   has_many :courses, foreign_key: "instructor_id"
 
+  validates :first_name, :last_name, :email, presence: true
   validates :username, uniqueness: { case_sensitive: false }, allow_nil: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]{2,}\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX },
@@ -49,6 +50,16 @@ class Admin < ActiveRecord::Base
 
   def self.instructors
     where(role: "Instructor")
+  end
+
+  def full_name=(name)
+    split = name.split(' ', 2)
+    self.first_name = split.first
+    self.last_name  = split.last
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
 private

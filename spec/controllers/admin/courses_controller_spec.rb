@@ -55,7 +55,8 @@ describe Admin::CoursesController do
                instructor_id: kevin.id,
                title: "",
                description: "",
-               min_quiz_count: ""
+               min_quiz_count: "",
+               price_dollars: 0
              }
       end
 

@@ -11,7 +11,7 @@
           = link_to linked_in_url(@enrollment.certificate) do
             = image_tag 'AddToProfileButton.png', class: "linkedin-button"
 .col-sm-2
-  %aside.well(style="margin: 10px 15px; min-width: 170px")
+  %aside.well
     %dl
       %dt Enrollment:
       %dd= @enrollment.paid? ? "Signature Track" : "Free"
@@ -26,39 +26,60 @@
           = link_to certificate_path(@enrollment.certificate.licence_number), target: "_blank" do
             here
             %span.glyphicon.glyphicon-new-window
-%section.container
-  .col-sm-7.quizzes
-    - @course.published_quizzes.each do |quiz|
-      .row{ id: "quiz_#{quiz.id}" }
-        %h3= quiz.title
-        %br
-        %p= quiz.description
-        %br
-        - if current_user.has_permission?(quiz)
-          - if current_user.examined_from?(quiz)
-            - if current_user.passed_exam?(quiz)
-              = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
-                %span.glyphicon.glyphicon-ok-circle
-                Exam passed
-              .clearfix
-            - elsif current_user.failed_exam?(quiz)
-              = link_to '', class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
-                %span.glyphicon.glyphicon-repeat
-                Re-attempt
-              .clearfix
+%section.quizzes.container
+  - @course.published_quizzes.each do |quiz|
+    .row{ id: "quiz_#{quiz.id}" }
+      .col-sm-7
+        .quiz-body
+          %h3= quiz.title
+          %br
+          %p= quiz.description
+          %br
+          - if current_user.has_permission?(quiz)
+            - if current_user.examined_from?(quiz)
+              - if current_user.passed_exam?(quiz)
+                = link_to quiz_exam_path(quiz, current_user.exam(quiz)), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
+                  %span.glyphicon.glyphicon-ok-circle
+                  Exam passed
+                .clearfix
+              - elsif current_user.failed_exam?(quiz)
+                = link_to '', class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
+                  %span.glyphicon.glyphicon-repeat
+                  Re-attempt
+                .clearfix
+              - else
+                = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
+                  %span.glyphicon.glyphicon-play-circle
+                  Continue in Quiz
+                .clearfix
             - else
               = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
                 %span.glyphicon.glyphicon-play-circle
-                Continue in Quiz
+                Start Quiz
               .clearfix
           - else
-            = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg btn-tealeaf col-sm-12" do
-              %span.glyphicon.glyphicon-play-circle
-              Start Quiz
+            = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
+              %span.glyphicon.glyphicon-ban-circle
+              You have to pass previous quiz first.
             .clearfix
-        - else
-          = link_to '', class: "btn btn-danger btn-lg col-sm-12 disabled" do
-            %span.glyphicon.glyphicon-ban-circle
-            You have to pass previous quiz first.
-          .clearfix
-        %hr(style="padding: 5px 0px;")
+      .col-sm-5
+        .quiz-details
+          .quiz-info
+            .info
+              %i.fa.fa-info-circle.fa-2x
+              %header Quiz Information
+              .clearfix
+            .info
+              %span.head Questions
+              %span.tail= quiz.questions.count
+            .info
+              %span.head Passing percentage
+              %span.tail #{quiz.passing_percentage} %
+            .info
+              %span.head Total Score
+              %span.tail= quiz.total_score
+          .quiz-tags
+            %span.head
+              %i.fa.fa-tags
+              tags, tags, tags
+    %hr

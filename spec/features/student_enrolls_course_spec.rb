@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature "student enrolls course" do
-  given(:ruby) { Fabricate(:course, title: "Ruby") }
+  given(:chris) { Fabricate(:instructor) }
+  given(:ruby) { Fabricate(:course, title: "Ruby", instructor: chris) }
   background do
     clear_emails
     Fabricate.times(3, :quiz, course: ruby, published: true)

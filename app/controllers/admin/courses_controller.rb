@@ -34,6 +34,7 @@ private
              :instructor_id,
              :min_quiz_count,
              :duration,
+             :price_dollars,
              :image_cover)
   end
 

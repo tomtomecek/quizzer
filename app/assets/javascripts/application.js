@@ -17,4 +17,5 @@
 //= require bootstrap
 //= require navbar
 //= require flash
+//= require jumbotron
 //= require turbolinks
