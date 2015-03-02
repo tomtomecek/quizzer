@@ -116,4 +116,54 @@ describe Admin::CoursesController do
       expect(assigns(:course)).to eq ruby
     end
   end
+
+  describe "PATCH update" do
+    let(:kevin) { Fabricate(:instructor, activated: true) }
+    let(:ruby) { Fabricate(:course) }
+    before { set_current_admin(kevin) }
+    it_behaves_like "require admin sign in" do
+      let(:action) { patch :update, id: ruby.slug, course: { title: "x" } }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { patch :update, id: ruby.slug, course: { title: "x" } }
+    end
+
+    context "with valid data" do
+      before do
+        patch :update, id: ruby.slug, course: {
+          title: "Changed title",
+          description: "Changed desription",
+          price_dollars: "400.00",
+          min_quiz_count: "4",
+          duration: "10 weeks"
+        }
+      end
+
+      it { is_expected.to redirect_to admin_courses_url }
+      it { is_expected.to set_flash[:success] }
+      it "changes the course" do
+        expect(ruby.reload.title).to eq "Changed title"
+        expect(ruby.reload.price_cents).to eq 40000
+      end
+    end
+
+    context "with invalid data" do
+       before do
+        patch :update, id: ruby.slug, course: {
+          title: "Different title",
+          description: "Different desription",
+          price_dollars: "400.00",
+          min_quiz_count: "2",
+          duration: ""
+        }
+      end
+
+      it { is_expected.to render_template :edit }
+      it { is_expected.to set_flash.now[:danger] }
+      it "sets the @course" do
+        expect(assigns(:course)).to eq ruby
+      end
+    end
+  end
 end
