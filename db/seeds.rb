@@ -29,7 +29,8 @@ ruby = Course.new(title: "Introduction to Ruby and Web development",
                   min_quiz_count: 4,
                   price_cents: 1999,
                   published: true)
-ruby.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby.jpg")))
+ruby.image_cover.store!(
+  File.open(File.join(Rails.root, "spec/support/images/ruby.jpg")))
 ruby.save!
 rails = Course.new(title: "Rapid Prototyping with Ruby on Rails",
                    description: Faker::Lorem.paragraph(9),
@@ -38,7 +39,8 @@ rails = Course.new(title: "Rapid Prototyping with Ruby on Rails",
                    min_quiz_count: 4,
                    price_cents: 1999,
                    published: true)
-rails.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
+rails.image_cover.store!(
+  File.open(File.join(Rails.root, "spec/support/images/ruby_on_rails.jpg")))
 rails.save!
 tdd = Course.new(title: "Build Robust and Production Quality Applications",
                  description: Faker::Lorem.paragraph(9),
@@ -47,7 +49,8 @@ tdd = Course.new(title: "Build Robust and Production Quality Applications",
                  duration: "8 weeks",
                  price_cents: 3999,
                  published: true)
-tdd.image_cover.store!(File.open(File.join(Rails.root, "spec/support/images/tdd.jpg")))
+tdd.image_cover.store!(
+  File.open(File.join(Rails.root, "spec/support/images/tdd.jpg")))
 tdd.save!
 
 QUIZ_NAMES = [
