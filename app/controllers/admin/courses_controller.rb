@@ -1,6 +1,6 @@
 class Admin::CoursesController < AdminController
-  before_action :require_instructor, only: [:new, :create, :edit]
-  before_action :find_course, only: [:show, :edit]
+  before_action :require_instructor, only: [:new, :create, :edit, :update]
+  before_action :find_course, only: [:show, :edit, :update]
 
   def new
     @course = Course.new
@@ -24,6 +24,16 @@ class Admin::CoursesController < AdminController
   def show; end
 
   def edit; end
+
+  def update
+    if @course.update(course_params)
+      flash[:success] = "Successfully updated the course #{@course.title}"
+      redirect_to admin_courses_url
+    else
+      flash[:danger] = "These errors needs to be fixed:"
+      render :edit
+    end
+  end
 
 private
 
