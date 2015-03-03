@@ -71,7 +71,4 @@ $(document).on('click', '#stripeSubmit', function(event) {
 $(document).on('click', 'button[data-dismiss=modal]', function() {
   $('body').removeClass('modal-open');
   $('.modal').remove();
-  $('html, body').animate({
-     scrollTop: $(".navbar").offset().top
-  }, 2000);
 });
