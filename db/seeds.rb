@@ -67,7 +67,7 @@ QUIZ_NAMES = [
           end
           question.answers.build do |answer|
             answer.content = "incorrect answer - whatever"
-            answer.content = false
+            answer.correct = false
           end
         end
       end
@@ -82,7 +82,7 @@ QUIZ_NAMES = [
           end
           question.answers.build do |answer|
             answer.content = "incorrect answer - whatever"
-            answer.content = false
+            answer.correct = false
           end
         end
       end
@@ -97,7 +97,7 @@ QUIZ_NAMES = [
           end
           question.answers.build do |answer|
             answer.content = "incorrect answer - whatever"
-            answer.content = false
+            answer.correct = false
           end
         end
       end
@@ -112,16 +112,11 @@ QUIZ_NAMES = [
           end
           question.answers.build do |answer|
             answer.content = "incorrect answer - whatever"
-            answer.content = false
+            answer.correct = false
           end
         end
       end
     end
-    q.save(validate: false)
+    q.save
   end
 end
-
-Quiz.published.each_with_index do |published_quiz, idx|
-  published_quiz.update_columns(position: idx + 1)
-end
-
