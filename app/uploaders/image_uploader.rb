@@ -18,6 +18,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   process resize_to_fill: [667, 320]
 
   version :certificate do
-    process resize_to_fit: [460, 322]
+    process resize_to_fill: [460, 322]
   end
 end

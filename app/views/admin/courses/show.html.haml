@@ -1,28 +1,25 @@
-%section.container
-  .row
-    .pull-left
+%section.push
+  .container
+    .page-header
       %h2 All Quizzes within - #{@course.title}
-    .pull-right
-      = link_to new_quiz_path(course_id: @course.slug), class: "btn btn-success btn-lg new_quiz_button" do
-        %span.glyphicon.glyphicon-plus
-        New Quiz
+      .pull-right
+        = link_to new_quiz_path(course_id: @course.slug), class: "btn btn-success btn-lg new_quiz_button" do
+          %span.glyphicon.glyphicon-plus
+          New Quiz
     .clearfix
     %hr
-  .col-sm-7
-    - @course.quizzes.each do |quiz|
-      .row{ id: "quiz_#{quiz.id}" }
-        %h3= quiz.title
-        - if quiz.published?
-          %h4 Published
-        %br
-        = link_to new_quiz_exam_path(quiz), class: "btn btn-default btn-lg" do
-          %span.glyphicon.glyphicon-play-circle
-          Start Quiz
-        = link_to edit_quiz_path(quiz), class: "btn btn-default btn-lg" do
-          %span.glyphicon.glyphicon-edit
-          Edit Quiz
-        = link_to quiz, class: "btn btn-default btn-lg view-quiz" do
-          %span.glyphicon.glyphicon-zoom-in
-          View Quiz
-        .clearfix
-        %hr(style="padding: 5px 0px;")
+    .col-sm-7
+      - @course.quizzes.each do |quiz|
+        .row{ id: "quiz_#{quiz.id}" }
+          %h3= quiz.title
+          - if quiz.published?
+            %h4 Published
+          %br
+          = link_to edit_quiz_path(quiz), class: "btn btn-default btn-lg btn-tealeaf" do
+            %span.glyphicon.glyphicon-edit
+            Edit Quiz
+          = link_to quiz, class: "btn btn-default btn-lg btn-tealeaf view-quiz" do
+            %span.glyphicon.glyphicon-zoom-in
+            View Quiz
+          .clearfix
+          %hr(style="padding: 5px 0px;")

@@ -1,11 +1,14 @@
-%section.container
-  .col-sm-8
-    .col-sm-offset-3(style="margin-left: 26%")
-      %h3 Add new admin
-    = bootstrap_form_for @admin, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-5", html: { 'data-parsley-validate' => '' } do |f|
-      = f.text_field :full_name, label: "Full Name:", required: true, "data-parsley-trigger" => "blur" 
-      = f.email_field :email, label: "Email:", required: true, "data-parsley-trigger" => "blur"
-      = f.select :role, roles, label: "Admin role:", prompt: "Select Role", required: true, "data-parsley-trigger" => "blur"
-      = f.form_group do
-        .col-sm-offset-2.col-sm-5
-          = f.submit "Add new admin"
+= content_for(:head) do
+  = stylesheet_link_tag "admin_management"
+%section.push
+  .container
+    .page-header
+      %h1 Add new admin
+    .col-sm-8
+      = bootstrap_form_for @admin, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-5", html: { 'data-parsley-validate' => '' } do |f|
+        = f.text_field :full_name, label: "Full Name:", required: true, "data-parsley-trigger" => "blur" 
+        = f.email_field :email, label: "Email:", required: true, "data-parsley-trigger" => "blur"
+        = f.select :role, roles, label: "Admin role:", prompt: "Select Role", required: true, "data-parsley-trigger" => "blur"
+        = f.form_group do
+          .col-sm-offset-2.col-sm-5
+            = f.submit "Add new admin", class: "btn btn-default btn-lg btn-tealeaf"

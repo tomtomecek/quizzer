@@ -85,4 +85,25 @@ describe Course do
       expect(ruby.price_dollars).to eq nil
     end
   end
+
+  describe "scope .published" do
+    it "returns an empty array of 0 published course" do
+      Fabricate(:course, published: false)
+      expect(Course.published).to eq []   
+    end
+
+    it "returns an array of many published courses" do
+      ruby = Fabricate(:course, published: true)
+      rails = Fabricate(:course, published: true)
+      tdd = Fabricate(:course, published: true)
+      expect(Course.published).to eq [ruby, rails, tdd]
+    end
+
+    it "orders the courses based on created at" do
+      ruby = Fabricate(:course, published: true, created_at: 2.days.ago)
+      rails = Fabricate(:course, published: true, created_at: 1.days.ago)
+      tdd = Fabricate(:course, published: true, created_at: Time.now)
+      expect(Course.published).to eq [ruby, rails, tdd]
+    end
+  end
 end

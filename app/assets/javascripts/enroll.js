@@ -42,7 +42,7 @@ function stripeResponseHandler(status, response) {
 }
 
 $(document).on('click', '#paid', function() {
-  var $paidButton = $('<button type=button class="btn btn-primary btn-lg" id="stripeSubmit"><span class="glyphicon glyphicon-certificate"></span>Enroll now!</button>');
+  var $paidButton = $('<button type=button class="btn btn-primary btn-lg btn-tealeaf" id="stripeSubmit"><span class="glyphicon glyphicon-certificate"></span>Enroll now!</button>');
   showCreditCardFields(true);
   $('.modal-footer').append($paidButton);
 });

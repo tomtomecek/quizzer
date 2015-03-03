@@ -9,6 +9,9 @@ $tealeaf-green: rgba(18, 117, 112, 0.7)
 $tealeaf-light: #46bcb8
 $teal-shadow: #36FFFF
 $white: white
+$btn-primary-border: $teal-light
+$btn-primary-color: $white
+$btn-primary-bg: $tealeaf-green
 
 /*
  *= require_self
@@ -27,22 +30,22 @@ $white: white
 @import bootstrap-sprockets
 @import bootstrap
 @import font-awesome
+@import footer
+@import jumbotron
 @import navbar
 @import modal
 @import student
 @import progressbar
 
+
 body
   font-family: "Crete Round", Georgia, "Times New Roman", Times, serif
-section
-  margin-top: 20px
 .row
   margin-left: 0
   margin-right: 0
 .btn-default
   background-color: $cloudy
-.btn-tealeaf, .btn-tealeaf:active
-  color: $dark-gray
+.btn-tealeaf
   -webkit-transition: all 0.2s ease
   -moz-transition: all 0.2s ease
   -ms-transition: all 0.2s ease
@@ -56,21 +59,21 @@ section
     border: 2px solid $teal
     color: $white
     background-color: $tealeaf-light
+  &:active
+    color: $white
+.btn-tealeaf.active
+  border: 2px solid $teal
+  color: $white
+  background-color: $tealeaf-light
 section.ui
   margin-top: 70px
 section.push
-  margin-top: 150px
-footer
-  min-height: 54px
-  background-color: #f8f8f8
-  border-color: #e7e7e7
-.copy-rights
-  padding: 26px
-  margin-top: 30px
+  margin-top: 200px
+
 .no-bullets
   list-style: none
 .admin-login
-  margin: 250px 150px
+  margin: 250px auto
   h1
     margin: 0px 0px 15px 6px
 .new_course_button

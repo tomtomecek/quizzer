@@ -8,13 +8,13 @@ feature "instructor edits course" do
               activated: true)
   end
 
-  given!(:ruby) { Fabricate(:course) }
+  given!(:ruby) { Fabricate(:course, published: true) }
   background { sign_in_admin(kevin) }
 
   scenario "successfull edit" do
     click_on "Courses"
     click_on "Edit"
-    expect_to_see "Edit course #{ruby.title}"
+    expect_to_see "Editing #{ruby.title}"
 
     fill_in "Title", with: "HTML and CSS basics"
     fill_in "Description", with: "front end course"
