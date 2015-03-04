@@ -153,7 +153,7 @@ describe EnrollmentsController do
         it "sends out email with correct" do
           email = mail.body.encoded
           expect(email).to include current_user.username
-          expect(email).to include "We confirm the payment - $19.99"
+          expect(email).to include "We confirm the payment - $#{ruby.price_dollars}"
           expect(email).to include ruby.title
           expect(email).to include "Certification will be sent only upon successful completion of exams."
         end

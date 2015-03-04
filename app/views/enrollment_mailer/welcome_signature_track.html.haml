@@ -3,7 +3,7 @@
   %body
     %p Welcome #{@student.username}!
     %br
-    %p Thank you for your trust in Tealeaf! We confirm the payment - $19.99 for the signature track for course #{@course.title}.
+    %p Thank you for your trust in Tealeaf! We confirm the payment - #{number_to_currency(@course.price_dollars)} for the signature track for course #{@course.title}.
     %br
     %p In order to receive certification from Tealeaf - here is the information you need to know:
     %ul
