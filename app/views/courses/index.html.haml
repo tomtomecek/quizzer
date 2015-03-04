@@ -46,8 +46,10 @@
           .instructor-image
             - if course.instructor.username == "Chris"
               = image_tag "chris.jpg", alt: "course.instructor.full_name", size: "150x150", class: "img-responsive"
-            - else
+            - elsif course.instructor.username == "Kevin"
               = image_tag "kevin.jpg", alt: "course.instructor.full_name", size: "150x150", class: "img-responsive"
+            - else
+              = image_tag "search_monkey.png", alt: "course.instructor.full_name", size: "150x150", class: "img-responsive"
           .course-info
             .info
               %span.head Instructor

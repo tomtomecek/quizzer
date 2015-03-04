@@ -6,6 +6,7 @@ feature "student enrolls course" do
     Fabricate(:course,
               title: "Ruby",
               instructor: chris,
+              price_dollars: "49.99",
               published: true)
   end
   background do
@@ -66,7 +67,7 @@ feature "student enrolls course" do
 
         open_email("alice@example.com")
         expect(current_email).to have_content "Thank you for your trust in\
-          Tealeaf! We confirm the payment - $19.99 for the signature track\
+          Tealeaf! We confirm the payment - $49.99 for the signature track\
           for course #{ruby.title}."
       end
 

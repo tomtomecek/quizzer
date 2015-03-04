@@ -23,7 +23,7 @@
                 %span.glyphicon.glyphicon-certificate
                 Signature Track
           %fieldset.credit_card.font-16(style="display: none;")
-            %h3 Get certified with Tealeaf for $19.99
+            %h3 Get certified with Tealeaf for #{number_to_currency(@enrollment.course.price_dollars)}
             %p
               Upon successfull course completion you will receive Certificate of Accomplishment via email and also you will be able to add it to your
               %span= image_tag("linkedin_logo.jpg", size: "66x20", alt: "LinkedIn")

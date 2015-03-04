@@ -13,7 +13,10 @@ class EnrollmentsController < ApplicationController
     if @enrollment.valid?
       if enrollment_paid?
         token = params[:stripeToken]
-        charge = StripeWrapper::Charge.create(amount: 1999, card_token: token)
+        charge = StripeWrapper::Charge.create(
+          amount: @enrollment.course.price_cents,
+          card_token: token
+        )
         if charge.successful?
           @enrollment.save
           EnrollmentMailer.delay.welcome_signature_track(current_user, course)
