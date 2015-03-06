@@ -35,7 +35,6 @@ feature "student receives certificate" do
     click_on "Submit Answers"
     expect_to_see course_completion_message
 
-    sleep 2
     open_email("alice@example.com")
     expect_to_see_in_email "Please access your Certificate of Accomplishment"
     current_email.click_link "here"
