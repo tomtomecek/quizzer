@@ -14,6 +14,7 @@ feature "admin activates account" do
   after { clear_emails }
 
   scenario "receives email and activates the account", :js do
+    sleep 0.1
     open_email(email)
     current_email.click_on activation_path
 
@@ -23,6 +24,7 @@ feature "admin activates account" do
 
   context "checks errors" do
     background do
+      sleep 0.1
       open_email(email)
       current_email.click_link activation_path
     end

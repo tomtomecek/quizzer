@@ -22,16 +22,6 @@ VCR.configure do |c|
 end
 
 Capybara.javascript_driver = :poltergeist
-if ENV['CODESHIP']
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {
-      js_errors:true,
-      phantomjs_options:['--proxy-type=none'],
-      port: 44678,
-      timeout:180
-    })
-  end
-end
 Capybara.default_wait_time = 3
 Capybara.server_port = 52662
 
