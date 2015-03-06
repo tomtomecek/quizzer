@@ -21,7 +21,19 @@ VCR.configure do |c|
   c.ignore_hosts 'codeclimate.com', 'js.stripe.com', 'tiles.services.mozilla.com', 'dtex4kvbppovt.cloudfront.net', 'dummyimage.com'
 end
 
+if ENV['CODESHIP']
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, {
+      js_errors:true,
+      phantomjs_options:['--proxy-type=none'],
+      timeout:180
+    })
+  end
+end
+
 Capybara.javascript_driver = :poltergeist
+
+
 Capybara.default_wait_time = 3
 Capybara.server_port = 52662
 
