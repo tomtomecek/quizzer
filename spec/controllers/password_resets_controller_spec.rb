@@ -26,9 +26,7 @@ describe PasswordResetsController do
       let(:mail) { ActionMailer::Base.deliveries.last }
       let(:message) { mail.body.encoded }
       let(:token) { admin.reload.password_reset_token }
-      let(:correct_link) do
-        "<a href=\"http://localhost:52662/password_reset/#{token}\">"
-      end
+      
       before { post :create, email: "admin@example.com" }
       after { ActionMailer::Base.deliveries.clear }
 
@@ -47,7 +45,7 @@ describe PasswordResetsController do
       end
 
       it "sends out an email with correct link" do
-        expect(message).to include correct_link
+        expect(message).to include edit_password_reset_path(token)
         expect(message).to match /received.+request.+reset your password/m
       end
 

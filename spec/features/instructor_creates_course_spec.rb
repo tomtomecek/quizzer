@@ -18,7 +18,7 @@ feature "instructor creates a new course" do
     click_on "Create Course"
     expect_to_see "Unpublished course has been created."
 
-    #TODO validation on image upload
+    # TODO validation on image upload
   end
 
   scenario "check error messages", :js do
