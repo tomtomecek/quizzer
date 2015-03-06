@@ -27,7 +27,7 @@ if ENV['CODESHIP']
     Capybara::Poltergeist::Driver.new(app, {
       js_errors:true,
       phantomjs_options:['--proxy-type=none'],
-      port: 52662,
+      port: 44678,
       timeout:180
     })
   end
