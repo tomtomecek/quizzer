@@ -28,7 +28,11 @@ Rails.application.routes.draw do
          to: "activations#create",
          as: :activations
 
-    resources :courses, only: [:new, :create, :index, :show, :edit, :update]
+    resources :courses, only: [:new, :create, :index, :show, :edit, :update] do
+      member do
+        patch "/publish", to: "courses#publish"
+      end
+    end
     resources :exams, only: [:index, :show]
   end
 

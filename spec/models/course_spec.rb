@@ -106,4 +106,23 @@ describe Course do
       expect(Course.published).to eq [ruby, rails, tdd]
     end
   end
+
+  describe "#can_be_published?" do
+    it "returns true if course has equal or more quizzes than min quiz count" do
+      ruby = Fabricate(:course, published: false, min_quiz_count: 3)
+      Fabricate.times(3, :quiz, course: ruby)
+      expect(ruby.can_be_published?).to be true
+    end
+
+    it "returns false if course has less quizzes than min quiz count" do
+      ruby = Fabricate(:course, published: false, min_quiz_count: 3)
+      expect(ruby.can_be_published?).to be false
+    end
+
+    it "returns false if course is already published" do
+      ruby = Fabricate(:course, published: true, min_quiz_count: 3)
+      Fabricate.times(3, :quiz, course: ruby)
+      expect(ruby.can_be_published?).to be false
+    end
+  end
 end

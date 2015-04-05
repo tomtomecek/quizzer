@@ -1,6 +1,6 @@
 class Admin::CoursesController < AdminController
-  before_action :require_instructor, only: [:new, :create, :edit, :update]
-  before_action :find_course, only: [:show, :edit, :update]
+  before_action :require_instructor, only: [:new, :create, :edit, :update, :publish]
+  before_action :find_course, only: [:show, :edit, :update, :publish]
 
   def new
     @course = Course.new
@@ -33,6 +33,12 @@ class Admin::CoursesController < AdminController
       flash[:danger] = "These errors needs to be fixed:"
       render :edit
     end
+  end
+
+  def publish
+    @course.update(published: true)
+    flash[:success] = "Course has been successfully published."
+    redirect_to root_url
   end
 
 private
