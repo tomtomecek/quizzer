@@ -52,6 +52,11 @@ class Course < ActiveRecord::Base
     price_cents / 100.0 if price_cents
   end
 
+  def can_be_published?
+    return false if published?
+    quizzes.count >= min_quiz_count
+  end
+
 private
   
   def slugify(the_slug)

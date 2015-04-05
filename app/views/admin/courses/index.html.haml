@@ -18,5 +18,6 @@
             %td
               %strong= link_to course.title, [:admin, course]
             %td
-              = link_to "Edit", [:edit, :admin, course] 
-              = link_to "Publish", ''
+              = link_to "Edit", [:edit, :admin, course]
+              - if course.can_be_published?
+                = link_to "Publish", [:publish, :admin, course], method: :patch

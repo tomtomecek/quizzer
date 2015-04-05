@@ -166,4 +166,15 @@ describe Admin::CoursesController do
       end
     end
   end
+
+  describe "PATCH publish" do
+    let(:ruby) { Fabricate(:course) }
+    it_behaves_like "require admin sign in" do
+      let(:action) { patch :publish, id: ruby.slug }
+    end
+
+    it_behaves_like "require instructor sign in" do
+      let(:action) { patch :publish, id: ruby.slug }
+    end
+  end
 end
