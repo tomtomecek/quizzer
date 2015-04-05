@@ -55,7 +55,7 @@ group :test do
   gem 'launchy',             '2.4.3'
   gem 'shoulda-matchers',    '2.8.0', require: false
   gem 'database_cleaner',    '1.2.0'
-  gem 'selenium-webdriver',  '2.44.0'
+  gem 'selenium-webdriver',  '2.45.0'
   gem 'vcr',                 '2.9.3'
   gem 'webmock',             '1.20.4'
   gem 'poltergeist',         '1.6.0'
