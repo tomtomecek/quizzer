@@ -98,7 +98,7 @@ feature "student enrolls course" do
         fill_in_card_details(
           card_number: "4000000000000069",
           month: "2 - February",
-          year: "2015")
+          year: (Time.now.year + 1))
         agree_on_honor_code
         click_paid_enroll_now
         expect_to_see "Your card's expiration month is invalid."
@@ -124,7 +124,7 @@ feature "student enrolls course" do
         fill_in_card_details(
           card_number: "4000000000000069",
           month: "1 - January",
-          year: "2015")
+          year: (Time.now.year + 1))
         click_paid_enroll_now
         expect_to_see "Your card's expiration month is invalid."
       end

@@ -43,7 +43,7 @@ group :development, :test do
   gem 'pry',                '0.10.1'
   gem 'pry-nav',            '0.2.4'
   gem 'rspec-rails',        '2.99'
-  gem 'wkhtmltopdf-binary', '0.9.9.3'
+  gem 'wkhtmltopdf-binary', '0.12.3.1'
   gem 'pry-rescue',         '1.4.1'
   gem 'pry-stack_explorer', '0.4.9.2'
 end

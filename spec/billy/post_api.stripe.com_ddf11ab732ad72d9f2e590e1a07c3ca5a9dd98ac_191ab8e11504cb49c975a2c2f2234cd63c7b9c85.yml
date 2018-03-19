@@ -1,0 +1,29 @@
+---
+:scope: 
+:url: https://api.stripe.com:443/v1/tokens
+:body: key=pk_test_3eaJL0BFXXf4VKuAG9HFfgwn&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=123&card[cvc]=123&card[exp_year]=2021&card[exp_month]=4
+:status: 402
+:method: post
+:headers:
+  Server: nginx
+  Date: Mon, 02 Mar 2015 16:39:52 GMT
+  Content-Type: application/json
+  Content-Length: '149'
+  Connection: close
+  Access-Control-Allow-Credentials: 'true'
+  Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+  Access-Control-Allow-Origin: https://js.stripe.com
+  Access-Control-Max-Age: '300'
+  Cache-Control: no-cache, no-store
+  Request-Id: req_koHz7Lx2agffG83u
+  Stripe-Version: '2015-02-10'
+  Timing-Allow-Origin: https://js.stripe.com
+:content: |
+  {
+    "error": {
+      "message": "This card number looks invalid.",
+      "type": "card_error",
+      "param": "number",
+      "code": "invalid_number"
+    }
+  }

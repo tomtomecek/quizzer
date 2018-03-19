@@ -1,0 +1,52 @@
+---
+:scope: 
+:url: https://api.stripe.com:443/v1/tokens
+:body: key=pk_test_3eaJL0BFXXf4VKuAG9HFfgwn&payment_user_agent=stripe.js%2Fbebcbe6&card[number]=4000000000000119&card[cvc]=123&card[exp_year]=2021&card[exp_month]=4
+:status: 200
+:method: post
+:headers:
+  Server: nginx
+  Date: Mon, 02 Mar 2015 16:39:59 GMT
+  Content-Type: application/json
+  Content-Length: '689'
+  Connection: close
+  Access-Control-Allow-Credentials: 'true'
+  Access-Control-Allow-Methods: GET, POST, HEAD, OPTIONS, DELETE
+  Access-Control-Allow-Origin: https://js.stripe.com
+  Access-Control-Max-Age: '300'
+  Cache-Control: no-cache, no-store
+  Request-Id: req_tf6qrjF05EbocEmW
+  Stripe-Version: '2015-02-10'
+  Timing-Allow-Origin: https://js.stripe.com
+  Strict-Transport-Security: max-age=31556926; includeSubDomains
+:content: |
+  {
+    "id": "tok_15bwaJC58PH9OiW9cZL3chsZ",
+    "livemode": false,
+    "created": 1425314399,
+    "used": false,
+    "object": "token",
+    "type": "card",
+    "card": {
+      "id": "card_15bwaIC58PH9OiW9Han4QbCF",
+      "object": "card",
+      "last4": "0119",
+      "brand": "Visa",
+      "funding": "credit",
+      "exp_month": 4,
+      "exp_year": 2018,
+      "country": "US",
+      "name": null,
+      "address_line1": null,
+      "address_line2": null,
+      "address_city": null,
+      "address_state": null,
+      "address_zip": null,
+      "address_country": null,
+      "cvc_check": "unchecked",
+      "address_line1_check": null,
+      "address_zip_check": null,
+      "dynamic_last4": null
+    },
+    "client_ip": "85.248.153.200"
+  }
