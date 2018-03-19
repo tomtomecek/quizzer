@@ -7,7 +7,6 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'capybara/poltergeist'
-# require 'billy/rspec'
 require 'vcr'
 require 'rack_session_access/capybara'
 require 'sidekiq/testing'
@@ -19,10 +18,6 @@ VCR.configure do |c|
   c.configure_rspec_metadata!
   c.ignore_hosts 'codeclimate.com'
   c.ignore_localhost = true
-
-  # c.ignore_request do |request|
-  #   request.headers.include?("Referer")
-  # end
 end
 
 Capybara.javascript_driver = :poltergeist

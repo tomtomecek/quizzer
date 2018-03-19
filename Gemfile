@@ -58,7 +58,6 @@ group :test do
   gem 'webmock',             '1.20.4'
   gem 'poltergeist',         '1.6.0'
   gem 'rack_session_access', '0.1.1'
-  gem 'puffing-billy',       '0.4.1'
   gem 'codeclimate-test-reporter', '0.4.5', require: nil
   gem 'rspec_junit_formatter'
 end
