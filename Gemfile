@@ -41,14 +41,14 @@ group :development, :test do
   gem 'fabrication',        '2.11.3'
   gem 'pry',                '0.10.1'
   gem 'pry-nav',            '0.2.4'
-  gem 'rspec-rails',        '2.99'
+  gem 'rspec-rails',        '3.6.0'
   gem 'wkhtmltopdf-binary', '0.12.3.1'
   gem 'pry-rescue',         '1.4.1'
   gem 'pry-stack_explorer', '0.4.9.2'
 end
 
 group :test do
-  gem 'capybara',            '2.4.4'
+  gem 'capybara',            '2.15.1'
   gem 'capybara-email',      '2.4.0'
   gem 'launchy',             '2.4.3'
   gem 'shoulda-matchers',    '2.8.0', require: false
