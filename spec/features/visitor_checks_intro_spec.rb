@@ -5,7 +5,7 @@ feature "visitor checks course intro" do
   given!(:rails) { Fabricate(:course, title: "Rails", published: true) }
   given!(:tdd) { Fabricate(:course, title: "TDD", published: true) }
 
-  scenario "sees all courses pop in seqence", :js, :billy, :slow do
+  scenario "sees all courses pop in seqence", :js, :billy do
     visit root_path
     within(".ta-leaf") do
       expect_to_see "Tealeaf Academy"

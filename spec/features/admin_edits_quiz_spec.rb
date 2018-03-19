@@ -66,7 +66,7 @@ feature "admin edits a quiz" do
     expect_to_see "For advanced programmers"
   end
 
-  scenario "admin adds a question", :js, :slow, driver: :selenium do
+  scenario "admin adds a question", :js do
     add_question(3, with: "Answer to life?", points: 9) do |question|
       create_all_answers_for(question)
     end
@@ -79,7 +79,7 @@ feature "admin edits a quiz" do
     end
   end
 
-  scenario "admin changes a question", :js, :slow, driver: :selenium do
+  scenario "admin changes a question", :js do
     within_question(2) do
       fill_in "Question", with: "Better content is a king"
       select 6

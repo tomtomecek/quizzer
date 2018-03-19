@@ -64,14 +64,14 @@ feature "admin updates answer from view quiz" do
   end
 
   context "admin deletes answer" do
-    scenario "successfull attempt", :js, :slow, driver: :selenium do
-      accept_alert { click_delete_on(redundant_answer) }
+    scenario "successfull attempt", :js do
+      click_delete_on(redundant_answer)
       expect_to_see "Successfully deleted the answer"
       expect_to_not_see "delete me"
     end
 
-    scenario "failed attempt", :js, :slow, driver: :selenium do
-      accept_alert { click_delete_on(correct_answer) }
+    scenario "failed attempt", :js do
+      click_delete_on(correct_answer)
       expect_to_see "At least 1 answer must be correct."
     end
   end
