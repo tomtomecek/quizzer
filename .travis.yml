@@ -1,10 +1,10 @@
 language: ruby
 rvm:
-- 2.1.5
+- 2.3.6
 sudo: false
 cache: bundler
 addons:
-  postgresql: '9.3'
+  postgresql: '9.6'
   code_climate:
     repo_token: 4435045f186f6da3b724256eb56c9fcead2650914f58931d32fe1b3c62d51259
 before_script:

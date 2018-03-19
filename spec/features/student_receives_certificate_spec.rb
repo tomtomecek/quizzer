@@ -33,7 +33,7 @@ feature "student receives certificate" do
     click_on "Start Quiz"
     within_exam_question(q1) { check("Correct Answer") }
     click_on "Submit Answers"
-    expect_to_see course_completion_message
+    expect(page).to have_content course_completion_message
 
     open_email("alice@example.com")
     expect_to_see_in_email "Please access your Certificate of Accomplishment"

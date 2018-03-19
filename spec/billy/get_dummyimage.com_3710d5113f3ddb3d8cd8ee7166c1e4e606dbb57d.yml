@@ -2,78 +2,15 @@
 :scope: 
 :url: http://dummyimage.com:/667x320/000/fff.png&text=Course+image
 :body: ''
-:status: 200
+:status: 301
 :method: get
 :headers:
-  Server: nginx/1.4.4
-  Date: Mon, 02 Mar 2015 16:38:46 GMT
-  Content-Type: image/png
+  Server: nginx
+  Date: Mon, 19 Mar 2018 15:53:58 GMT
+  Content-Type: text/html
+  Content-Length: '178'
   Connection: close
-  Cache-control: max-age=7776000
-  Expires: Sun, 31 May 2015 16:38:46 +0000
-  Last-Modified: Tue, 02 Dec 2014 16:38:46 GMT
-:content: !binary |-
-  iVBORw0KGgoAAAANSUhEUgAAApsAAAFABAMAAAABraomAAAAG1BMVEUAAAD/
-  //8fHx9fX19/f3+/v7/f39+fn58/Pz/pm04NAAAKxElEQVR4nO2cPXvbNheG
-  JVofHIs2pjNSlz/qMYqdJqPV2HXHsI3sji9z1XLHqrajjlKTNv7ZJUgABECA
-  Ak1Wei0/9yRRBA74EDw4OCDUagEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBCv
-  xifrbkJtvOPxZDK+fbPudiSMyLt1N6EuX2KSEdyE627L45fzO5Kz/WLNjXn0
-  cu6n/fLqYpLque6Leexydmif/JF+8o4jyFmXKSHPQv7lc7Tui3nkcnYJ2Qnz
-  rx58Zy2SzrluBRUet5yJ5/yw7jZsEAsShOtuw+bgxeT5utuwQfT/zzznI2dB
-  ttfdhE0iIl+vuwkbhEfI7+tuwwaRuM5w3W3YINpkZ91N2CQWCJOaZEr+V/bz
-  7l1MyNWP0hHvfi6f4N+H7PBf4ozD/IzPFzEJrm7/ainQWoP385aZQ1Ylr9S/
-  I+SSneydxWpzksrOExtkcqtW9/mCMBNSy5ZZrk9cOhL9zVLK16E41FW784JN
-  sLd4vEWvg8cK/pTnpK9fSmV+YAf/MBvN5+xb5FlSSbpQEMzpAS9KC/6Wn7x3
-  IfLeUnUeN/Enq8TNcm2SgX1u//Vv0dQ85VQup/eRns3k9ISaRI4f8tT/idGq
-  LOdOmqFJW5D9pFYmZLOa+EmWc5nl2myVDexpWvnm6PhO7hClcjIBmZwHycfL
-  t0fHZ7Gc46ep//dH9zRRvW20rcrZpWefx6kCSRiyc0QL8uHTT81dzU5ntJOK
-  +UifPg9v7j+dUeFyOZdark2HBPYfE21+ST/sxvn9LJWT9p7t29PsXC9xU+wZ
-  //RRSJQ8u0E2q/3OkspS5YySDpZ8SjML0yzNPRLzYp8uI4TZuVHePSP+OCcH
-  d4Scyy3XplsSJ3XzPplczTNx1C5ncvuDfJzoydmAL7+LAuLoyDy/VeTsk2/S
-  j/vJfe9wDxrz/u+TfOHVF7mcLklvATt4w5u+3HJtepKf1plKUu+LppTImVzm
-  9jz/aWSKwZJzRMfwzT5MkXPI7CblXix40QVvtbJycMA1GikND9jJDpZr02Y3
-  38CWMv0UU/sSOQ/U5FRsanJXzq4OjfkCWc5t0b4heRdxP983uig+Dnhaw5mc
-  DpZrM7BH8T3lgRC3vkTOSDxjlKQHGGodysX7Rlcjy5krkzxHoqglHomzu9lV
-  xO5xOR0s12Zgv0sj5SefX4Fdzr7qkDrGFitxrmeMKxQ5ldFaFDV2/KRgeoLa
-  RXwup4Pl2iyscnqae4nYRdrlXKhLZn2TW9YCs6lJFkVOYYzGRKLo1Dj5WGQz
-  PG3pLsra4WK5NgvyleUXPYTik3u7nJFawCinFkksTIuWipzid49I9Q2NU+NB
-  djGRqtQwK+diuTZ2ObuaGl3h0S1yEq2jd0xyar66Z3o4FDnzsU2u39zsdnaG
-  9hwPsna4WK7N0CqnPkjx3loi54lWwBDbLdRu1TcFFoqcoTgcS/1pUCKnpw2B
-  7UxOF8u1scupP0/cedvl1IIX3+TtR6rT2zL1YFlOqc5IKto29q0ekzPQjj5z
-  tVwb+8Ne8PYiDLHJqbcvNrinSF029U09WIk75aIn4nMVOZmXcrFcG7uckT70
-  sQN2OfUrHBk6QKwFjKZ43CKnPBabPV9p73SxXBt7oFSIlNlV2uXU+2LPkFfU
-  HYAp1HeSU3Xsn47PZ7PZ1Og7e5mXdLFcG+usqBjnMmdql/NEryIm5PtCreqB
-  uAE5/TP+JnrWN2J9ZH/uark2VjmLU0Q2atnlnOt10Hznz6Faq/aIxcbhqpKc
-  4rV+LqfmJbN2O1mujTUFUpRzsUzOUK8jTSYHN3O51mCmUF/OdMUguLw9PT1l
-  0+KhPit652q5NtYE3QPkLFaSJeeDG7lWnbBQqpKcaeL9JT+aylmYs79wtVyb
-  vi1e2CqMfCxbYpXTNFJ6Z9k6z1zUWmBeKFRFTi+SxjsmZ0d5w/Iga5iT5dpY
-  FzeakbPV2k3X4nhWObmosUZYKFJFzgM5euDhkxLwRpk7c7JcG+vSW/WH3RbH
-  pYLu8Fodor0qckZya7icC2llbZ+l9Zws18azvd3ZnJzJ2CsWMpuWs6P0Bi6n
-  n+9E2eMZ09XIaZwJUqrHnSXN7fCLKkR/JirIOVACk3YuJ9mhw5P3WuScnSzX
-  Z2SZZTYqJ3VxJ6xWlyY5y6lmitviYU8Diqt0Ex9bjF2RnAtb4FnwAtMlk8wy
-  OcVSrst4WkFOdSI+EEPRyykfvn/mP/4nI3mBni1SckyBDJ3k5DlcfcZixF1O
-  rcuxBET6Ks7rdK50na/6u1iuT8d216a6UyXGBN3ITU4e35oXeVTc5dxS+8KI
-  h3Kp/zq8F2/iuVquj2fb0qqnj32RPla8Q+QmJw8UzIs8KlXkVNZ/2LsAbaNw
-  LpYbYGRxnrbFDXVVQNyNJXLy/FjJQrTUIlc51bVnj/BJpklOF8sNcGDZ9Ka/
-  vcRn9+oldFzlZBmHspd4OA+Vs0947zQ9by6WG8CQ9+XHQ/k7TzSr/mpQsXeW
-  vrHHeKjvHDA59dxyhovlJogst017LzkyxsNTRzl5GKu/DGHCXU516hYRkQIx
-  DOIulpvgwDLPVN7pkdLDcqzXIY5yip9Hy11YpUBJbstExJ0Be+lTrXYlztMv
-  rkGm9BSBBsJNyRHUkEzd5BSe+GD5M1chjJcXi0fkFRPsgCeU374J8/IOlhth
-  aN745stOVXo5Uto6kwQqbrOivKvbXLVEpUmmaEuHbHeZnNI7+cH7MG/sav52
-  gL5xID3uHl8uG0p5rn/yx6qXhwJT8sEup/+nYoJfymjp9vkKcrZFZV5EPnA5
-  lR0I+aUtt9wMC/nPk3YjfsMTx8hDzD0id0meVvgnad/ALme+7Ea7C//cl//H
-  Zfe9oTnVEnS/8UJB2M294+H53WTC9Jw7W24GukKQ/buXd/xREm5EyK+p/S/K
-  UsCU7UB4RV9BL5OTbwOg24uey8XZYod/tvR12WXpY9aWwyndPNDVBxsv3bvx
-  TV7DEssN0Ulv42SSLbHm/TBOXfosUVve6UBXu7Zn51GaY7fL6aVd43I2+yh3
-  kaxWcn16en6RZ+kVqsjZpXWPWU0FORP24jxwWWq5KfakFakgf9XgW3HwV/ls
-  vlmKamSXM92awjmRjnckY78YGlNpJZO3ha5GmeSk1r6WPpdabgxx6epf+u3F
-  WtYwhY2cqb8tkbPlvSreIcWYsrVQUElO1pbrecsiJx1RXS03yKe78dX4Vg7U
-  KN7x3WSs71BttT7fXYzfhvrRIknx8dVl8cyk/NX4plDtQ/BeJxbK/idT3bHf
-  oOUnCv47plFWkzh+MgxXMxt6KixWk4d/KkDORvlvthA9WUYYippkNSvsTwXj
-  /ibwUHr4460mmeI/C+vgqfmW/RWtYG4qvrI5bCvGs16LZOjJ19voXxYhTKoD
-  XQUIspziLl3bWMm7NBvMF8LWarIkd7ju9jx29qRVFbGlCTyc15FpqQY8mMMj
-  +k7NulsBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgUfMv8FwT
-  zA4gksQAAAAASUVORK5CYII=
+  Location: https://dummyimage.com/667x320/000/fff.png&text=Course+image
+  X-Powered-By: EasyEngine 3.7.4
+:content: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body bgcolor=\"white\">\r\n<center><h1>301
+  Moved Permanently</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"

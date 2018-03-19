@@ -27,8 +27,8 @@ feature "admin adds a quiz to a course" do
 
     click_on "Create Quiz"
     expect_to_be_in admin_course_path(ruby)
-    expect_to_see "Week 1 - Ruby basics"
-    expect_to_see "Successfully created new quiz."
+    expect(page).to have_content "Week 1 - Ruby basics"
+    expect(page).to have_content "Successfully created new quiz."
   end
 
   scenario "quiz invalid" do
@@ -38,7 +38,7 @@ feature "admin adds a quiz to a course" do
     uncheck "Published"
     click_on "Create Quiz"
 
-    expect_to_see "Quiz creation failed"
+    expect(page).to have_content "Quiz creation failed"
     expect_to_be_in quizzes_path
   end
 
@@ -61,7 +61,7 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed -\
+      expect(page).to have_content "Quiz creation failed -\
         Maximum 10 records are allowed. Got 11 records instead"
     end
 
@@ -73,14 +73,14 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
-      expect_to_see "Answers - there must be at least 4 answers."
+      expect(page).to have_content "Quiz creation failed"
+      expect(page).to have_content "Answers - there must be at least 4 answers."
     end
 
     scenario "question missing", :js do
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
-      expect_to_see "Questions requires at least 1 question."
+      expect(page).to have_content "Quiz creation failed"
+      expect(page).to have_content "Questions requires at least 1 question."
     end
 
     scenario "all incorrect answers", :js do
@@ -92,37 +92,37 @@ feature "admin adds a quiz to a course" do
       end
 
       click_on "Create Quiz"
-      expect_to_see "Quiz creation failed"
-      expect_to_see "Answers - at least 1 must be correct."
+      expect(page).to have_content "Quiz creation failed"
+      expect(page).to have_content "Answers - at least 1 must be correct."
     end
   end
 
   context "client side validations" do
     scenario "check on quiz", :js do
       fill_in "Title", with: ""
-      expect_to_see "This value is required."
+      expect(page).to have_content "This value is required."
       fill_in "Title", with: "Some title"
-      expect_to_not_see "This value is required."
+      expect(page).to_not have_content "This value is required."
 
       fill_in "Description", with: ""
-      expect_to_see "This value is required."
+      expect(page).to have_content "This value is required."
       fill_in "Description", with: "Some description"
-      expect_to_not_see "This value is required."
+      expect(page).to_not have_content "This value is required."
     end
 
     scenario "check on question", :js do
       fill_in_valid_quiz_attributes
       add_question(1, with: "", points: 3) do
-        expect_to_see "This value is required."
+        expect(page).to have_content "This value is required."
         fill_in "Question", with: "Some question"
-        expect_to_not_see "This value is required."
+        expect(page).to_not have_content "This value is required."
 
         select "Select Points"
         find("select").trigger('blur')
 
-        expect_to_see "This value is required."
+        expect(page).to have_content "This value is required."
         select 3
-        expect_to_not_see "This value is required."
+        expect(page).to_not have_content "This value is required."
       end
     end
 
@@ -130,9 +130,9 @@ feature "admin adds a quiz to a course" do
       fill_in_valid_quiz_attributes
       add_question(1, with: "Some question", points: 3) do |question|
         add_answer(1, to: question, with: "") do
-          expect_to_see "This value is required."
+          expect(page).to have_content "This value is required."
           fill_in "Answer", with: "Some answer"
-          expect_to_not_see "This value is required."
+          expect(page).to_not have_content "This value is required."
         end
       end
     end

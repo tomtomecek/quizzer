@@ -17,22 +17,20 @@ feature "admin updates answer from view quiz" do
 
   context "admin edits answer" do
     scenario "successfull attempt", :js do
-      expect_to_see_no_modal
       click_edit_on(answer)
 
       within_modal do
         fill_in "Answer's content", with: ""
         submit_changes
-        expect_to_see "These errors needs to be fixed:"
-        expect_to_see "Content can't be blank"
+        expect(page).to have_content "These errors needs to be fixed:"
+        expect(page).to have_content "Content can't be blank"
 
         fill_in "Answer's content", with: "new answer"
         submit_changes
       end
 
-      expect_to_see_no_modal
-      expect_to_see "Successfully updated answer"
-      within(:css, "#answer_#{answer.id}") { expect_to_see "new answer" }
+      expect(page).to have_content "Successfully updated answer"
+      within(:css, "#answer_#{answer.id}") { expect(page).to have_content "new answer" }
     end
 
     scenario "failed attempt none correct", :js do
@@ -40,7 +38,7 @@ feature "admin updates answer from view quiz" do
       within_modal do
         untick_checkbox
         submit_changes
-        expect_to_see "At least 1 answer must be correct."
+        expect(page).to have_content "At least 1 answer must be correct."
       end
       expect(page).to have_css(".modal")
     end
@@ -58,21 +56,21 @@ feature "admin updates answer from view quiz" do
       click_edit_on(answer)
       sleep 1
       within_modal do
-        expect_to_not_see "Successfully updated answer"
+        expect(page).to have_no_content "Successfully updated answer"
       end
     end
   end
 
   context "admin deletes answer" do
-    scenario "successfull attempt", :js, :slow, driver: :selenium do
-      accept_alert { click_delete_on(redundant_answer) }
-      expect_to_see "Successfully deleted the answer"
-      expect_to_not_see "delete me"
+    scenario "successfull attempt", :js do
+      click_delete_on(redundant_answer)
+      expect(page).to have_content "Successfully deleted the answer"
+      expect(page).to have_no_content "delete me"
     end
 
-    scenario "failed attempt", :js, :slow, driver: :selenium do
-      accept_alert { click_delete_on(correct_answer) }
-      expect_to_see "At least 1 answer must be correct."
+    scenario "failed attempt", :js do
+      click_delete_on(correct_answer)
+      expect(page).to have_content "At least 1 answer must be correct."
     end
   end
 end

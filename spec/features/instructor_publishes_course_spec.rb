@@ -9,6 +9,6 @@ feature "instructor publishes a course" do
     sign_in_admin kevin
 
     click_on "Publish"
-    expect_to_see "Course has been successfully published."
+    expect(page).to have_content "Course has been successfully published."
   end
 end

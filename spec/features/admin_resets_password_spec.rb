@@ -13,31 +13,31 @@ feature "admin resets password" do
     click_on "Forgot password?"
 
     expect_to_be_in new_password_reset_path
-    expect_to_see "We will send you an email with a link that\
+    expect(page).to have_content "We will send you an email with a link that\
       you can use to reset your password."
 
     fill_in "Email", with: "admin@example.com"
     click_on "Send Email"
 
     expect_to_be_in confirm_password_reset_path
-    expect_to_see "We have send an email with instruction to reset your\
+    expect(page).to have_content "We have send an email with instruction to reset your\
       password."
 
     open_email("admin@example.com")
     current_email.click_link "Reset password link"
 
     expect_to_be_in edit_password_reset_path(admin.reload.password_reset_token)
-    expect_to_see "Reset Your Password"
+    expect(page).to have_content "Reset Your Password"
 
     fill_in_new_password_and_submit("new_password")
     expect_to_be_in admin_sign_in_path
-    expect_to_see "You can sign in with your new password now"
+    expect(page).to have_content "You can sign in with your new password now"
 
     fill_in_login_details_and_submit(with: "old_pswd")
-    expect_to_see "Incorrect email or password"
+    expect(page).to have_content "Incorrect email or password"
 
     fill_in_login_details_and_submit(with: "new_password")
-    expect_to_see "Login was successful"
+    expect(page).to have_content "Login was successful"
     expect_to_be_in admin_courses_path
   end
 
@@ -48,18 +48,18 @@ feature "admin resets password" do
     visit edit_password_reset_path(admin.password_reset_token)
 
     fill_in_new_password_and_submit("")
-    expect_to_see "This value is required"
+    expect(page).to have_content "This value is required"
 
     fill_in_new_password_and_submit("123")
-    expect_to_see "Password must have at least 6 characters"
+    expect(page).to have_content "Password must have at least 6 characters"
   end
 
   scenario "sending pw reset client side errors check", :js do
     visit new_password_reset_path
     fill_in "Email", with: ""
-    expect_to_see "This value is required"
+    expect(page).to have_content "This value is required"
     fill_in "Email", with: "admin"
-    expect_to_see "This value should be a valid email"
+    expect(page).to have_content "This value should be a valid email"
   end
 end
 

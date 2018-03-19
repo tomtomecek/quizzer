@@ -14,7 +14,7 @@ feature "instructor edits course" do
   scenario "successfull edit" do
     click_on "Courses"
     click_on "Edit"
-    expect_to_see "Editing #{ruby.title}"
+    expect(page).to have_content "Editing #{ruby.title}"
 
     fill_in "Title", with: "HTML and CSS basics"
     fill_in "Description", with: "front end course"
@@ -25,7 +25,7 @@ feature "instructor edits course" do
     attach_file 'Image', 'spec/support/images/ruby.jpg'
 
     click_on "Submit changes"
-    expect_to_see "Successfully updated the course HTML and CSS basics"
+    expect(page).to have_content "Successfully updated the course HTML and CSS basics"
     click_on "Quizzer"
 
     validate_course_update(ruby)
@@ -39,28 +39,28 @@ feature "instructor edits course" do
     validate_required_error_message_for("Duration")
 
     fill_in "Certificate (in $)", with: ""
-    expect_to_see "Each course must have a certificate value."
+    expect(page).to have_content "Each course must have a certificate value."
     fill_in "Certificate (in $)", with: "-1"
-    expect_to_see "Minimum dollar amount of certificate is 0.01"
+    expect(page).to have_content "Minimum dollar amount of certificate is 0.01"
 
     fill_in "Quizzes to pass", with: ""
-    expect_to_see "Set minimum amount of quizzes to pass."
+    expect(page).to have_content "Set minimum amount of quizzes to pass."
     fill_in "Quizzes to pass", with: "2"
-    expect_to_see "Minimum amount of quizzes to pass is 3."
+    expect(page).to have_content "Minimum amount of quizzes to pass is 3."
   end
 end
 
 def validate_required_error_message_for(label)
   fill_in label, with: ""
-  expect_to_see "This value is required."
+  expect(page).to have_content "This value is required."
   fill_in label, with: "something"
 end
 
 def validate_course_update(ruby)
-  expect_to_see "Price $419.99"
-  expect_to_see "7 weeks"
-  expect_to_see "Kevin Wang"
-  expect_to_see "front end course"
+  expect(page).to have_content "Price $419.99"
+  expect(page).to have_content "7 weeks"
+  expect(page).to have_content "Kevin Wang"
+  expect(page).to have_content "front end course"
   url = ruby.reload.image_cover_url
   expect(page).to have_css("img[src='#{url}']", visible: true)
 end

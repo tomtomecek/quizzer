@@ -7,7 +7,6 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/email/rspec'
 require 'capybara/poltergeist'
-require 'billy/rspec'
 require 'vcr'
 require 'rack_session_access/capybara'
 require 'sidekiq/testing'
@@ -17,12 +16,12 @@ VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
   c.configure_rspec_metadata!
+  c.ignore_hosts 'codeclimate.com'
   c.ignore_localhost = true
-  c.ignore_hosts 'codeclimate.com', 'js.stripe.com', 'tiles.services.mozilla.com', 'dtex4kvbppovt.cloudfront.net', 'dummyimage.com'
 end
 
 Capybara.javascript_driver = :poltergeist
-Capybara.default_wait_time = 3
+Capybara.default_max_wait_time = 4
 Capybara.server_port = 52662
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -30,7 +29,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run_excluding :slow unless ENV["SLOW_SPECS"]
   config.filter_run_excluding :no_travis if ENV["NO_TRAVIS"]

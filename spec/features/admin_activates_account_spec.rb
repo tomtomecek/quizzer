@@ -30,16 +30,16 @@ feature "admin activates account" do
     scenario "username errors", :js do
       Fabricate(:teaching_assistant, username: "brandon")
       submit_with(username: "", password: "strongPassword")
-      expect_to_see "This value is required."
+      expect(page).to have_content "This value is required."
       submit_with(username: "brandon", password: "strongPassword")
-      expect_to_see "User Name has already been taken"
+      expect(page).to have_content "User Name has already been taken"
     end
 
     scenario "password errors", :js do
       submit_with(username: "brandon", password: "123")
       validate_password_error_message
       submit_with(username: "brandon", password: "")
-      expect_to_see "This value is required."
+      expect(page).to have_content "This value is required."
     end
   end
 end
@@ -61,9 +61,9 @@ def submit_with(options = {})
 end
 
 def validate_password_error_message
-  expect_to_see "Password must have at least 6 characters"
+  expect(page).to have_content "Password must have at least 6 characters"
 end
 
 def validate_successful_activation
-  expect_to_see "Welcome to Tealeaf! You are new admin."
+  expect(page).to have_content "Welcome to Tealeaf! You are new admin."
 end

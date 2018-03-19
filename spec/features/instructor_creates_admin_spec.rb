@@ -39,6 +39,6 @@ def navigate_to_admin_new(options = {})
 end
 
 def validate_admin_creation
-  expect_to_see "New admin account was created, email was sent with\
+  expect(page).to have_content "New admin account was created, email was sent with\
  instructions"
 end
