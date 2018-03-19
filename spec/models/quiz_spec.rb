@@ -17,7 +17,7 @@ describe Quiz do
                       allow_destroy(true) }
 
   context "when published" do
-    before { subject.stub(:published?).and_return(true) }
+    before { allow(subject).to receive(:published?).and_return(true) }
     it { is_expected.to validate_numericality_of(:position).only_integer }
   end
 
@@ -84,13 +84,13 @@ describe Quiz do
   describe "#passing_score" do
     it "returns passing_score for quiz" do
       quiz = Fabricate.build(:quiz, passing_percentage: 60)
-      quiz.stub(:total_score).and_return(10)
+      allow(quiz).to receive(:total_score).and_return(10)
       expect(quiz.passing_score).to eq 6
     end
 
     it "returns float" do
       quiz = Fabricate.build(:quiz, passing_percentage: 60)
-      quiz.stub(:total_score).and_return(10)
+      allow(quiz).to receive(:total_score).and_return(10)
       expect(quiz.passing_score).to be_kind_of Float
     end
   end

@@ -58,32 +58,32 @@ feature "student goes through whole course" do
       expect(page).to have_css('img.linkedin-button', visible: true)
     end
   end
+end
 
-  def build_quiz(ruby)
-    Fabricate(:quiz, course: ruby, published: true, passing_percentage: 50) do
-      questions { build_question }
+def build_quiz(ruby)
+  Fabricate(:quiz, course: ruby, published: true, passing_percentage: 50) do
+    questions { build_question }
+  end
+end
+
+def build_question
+  [
+    Fabricate(:question, points: 10) do
+      answers {
+        Fabricate.times(3, :incorrect) <<
+        Fabricate(:correct, content: "Correct Answer")
+      }
     end
-  end
+  ]
+end
 
-  def build_question
-    [
-      Fabricate(:question, points: 10) do
-        answers {
-          Fabricate.times(3, :incorrect) <<
-          Fabricate(:correct, content: "Correct Answer")
-        }
-      end
-    ]
-  end
-
-  def enroll_paid
-    click_on "Enroll now"
-    find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
-    fill_in "Credit Card Number", with: "4242424242424242"
-    fill_in "Security Code", with: "123"
-    select "1 - January", from: "date_month"
-    select year, from: "date_year"
-    find('input[type=checkbox]').trigger('click')
-    find('#stripeSubmit').trigger('click')
-  end
+def enroll_paid
+  click_on "Enroll now"
+  find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
+  fill_in "Credit Card Number", with: "4242424242424242"
+  fill_in "Security Code", with: "123"
+  select "1 - January", from: "date_month"
+  select year, from: "date_year"
+  find('input[type=checkbox]').trigger('click')
+  find('#stripeSubmit').trigger('click')
 end

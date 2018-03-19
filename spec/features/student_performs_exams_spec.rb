@@ -95,24 +95,24 @@ feature "student performs an exams" do
       expect(page).to have_content "One of the answers was wrong"
     end
   end
+end
 
-  def incorrect(n = 1, options = {})
-    if options == {}
-      Fabricate.times(n, :incorrect)
-    else
-      Fabricate.times(n, :incorrect, content: options[:content])
-    end
+def incorrect(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :incorrect)
+  else
+    Fabricate.times(n, :incorrect, content: options[:content])
   end
+end
 
-  def correct(n = 1, options = {})
-    if options == {}
-      Fabricate.times(n, :correct)
-    else
-      Fabricate.times(n, :correct, content: options[:content])
-    end
+def correct(n = 1, options = {})
+  if options == {}
+    Fabricate.times(n, :correct)
+  else
+    Fabricate.times(n, :correct, content: options[:content])
   end
+end
 
-  def create_course(options = {})
-    Fabricate(:course, title: options[:title] , published: true)
-  end
+def create_course(options = {})
+  Fabricate(:course, title: options[:title] , published: true)
 end
