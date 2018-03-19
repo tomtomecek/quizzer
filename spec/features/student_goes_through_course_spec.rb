@@ -43,7 +43,7 @@ feature "student goes through whole course" do
     within("#quiz_#{quiz1.id}") { expect(page).to have_content "Exam passed" }
     within("#quiz_#{quiz2.id}") { expect(page).to have_content "Exam passed" }
     within("#quiz_#{quiz3.id}") { click_on "Start Quiz" }
-    expect_to_not_see "You have to pass previous quiz first"
+    expect(page).to_not have_content "You have to pass previous quiz first"
     within_exam_question(q3) { check("Correct Answer") }
     click_on "Submit Answers"
     expect(page).to have_content "Congratulations. You have passed the quiz."

@@ -102,12 +102,12 @@ feature "admin adds a quiz to a course" do
       fill_in "Title", with: ""
       expect(page).to have_content "This value is required."
       fill_in "Title", with: "Some title"
-      expect_to_not_see "This value is required."
+      expect(page).to_not have_content "This value is required."
 
       fill_in "Description", with: ""
       expect(page).to have_content "This value is required."
       fill_in "Description", with: "Some description"
-      expect_to_not_see "This value is required."
+      expect(page).to_not have_content "This value is required."
     end
 
     scenario "check on question", :js do
@@ -115,14 +115,14 @@ feature "admin adds a quiz to a course" do
       add_question(1, with: "", points: 3) do
         expect(page).to have_content "This value is required."
         fill_in "Question", with: "Some question"
-        expect_to_not_see "This value is required."
+        expect(page).to_not have_content "This value is required."
 
         select "Select Points"
         find("select").trigger('blur')
 
         expect(page).to have_content "This value is required."
         select 3
-        expect_to_not_see "This value is required."
+        expect(page).to_not have_content "This value is required."
       end
     end
 
@@ -132,7 +132,7 @@ feature "admin adds a quiz to a course" do
         add_answer(1, to: question, with: "") do
           expect(page).to have_content "This value is required."
           fill_in "Answer", with: "Some answer"
-          expect_to_not_see "This value is required."
+          expect(page).to_not have_content "This value is required."
         end
       end
     end

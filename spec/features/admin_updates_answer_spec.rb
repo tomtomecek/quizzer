@@ -17,7 +17,6 @@ feature "admin updates answer from view quiz" do
 
   context "admin edits answer" do
     scenario "successfull attempt", :js do
-      expect(page).to have_content_no_modal
       click_edit_on(answer)
 
       within_modal do
@@ -30,7 +29,6 @@ feature "admin updates answer from view quiz" do
         submit_changes
       end
 
-      expect(page).to have_content_no_modal
       expect(page).to have_content "Successfully updated answer"
       within(:css, "#answer_#{answer.id}") { expect(page).to have_content "new answer" }
     end
@@ -58,7 +56,7 @@ feature "admin updates answer from view quiz" do
       click_edit_on(answer)
       sleep 1
       within_modal do
-        expect_to_not_see "Successfully updated answer"
+        expect(page).to have_no_content "Successfully updated answer"
       end
     end
   end
@@ -67,7 +65,7 @@ feature "admin updates answer from view quiz" do
     scenario "successfull attempt", :js do
       click_delete_on(redundant_answer)
       expect(page).to have_content "Successfully deleted the answer"
-      expect_to_not_see "delete me"
+      expect(page).to have_no_content "delete me"
     end
 
     scenario "failed attempt", :js do

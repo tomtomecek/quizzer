@@ -11,10 +11,10 @@ feature "admin authenticates with Quizzer" do
 
     scenario "successful sign in" do
       navigate_to_admin_login(activated_admin)
-      expect_to_see "Administrator Login"
+      expect(page).to have_content "Administrator Login"
       logging_in_with(email: "admin@example.com", password: "secret")
 
-      expect_to_see "Login was successful!"
+      expect(page).to have_content "Login was successful!"
       expect_to_not_have_sign_out_link_for_student
       expect_to_have_sign_out_link_for_admin
       expect_to_be_in admin_courses_path
@@ -24,16 +24,16 @@ feature "admin authenticates with Quizzer" do
       navigate_to_admin_login(activated_admin)
 
       logging_in_with(email: "admin@example.com", password: "no match")
-      expect_to_see "Incorrect email or password. Please try again."
+      expect(page).to have_content "Incorrect email or password. Please try again."
 
       logging_in_with(email: "no match", password: "secret")
-      expect_to_see "Incorrect email or password. Please try again."
+      expect(page).to have_content "Incorrect email or password. Please try again."
     end
 
     scenario "signs out" do
       sign_in_admin(activated_admin)
       click_on "Sign out"
-      expect_to_see "Logged out successfully."
+      expect(page).to have_content "Logged out successfully."
       expect_to_be_in root_path
     end
   end
@@ -50,7 +50,7 @@ feature "admin authenticates with Quizzer" do
       navigate_to_admin_login(not_activated_admin)
 
       logging_in_with(email: "admin@example.com", password: "secret")
-      expect_to_see "Your account has not been activated yet."
+      expect(page).to have_content "Your account has not been activated yet."
     end
   end
 
@@ -83,17 +83,17 @@ end
 def validate_email_error_messages
   fill_in "Email", with: ""
   click_on "Sign in"
-  expect_to_see "This value is required"
+  expect(page).to have_content "This value is required"
   fill_in "Email", with: "admin"
   click_on "Sign in"
-  expect_to_see "This value should be a valid email"
+  expect(page).to have_content "This value should be a valid email"
 end
 
 def validate_password_error_messages
   fill_in "Password", with: ""
   click_on "Sign in"
-  expect_to_see "This value is required"
+  expect(page).to have_content "This value is required"
   fill_in "Password", with: "123"
   click_on "Sign in"
-  expect_to_see "Password must have at least 6 charact"
+  expect(page).to have_content "Password must have at least 6 charact"
 end
