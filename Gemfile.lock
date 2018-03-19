@@ -1,5 +1,4 @@
 GEM
-  remote: https://code.stripe.com/
   remote: https://rubygems.org/
   specs:
     actionmailer (4.1.8)
@@ -401,7 +400,7 @@ DEPENDENCIES
   wkhtmltopdf-binary (= 0.12.3.1)
 
 RUBY VERSION
-   ruby 2.1.5p273
+   ruby 2.1.10p492
 
 BUNDLED WITH
    1.16.1

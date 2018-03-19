@@ -1,6 +1,5 @@
-source 'https://code.stripe.com'
 source 'https://rubygems.org'
-ruby '2.1.5'
+ruby '2.1.10'
 
 gem 'rails',                '4.1.8'
 gem 'pg',                   '0.18.1'
