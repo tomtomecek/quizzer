@@ -12,49 +12,49 @@ feature "student goes through whole course" do
   background { clear_emails }
   after { clear_emails }
 
-  scenario "full course experience", :js, :billy, :vcr do
+  scenario "full course experience", :js, :vcr do
     sign_in
     enroll_paid
-    within(".jumbotron") { expect_to_see "Quizzes: 0 / 3" }
+    within(".jumbotron") { expect(page).to have_content "Quizzes: 0 / 3" }
     within("#quiz_#{quiz2.id}") do
-      expect_to_see "You have to pass previous quiz first"
+      expect(page).to have_content "You have to pass previous quiz first"
     end
     within("#quiz_#{quiz3.id}") do
-      expect_to_see "You have to pass previous quiz first"
+      expect(page).to have_content "You have to pass previous quiz first"
     end
     within("#quiz_#{quiz1.id}") { click_on "Start Quiz" }
     within_exam_question(q1) { check("Correct Answer") }
     click_on "Submit Answers"
-    expect_to_see "Congratulations. You have passed the quiz."
+    expect(page).to have_content "Congratulations. You have passed the quiz."
     within(".jumbotron") { click_on "Course area" }
 
-    within(".jumbotron") { expect_to_see "Quizzes: 1 / 3" }
-    within("#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
+    within(".jumbotron") { expect(page).to have_content "Quizzes: 1 / 3" }
+    within("#quiz_#{quiz1.id}") { expect(page).to have_content "Exam passed" }
     within("#quiz_#{quiz3.id}") do
-      expect_to_see "You have to pass previous quiz first"
+      expect(page).to have_content "You have to pass previous quiz first"
     end
     within("#quiz_#{quiz2.id}") { click_on "Start Quiz" }
     within_exam_question(q2) { check("Correct Answer") }
     click_on "Submit Answers"
-    expect_to_see "Congratulations. You have passed the quiz."
+    expect(page).to have_content "Congratulations. You have passed the quiz."
     within(".jumbotron") { click_on "Course area" }
 
-    within(".jumbotron") { expect_to_see "Quizzes: 2 / 3" }
-    within("#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
-    within("#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
+    within(".jumbotron") { expect(page).to have_content "Quizzes: 2 / 3" }
+    within("#quiz_#{quiz1.id}") { expect(page).to have_content "Exam passed" }
+    within("#quiz_#{quiz2.id}") { expect(page).to have_content "Exam passed" }
     within("#quiz_#{quiz3.id}") { click_on "Start Quiz" }
     expect_to_not_see "You have to pass previous quiz first"
     within_exam_question(q3) { check("Correct Answer") }
     click_on "Submit Answers"
-    expect_to_see "Congratulations. You have passed the quiz."
+    expect(page).to have_content "Congratulations. You have passed the quiz."
     within(".jumbotron") { click_on "Course area" }
 
-    within("#quiz_#{quiz1.id}") { expect_to_see "Exam passed" }
-    within("#quiz_#{quiz2.id}") { expect_to_see "Exam passed" }
-    within("#quiz_#{quiz3.id}") { expect_to_see "Exam passed" }
+    within("#quiz_#{quiz1.id}") { expect(page).to have_content "Exam passed" }
+    within("#quiz_#{quiz2.id}") { expect(page).to have_content "Exam passed" }
+    within("#quiz_#{quiz3.id}") { expect(page).to have_content "Exam passed" }
     within(".jumbotron") do
-      expect_to_see "Quizzes: 3 / 3"
-      expect_to_see "Your PDF certificate is ready:"
+      expect(page).to have_content "Quizzes: 3 / 3"
+      expect(page).to have_content "Your PDF certificate is ready:"
       expect(page).to have_css('img.linkedin-button', visible: true)
     end
   end
