@@ -1,0 +1,21 @@
+---
+:scope: 
+:url: https://m.stripe.com:443/4
+:body: JTdCJTIyc291cmNlJTIyJTNBJTIybnNyJTIyJTJDJTIyZGF0YSUyMiUzQSU3QiUyMmElMjIlM0E0MSUyQyUyMmIlMjIlM0ExMDQlMkMlMjJjJTIyJTNBJTIyQTIuN1dYV0ZmaXoyc2RoMzlnOW1FZ1FxdElUQzFtUEFpZGQ4VHJzV29KQ2ZqQSUzRC5QMjlCUFRnNExqSXhNaTQxTmk0eUptOUNQVEV3Sm05RFBUVXpOaVp2UkQweE5EUTRKbTlGUFRJek1qUTJKbTlHUFRjeE56SW1iMGM5TUNadlNEMHlPRGsyTUNadlNUMHdKbTlLUFRBdU1EQXdKbTlMUFVWVkxVVmhjM1FtYjB3OVNFaE9KbTlOUFRBbWIwNDlNQ1p2VHoxVVRGTjJNUzR5Sm05UVBVVkRSRWhGTFZKVFFTMUJSVk14TWpndFIwTk5MVk5JUVRJMU5pWnZVVDE2ZG5GTWJUaFBSbFJUT0ZjemFXeENaMFpPZG10dlYxSjNaRVVsTTBRbWIxSTlhM1I1VkRkS2FXOXNPSGczYjA5T2VtRlNiRkpJYkdsSk0zQTBKVE5FJTIyJTdEJTdE
+:status: 200
+:method: post
+:headers:
+  Server: nginx
+  Date: Mon, 19 Mar 2018 15:56:44 GMT
+  Content-Type: text/plain
+  Content-Length: '36'
+  Connection: close
+  Vary: Accept-Encoding
+  Set-Cookie: m=8a5cc014-8afa-462d-bea5-d07593fbdb61; Expires=Thu, 16 Mar 2028 15:56:44
+    GMT; Domain=m.stripe.com; Secure; HTTPOnly
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: https://m.stripe.network
+  Access-Control-Allow-Credentials: 'true'
+  Access-Control-Allow-Headers: Content-Type
+  Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
+:content: 8a5cc014-8afa-462d-bea5-d07593fbdb61

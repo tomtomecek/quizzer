@@ -1,0 +1,23 @@
+---
+:scope: 
+:url: https://stripensrq.global.ssl.fastly.net:443/s/o
+:body: ''
+:status: 200
+:method: get
+:headers:
+  Server: Varnish
+  Content-Type: text/vnd.stripensr
+  Cache-Control: private, no-cache, no-store
+  Access-Control-Allow-Origin: https://m.stripe.network
+  Access-Control-Allow-Methods: OPTIONS, GET
+  Access-Control-Allow-Credentials: 'true'
+  Access-Control-Expose-Headers: Server,Range,Content-Type
+  Access-Control-Allow-Headers: Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,Keep-Alive,X-Requested-With,If-Modified-Since,Range,X-Stripe-Csrf-Token
+  Access-Control-Max-Age: '86400'
+  Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
+  Content-Length: '340'
+  Accept-Ranges: bytes
+  Date: Mon, 19 Mar 2018 15:56:43 GMT
+  Via: 1.1 varnish
+  Connection: close
+:content: A2.7WXWFfiz2sdh39g9mEgQqtITC1mPAidd8TrsWoJCfjA=.P29BPTg4LjIxMi41Ni4yJm9CPTEwJm9DPTUzNiZvRD0xNDQ4Jm9FPTIzMjQ2Jm9GPTcxNzImb0c9MCZvSD0yODk2MCZvST0wJm9KPTAuMDAwJm9LPUVVLUVhc3Qmb0w9SEhOJm9NPTAmb049MCZvTz1UTFN2MS4yJm9QPUVDREhFLVJTQS1BRVMxMjgtR0NNLVNIQTI1NiZvUT16dnFMbThPRlRTOFczaWxCZ0ZOdmtvV1J3ZEUlM0Qmb1I9a3R5VDdKaW9sOHg3b09OemFSbFJIbGlJM3A0JTNE

@@ -14,14 +14,14 @@
   Server: AmazonS3
   Content-Length: '718'
   Accept-Ranges: bytes
-  Date: Mon, 19 Mar 2018 14:16:20 GMT
+  Date: Mon, 19 Mar 2018 15:56:40 GMT
   Via: 1.1 varnish
-  Age: '16'
+  Age: '319'
   Connection: close
-  X-Served-By: cache-hhn1551-HHN
+  X-Served-By: cache-hhn1547-HHN
   X-Cache: HIT
-  X-Cache-Hits: '1'
-  X-Timer: S1521468981.890892,VS0,VE0
+  X-Cache-Hits: '3'
+  X-Timer: S1521475001.829762,VS0,VE0
   Vary: Accept-Encoding
   Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
   Timing-Allow-Origin: "*"

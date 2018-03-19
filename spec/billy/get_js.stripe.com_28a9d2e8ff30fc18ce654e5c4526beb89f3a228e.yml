@@ -1,6 +1,6 @@
 ---
 :scope: 
-:url: https://js.stripe.com:443/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default560494&stripe_xdm_p=1
+:url: https://js.stripe.com:443/v2/channel.html?stripe_xdm_e=http%3A%2F%2F127.0.0.1%3A52662&stripe_xdm_c=default898952&stripe_xdm_p=1
 :body: ''
 :status: 200
 :method: get
@@ -14,14 +14,14 @@
   Server: AmazonS3
   Content-Length: '1113'
   Accept-Ranges: bytes
-  Date: Mon, 19 Mar 2018 14:16:20 GMT
+  Date: Mon, 19 Mar 2018 15:56:39 GMT
   Via: 1.1 varnish
-  Age: '139'
+  Age: '127'
   Connection: close
-  X-Served-By: cache-hhn1533-HHN
+  X-Served-By: cache-hhn1528-HHN
   X-Cache: HIT
-  X-Cache-Hits: '1'
-  X-Timer: S1521468981.896636,VS0,VE0
+  X-Cache-Hits: '48'
+  X-Timer: S1521475000.509867,VS0,VE0
   Vary: Accept-Encoding
   Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
   Timing-Allow-Origin: "*"

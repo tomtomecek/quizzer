@@ -21,13 +21,13 @@
   - 1.1 varnish
   Content-Length: '28973'
   Accept-Ranges: bytes
-  Date: Mon, 19 Mar 2018 14:16:21 GMT
-  Age: '53'
+  Date: Mon, 19 Mar 2018 15:56:41 GMT
+  Age: '28'
   Connection: close
-  X-Served-By: cache-sea1046-SEA, cache-hhn1547-HHN
+  X-Served-By: cache-sea1042-SEA, cache-hhn1548-HHN
   X-Cache: HIT, HIT
-  X-Cache-Hits: 1, 1
-  X-Timer: S1521468982.505301,VS0,VE1
+  X-Cache-Hits: 205, 1
+  X-Timer: S1521475001.033257,VS0,VE148
   Vary: Accept-Encoding
   Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
 :content: !binary |-

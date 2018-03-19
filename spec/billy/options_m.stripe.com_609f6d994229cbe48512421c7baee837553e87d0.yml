@@ -6,16 +6,16 @@
 :method: options
 :headers:
   Server: nginx
-  Date: Mon, 19 Mar 2018 14:16:22 GMT
+  Date: Mon, 19 Mar 2018 15:56:42 GMT
   Content-Type: text/plain
   Content-Length: '36'
   Connection: close
   Vary: Accept-Encoding
-  Set-Cookie: m=bd58fc30-e815-45a5-aae8-b282f2e56ed7; Expires=Thu, 16 Mar 2028 14:16:22
+  Set-Cookie: m=643b7ad2-eedd-4788-ba3e-7f59928699c9; Expires=Thu, 16 Mar 2028 15:56:42
     GMT; Domain=m.stripe.com; Secure; HTTPOnly
   X-Content-Type-Options: nosniff
   Access-Control-Allow-Origin: https://m.stripe.network
   Access-Control-Allow-Credentials: 'true'
   Access-Control-Allow-Headers: Content-Type
   Strict-Transport-Security: max-age=31556926; includeSubDomains; preload
-:content: bd58fc30-e815-45a5-aae8-b282f2e56ed7
+:content: 643b7ad2-eedd-4788-ba3e-7f59928699c9
