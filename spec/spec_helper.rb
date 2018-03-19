@@ -26,7 +26,7 @@ VCR.configure do |c|
 end
 
 Capybara.javascript_driver = :poltergeist_billy
-Capybara.default_wait_time = 3
+Capybara.default_max_wait_time = 4
 Capybara.server_port = 52662
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
