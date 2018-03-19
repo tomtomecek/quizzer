@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-feature "admin edits a quiz" do
-  given!(:ruby) { Fabricate(:course, title: 'Ruby course') }
+feature "Admin edits a quiz" do
+  given!(:ruby) { Fabricate(:course, title: "Ruby course") }
   given!(:quiz) do
     Fabricate(
       :quiz,
@@ -133,7 +133,7 @@ feature "admin edits a quiz" do
 
   def view(quiz)
     within(:css, "#quiz_#{quiz.id}") do
-      find('a', text: "View Quiz").click
+      click_on "View Quiz"
     end
   end
 end

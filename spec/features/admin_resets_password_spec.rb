@@ -20,8 +20,8 @@ feature "admin resets password" do
     click_on "Send Email"
 
     expect_to_be_in confirm_password_reset_path
-    expect(page).to have_content "We have send an email with instruction to reset your\
-      password."
+    expect(page).to have_content "We have send an email with instruction to\
+      reset your password."
 
     open_email("admin@example.com")
     current_email.click_link "Reset password link"
@@ -61,15 +61,15 @@ feature "admin resets password" do
     fill_in "Email", with: "admin"
     expect(page).to have_content "This value should be a valid email"
   end
-end
 
-def fill_in_new_password_and_submit(password)
-  fill_in "New Password", with: password
-  click_button "Reset Password"
-end
+  def fill_in_new_password_and_submit(password)
+    fill_in "New Password", with: password
+    click_button "Reset Password"
+  end
 
-def fill_in_login_details_and_submit(options)
-  fill_in "Email", with: "admin@example.com"
-  fill_in "Password", with: options[:with]
-  click_button "Sign in"
+  def fill_in_login_details_and_submit(options)
+    fill_in "Email", with: "admin@example.com"
+    fill_in "Password", with: options[:with]
+    click_button "Sign in"
+  end
 end

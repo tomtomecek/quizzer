@@ -88,27 +88,31 @@ feature "student performs an exams" do
 
     expect(page).to have_content "Score: 3 from 12 points"
     expect(page).to have_content "Sorry, you have to re-attempt the quiz."
-    within_exam_question(q1) { expect(page).to have_content "You earned 3 points" }
-    within_exam_question(q2) { expect(page).to have_content "One of the answers was wrong" }
+    within_exam_question(q1) do
+      expect(page).to have_content "You earned 3 points"
+    end
+    within_exam_question(q2) do
+      expect(page).to have_content "One of the answers was wrong"
+    end
   end
-end
 
-def incorrect(n = 1, options = {})
-  if options == {}
-    Fabricate.times(n, :incorrect)
-  else
-    Fabricate.times(n, :incorrect, content: options[:content])
+  def incorrect(n = 1, options = {})
+    if options == {}
+      Fabricate.times(n, :incorrect)
+    else
+      Fabricate.times(n, :incorrect, content: options[:content])
+    end
   end
-end
 
-def correct(n = 1, options = {})
-  if options == {}
-    Fabricate.times(n, :correct)
-  else
-    Fabricate.times(n, :correct, content: options[:content])
+  def correct(n = 1, options = {})
+    if options == {}
+      Fabricate.times(n, :correct)
+    else
+      Fabricate.times(n, :correct, content: options[:content])
+    end
   end
-end
 
-def create_course(options = {})
-  Fabricate(:course, title: options[:title] , published: true)
+  def create_course(options = {})
+    Fabricate(:course, title: options[:title] , published: true)
+  end
 end

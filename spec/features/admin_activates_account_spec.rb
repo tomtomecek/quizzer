@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "admin activates account" do
+feature "Admin activates account" do
   given(:kevin) { Fabricate(:instructor, activated: true) }
   given(:email) { "new_admin@email.com" }
   given(:admin) { Admin.last }
@@ -42,28 +42,28 @@ feature "admin activates account" do
       expect(page).to have_content "This value is required."
     end
   end
-end
 
-def create_admin_account(options = {})
-  visit new_admin_path
-  fill_in "Full Name", with: "New Admin"
-  fill_in "Email:", with: options[:email]
-  role = options[:role] || "Teaching assistant"
-  select role, from: "Admin role:"
-  click_on "Add new admin"
-  click_on "Sign out"
-end
+  def create_admin_account(options = {})
+    visit new_admin_path
+    fill_in "Full Name", with: "New Admin"
+    fill_in "Email:", with: options[:email]
+    role = options[:role] || "Teaching assistant"
+    select role, from: "Admin role:"
+    click_on "Add new admin"
+    click_on "Sign out"
+  end
 
-def submit_with(options = {})
-  fill_in "User Name", with: options[:username]
-  fill_in "Password", with: options[:password]
-  click_on "Enter Tealeaf Academy Quizzer"
-end
+  def submit_with(options = {})
+    fill_in "User Name", with: options[:username]
+    fill_in "Password", with: options[:password]
+    click_on "Enter Tealeaf Academy Quizzer"
+  end
 
-def validate_password_error_message
-  expect(page).to have_content "Password must have at least 6 characters"
-end
+  def validate_password_error_message
+    expect(page).to have_content "Password must have at least 6 characters"
+  end
 
-def validate_successful_activation
-  expect(page).to have_content "Welcome to Tealeaf! You are new admin."
+  def validate_successful_activation
+    expect(page).to have_content "Welcome to Tealeaf! You are new admin."
+  end
 end

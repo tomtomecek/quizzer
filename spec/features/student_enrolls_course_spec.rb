@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "student enrolls course" do
+feature "Student enrolls course" do
   given(:chris) { Fabricate(:instructor, username: "Chris") }
   given(:ruby) do
     Fabricate(:course,
