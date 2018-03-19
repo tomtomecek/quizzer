@@ -53,13 +53,14 @@ group :test do
   gem 'launchy',             '2.4.3'
   gem 'shoulda-matchers',    '2.8.0', require: false
   gem 'database_cleaner',    '1.2.0'
-  gem 'selenium-webdriver',  '2.45.0'
+  gem 'selenium-webdriver',  '3.6.0'
   gem 'vcr',                 '2.9.3'
   gem 'webmock',             '1.20.4'
   gem 'poltergeist',         '1.6.0'
   gem 'rack_session_access', '0.1.1'
   gem 'puffing-billy',       '0.4.1'
   gem 'codeclimate-test-reporter', '0.4.5', require: nil
+  gem 'rspec_junit_formatter'
 end
 
 group :development, :test, :staging do
