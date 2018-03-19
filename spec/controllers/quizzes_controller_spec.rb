@@ -338,31 +338,30 @@ describe QuizzesController do
     end
   end
 
-end
-
-def question(options = {})
-  content   = options[:question]
-  points    = options[:points] || "1"
-  correct   = options[:correct_count] || 1
-  incorrect = options[:incorrect_count] || 4
-  {
-    content: content,
-    points: points,
-    answers_attributes: answers(options[:answer], correct, incorrect)
-  }
-end
-
-def answers(answer, correct_answers, incorrect_answers)
-  hash = {}
-
-  correct_answers.times do |n|
-    hash["#{n}"] = { content: answer, correct: true }
+  def question(options = {})
+    content   = options[:question]
+    points    = options[:points] || "1"
+    correct   = options[:correct_count] || 1
+    incorrect = options[:incorrect_count] || 4
+    {
+      content: content,
+      points: points,
+      answers_attributes: answers(options[:answer], correct, incorrect)
+    }
   end
 
-  incorrect_answers.times do |n|
-    key = correct_answers + n
-    hash["#{key}"] = { content: "incorrect answer", correct: false }
-  end
+  def answers(answer, correct_answers, incorrect_answers)
+    hash = {}
 
-  hash
+    correct_answers.times do |n|
+      hash["#{n}"] = { content: answer, correct: true }
+    end
+
+    incorrect_answers.times do |n|
+      key = correct_answers + n
+      hash["#{key}"] = { content: "incorrect answer", correct: false }
+    end
+
+    hash
+  end
 end

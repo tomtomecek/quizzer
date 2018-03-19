@@ -183,7 +183,6 @@ describe EnrollmentsController do
         end
 
         it { is_expected.to render_template :new }
-
         it { is_expected.to set_flash.now[:danger] }
 
         it "does not create enrollment" do

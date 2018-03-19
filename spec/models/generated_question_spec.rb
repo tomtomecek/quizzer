@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe GeneratedQuestion do
-
   it { is_expected.to belong_to(:exam) }
   it { is_expected.to belong_to(:question) }
   it { is_expected.to have_db_index(:exam_id) }

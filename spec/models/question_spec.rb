@@ -87,20 +87,20 @@ describe Question do
       expect(question.generate_answers.uniq.size).to eq(4)
     end
   end
-end
 
-def incorrect(n = 1, options = {})
-  if options == {}
-    Fabricate.times(n, :incorrect)
-  else
-    Fabricate.times(n, :incorrect, content: options[:content])
+  def incorrect(n = 1, options = {})
+    if options == {}
+      Fabricate.times(n, :incorrect)
+    else
+      Fabricate.times(n, :incorrect, content: options[:content])
+    end
   end
-end
 
-def correct(n = 1, options = {})
-  if options == {}
-    Fabricate.times(n, :correct)
-  else
-    Fabricate.times(n, :correct, content: options[:content])
+  def correct(n = 1, options = {})
+    if options == {}
+      Fabricate.times(n, :correct)
+    else
+      Fabricate.times(n, :correct, content: options[:content])
+    end
   end
 end
