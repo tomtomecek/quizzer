@@ -17,11 +17,15 @@ VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
   c.configure_rspec_metadata!
+  # c.ignore_hosts 'codeclimate.com', 'js.stripe.com', 'tiles.services.mozilla.com', 'dtex4kvbppovt.cloudfront.net', 'dummyimage.com'
   c.ignore_localhost = true
-  c.ignore_hosts 'codeclimate.com', 'js.stripe.com', 'tiles.services.mozilla.com', 'dtex4kvbppovt.cloudfront.net', 'dummyimage.com'
+
+  c.ignore_request do |request|
+    request.headers.include?("Referer")
+  end
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist_billy
 Capybara.default_wait_time = 3
 Capybara.server_port = 52662
 

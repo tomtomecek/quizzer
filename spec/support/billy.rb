@@ -8,17 +8,17 @@ Billy.configure do |c|
   c.ignore_params = ['https://js.stripe.com:443/v2/channel.html']
 end
 
-RSpec.configure do |config|
-  config.before(:each, billy: true) do
-    WebMock.allow_net_connect!
-    Capybara.current_driver = :poltergeist_billy
-  end
+# RSpec.configure do |config|
+#   config.before(:each, billy: true) do
+#     WebMock.allow_net_connect!
+#     Capybara.current_driver = :poltergeist_billy
+#   end
 
-  config.after(:each, billy: true) do
-    Capybara.use_default_driver
-    WebMock.disable_net_connect!(allow_localhost: true)
-  end
-end
+#   config.after(:each, billy: true) do
+#     Capybara.use_default_driver
+#     WebMock.disable_net_connect!(allow_localhost: true)
+#   end
+# end
 
 def billy_whitelist_capybara
   if server = Capybara.current_session.server
