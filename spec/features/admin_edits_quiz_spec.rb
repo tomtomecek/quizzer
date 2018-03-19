@@ -55,15 +55,15 @@ feature "admin edits a quiz" do
     click_on "Update Quiz"
 
     expect_to_be_in admin_course_path(ruby)
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
 
     within(:css, "#quiz_#{quiz.id}") do
-      expect_to_see "Published"
+      expect(page).to have_content "Published"
       click_on "View Quiz"
     end
-    expect_to_see "50 percents"
-    expect_to_see "Hardcore Ruby"
-    expect_to_see "For advanced programmers"
+    expect(page).to have_content "50 percents"
+    expect(page).to have_content "Hardcore Ruby"
+    expect(page).to have_content "For advanced programmers"
   end
 
   scenario "admin adds a question", :js do
@@ -71,11 +71,11 @@ feature "admin edits a quiz" do
       create_all_answers_for(question)
     end
     click_on "Update Quiz"
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
     click_on "View Quiz"
     within("#question_3") do
-      expect_to_see "Answer to life?"
-      expect_to_see "9 points"
+      expect(page).to have_content "Answer to life?"
+      expect(page).to have_content "9 points"
     end
   end
 
@@ -85,19 +85,19 @@ feature "admin edits a quiz" do
       select 6
     end
     click_on "Update Quiz"
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
     click_on "View Quiz"
     expect_to_not_see "Question: 3"
     within(:css, "#question_2") do
-      expect_to_see "Better content is a king"
-      expect_to_see "6 points"
+      expect(page).to have_content "Better content is a king"
+      expect(page).to have_content "6 points"
     end
   end
 
   scenario "admin removes a question", :js do
     remove_question(2)
     click_on "Update Quiz"
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
     view quiz
     expect_to_not_see "Question: 2"
     expect_to_not_see "How much is 2 + 2?"
@@ -109,15 +109,15 @@ feature "admin edits a quiz" do
       add_answer(5, to: question, with: "new answer") { mark_incorrect }
     end
     click_on "Update Quiz"
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
     view quiz
-    expect_to_see "new answer"
+    expect(page).to have_content "new answer"
   end
 
   scenario "admin removes an answer", :js do
     remove_answer(5, from: 1)
     click_on "Update Quiz"
-    expect_to_see "Quiz was successfully updated."
+    expect(page).to have_content "Quiz was successfully updated."
     view quiz
     expect_to_not_see "delete me"
   end
@@ -133,7 +133,7 @@ feature "admin edits a quiz" do
     end
 
     click_on "Update Quiz"
-    expect_to_see "Quiz creation failed -\
+    expect(page).to have_content "Quiz creation failed -\
       Maximum 10 records are allowed. Got 11 records instead"
   end
 end

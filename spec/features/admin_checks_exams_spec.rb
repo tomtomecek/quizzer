@@ -17,9 +17,9 @@ feature "admin checks on exams" do
     expect(find("tbody")).to have_css("tr", count: 2)
 
     within(:css, "tr#exam_#{exam1.id}") do
-      expect_to_see alice.username
-      expect_to_see week1_ruby.title
-      expect_to_see ruby.title
+      expect(page).to have_content alice.username
+      expect(page).to have_content week1_ruby.title
+      expect(page).to have_content ruby.title
       click_on "View"
     end
 

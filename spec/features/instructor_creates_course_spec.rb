@@ -16,7 +16,7 @@ feature "instructor creates a new course" do
     attach_file 'Image', 'spec/support/images/ruby_on_rails.jpg'
 
     click_on "Create Course"
-    expect_to_see "Unpublished course has been created."
+    expect(page).to have_content "Unpublished course has been created."
   end
 
   scenario "check error messages", :js do
@@ -26,18 +26,18 @@ feature "instructor creates a new course" do
     validate_required_error_message_for("Duration")
 
     fill_in "Certificate (in $)", with: ""
-    expect_to_see "Each course must have a certificate value."
+    expect(page).to have_content "Each course must have a certificate value."
     fill_in "Certificate (in $)", with: "-1"
-    expect_to_see "Minimum dollar amount of certificate is 0.01"
+    expect(page).to have_content "Minimum dollar amount of certificate is 0.01"
 
     select "Select one", from: "Instructor"
     click_on "Create Course"
-    expect_to_see "Course must have at least 1 instructor."
+    expect(page).to have_content "Course must have at least 1 instructor."
 
     fill_in "Quizzes to pass", with: ""
-    expect_to_see "Set minimum amount of quizzes to pass."
+    expect(page).to have_content "Set minimum amount of quizzes to pass."
     fill_in "Quizzes to pass", with: "2"
-    expect_to_see "Minimum amount of quizzes to pass is 3."
+    expect(page).to have_content "Minimum amount of quizzes to pass is 3."
   end
 end
 
@@ -48,6 +48,6 @@ end
 
 def validate_required_error_message_for(label)
   fill_in label, with: ""
-  expect_to_see "This value is required."
+  expect(page).to have_content "This value is required."
   fill_in label, with: "something"
 end
