@@ -98,7 +98,8 @@ feature "student enrolls course" do
         fill_in_card_details(
           card_number: "4000000000000069",
           month: "2 - February",
-          year: (Time.now.year + 1))
+          year: (Time.now.year + 1)
+        )
         agree_on_honor_code
         click_paid_enroll_now
         expect_to_see "Your card's expiration month is invalid."
@@ -124,7 +125,8 @@ feature "student enrolls course" do
         fill_in_card_details(
           card_number: "4000000000000069",
           month: "1 - January",
-          year: (Time.now.year + 1))
+          year: (Time.now.year + 1)
+        )
         click_paid_enroll_now
         expect_to_see "Your card's expiration month is invalid."
       end
@@ -140,43 +142,43 @@ feature "student enrolls course" do
     within_modal { click_on_cross_icon }
     expect_to_see_no_modal
   end
-end
 
-def click_enroll(course)
-  within("#course_#{course.id}") do
-    find("a", text: 'Enroll now').trigger('click')
+  def click_enroll(course)
+    within("#course_#{course.id}") do
+      find("a", text: 'Enroll now').trigger('click')
+    end
   end
-end
 
-def click_on_free
-  find(:xpath, "//label[contains(.,'Free')]").trigger('click')
-end
+  def click_on_free
+    find(:xpath, "//label[contains(.,'Free')]").trigger('click')
+  end
 
-def click_on_cross_icon
-  find('.modal-header').find('button.close').trigger('click')
-end
+  def click_on_cross_icon
+    find('.modal-header').find('button.close').trigger('click')
+  end
 
-def click_on_close_button
-  find(:button, "Close").trigger('click')
-end
+  def click_on_close_button
+    find(:button, "Close").trigger('click')
+  end
 
-def fill_in_card_details(options = {})
-  year = options[:year] || Time.now.year + 3
-  month = options[:month] || "4 - April"
-  fill_in "Credit Card Number", with: options[:card_number]
-  fill_in "Security Code",      with: "123"
-  select month, from: "date_month"
-  select year, from: "date_year"
-end
+  def fill_in_card_details(options = {})
+    year = options[:year] || Time.now.year + 3
+    month = options[:month] || "4 - April"
+    fill_in "Credit Card Number", with: options[:card_number]
+    fill_in "Security Code",      with: "123"
+    select month, from: "date_month"
+    select year, from: "date_year"
+  end
 
-def click_on_signature_track
-  find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
-end
+  def click_on_signature_track
+    find(:xpath, "//label[contains(.,'Signature Track')]").trigger('click')
+  end
 
-def agree_on_honor_code
-  find('input[type=checkbox]').trigger('click')
-end
+  def agree_on_honor_code
+    find('input[type=checkbox]').trigger('click')
+  end
 
-def click_paid_enroll_now
-  find('#stripeSubmit').trigger('click')
+  def click_paid_enroll_now
+    find('#stripeSubmit').trigger('click')
+  end
 end
