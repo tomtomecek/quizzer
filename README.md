@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/tomtomecek/quizzer.svg)](https://travis-ci.org/tomtomecek/quizzer) [![Code Climate](https://codeclimate.com/github/tomtomecek/quizzer/badges/gpa.svg)](https://codeclimate.com/github/tomtomecek/quizzer) [![Test Coverage](https://codeclimate.com/github/tomtomecek/quizzer/badges/coverage.svg)](https://codeclimate.com/github/tomtomecek/quizzer) [![Circle CI](https://circleci.com/gh/tomtomecek/quizzer/tree/master.svg?style=shield&circle-token=f47aaaa83e457e1b1052b299a93eb716c215ec12)](https://circleci.com/gh/tomtomecek/quizzer/tree/master)
 
+![quizzer_logo](https://user-images.githubusercontent.com/7385469/37671211-8627f5f8-2c6b-11e8-8176-939b6979107b.gif)
+
 Ruby on Rails application for building unique quizzes with admin/user interface, e-commerce, and certification. The application was built by using Test Driven Development, GitHub Flow, and Agile Planning.
 
 **IMPORTANT**: The code in this repository is _legacy_ (from 2015) and is no longer maintained.
