@@ -98,7 +98,6 @@ describe ExamsController do
                 student: current_user,
                 enrollment: enrollment)
     end
-    after { ActionMailer::Base.deliveries.clear }
 
     let(:gq) { Fabricate(:gen_question, exam: exam, points: 10) }
     let(:ga1) { Fabricate(:gen_correct, generated_question: gq) }
@@ -234,7 +233,6 @@ describe ExamsController do
                   quiz_id: quiz.slug,
                   student_answer_ids: to_ids(ga1)
           end
-          after { ActionMailer::Base.deliveries.clear }
 
           it "creates certificate" do
             expect(Certificate.count).to eq 1

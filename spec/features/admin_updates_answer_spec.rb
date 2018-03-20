@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "admin updates answer from view quiz" do
+feature "Admin updates answer from view quiz" do
   given!(:quiz) { Fabricate(:quiz) }
   given(:answer) { quiz.questions.first.answers.first }
   given(:correct_answer) do
@@ -30,7 +30,9 @@ feature "admin updates answer from view quiz" do
       end
 
       expect(page).to have_content "Successfully updated answer"
-      within(:css, "#answer_#{answer.id}") { expect(page).to have_content "new answer" }
+      within(:css, "#answer_#{answer.id}") do
+        expect(page).to have_content "new answer"
+      end
     end
 
     scenario "failed attempt none correct", :js do
@@ -73,24 +75,24 @@ feature "admin updates answer from view quiz" do
       expect(page).to have_content "At least 1 answer must be correct."
     end
   end
-end
 
-def click_edit_on(answer)
-  within(:css, "#answer_#{answer.id}") do
-    find(:css, ".fa-edit").trigger('click')
+  def click_edit_on(answer)
+    within(:css, "#answer_#{answer.id}") do
+      find(:css, ".fa-edit").trigger('click')
+    end
   end
-end
 
-def click_delete_on(answer)
-  within(:css, "#answer_#{answer.id}") do
-    find(:css, ".fa-times-circle").click
+  def click_delete_on(answer)
+    within(:css, "#answer_#{answer.id}") do
+      find(:css, ".fa-times-circle").click
+    end
   end
-end
 
-def untick_checkbox
-  find('input[type=checkbox]').trigger('click')
-end
+  def untick_checkbox
+    find('input[type=checkbox]').trigger('click')
+  end
 
-def submit_changes
-  find('input[type=submit]').trigger('click')
+  def submit_changes
+    find('input[type=submit]').trigger('click')
+  end
 end

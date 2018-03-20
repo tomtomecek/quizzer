@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "visitor checks course intro" do
+feature "Visitor checks course intro" do
   given!(:ruby) { Fabricate(:course, title: "Ruby", published: true) }
   given!(:rails) { Fabricate(:course, title: "Rails", published: true) }
   given!(:tdd) { Fabricate(:course, title: "TDD", published: true) }

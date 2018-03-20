@@ -126,7 +126,6 @@ describe EnrollmentsController do
             paid: "1"
           }
         end
-        after { ActionMailer::Base.deliveries.clear }
 
         it "redirects to course show" do
           ajax_redirect = "window.location.replace('#{course_url(ruby)}');"
@@ -183,7 +182,6 @@ describe EnrollmentsController do
         end
 
         it { is_expected.to render_template :new }
-
         it { is_expected.to set_flash.now[:danger] }
 
         it "does not create enrollment" do

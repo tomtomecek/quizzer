@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "student enrolls course" do
+feature "Student enrolls course" do
   given(:chris) { Fabricate(:instructor, username: "Chris") }
   given(:ruby) do
     Fabricate(:course,
@@ -10,11 +10,9 @@ feature "student enrolls course" do
               published: true)
   end
   background do
-    clear_emails
     Fabricate.times(3, :quiz, course: ruby, published: true)
     sign_in
   end
-  after { clear_emails }
 
   context "for free" do
     scenario "student enrolls course for free", :js do

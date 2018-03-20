@@ -56,5 +56,4 @@ private
   def reached_answer_limit?
     total.count == MIN_ANSWER_LIMIT
   end
-
 end

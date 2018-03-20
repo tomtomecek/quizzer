@@ -56,7 +56,7 @@ private
   end
 
   def slugify(the_slug)
-    first_part = the_slug.split('-').slice(0...-1).join('-')
+    first_part = the_slug.split('-').slice(0...-1).join("-")
     second_part = the_slug.split('-').last.to_i + 1
     "#{first_part}-#{second_part}"
   end

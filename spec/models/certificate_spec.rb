@@ -20,7 +20,9 @@ describe Certificate do
   describe "#file_name" do
     it "returns file name for pdf" do
       alice = Fabricate(:user, username: "alicewang")
-      cert = Fabricate(:certificate, student: alice, created_at: "Thu, 19 Feb 2015 23:44:49 UTC +00:00".to_datetime)
+      cert = Fabricate(:certificate,
+                       student: alice,
+                       created_at: "Thu, 19 Feb 2015 23:44:49 UTC +00:00".to_datetime)
       expect(cert.file_name).to eq "certificate_alicewang_2015-02-19"
     end
   end

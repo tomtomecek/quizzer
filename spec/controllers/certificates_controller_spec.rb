@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CertificatesController do
-
   describe "GET show" do
     let(:alice) { Fabricate(:user) }
     let(:cert) { Fabricate(:certificate, student: alice) }

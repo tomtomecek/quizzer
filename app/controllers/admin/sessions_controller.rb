@@ -41,6 +41,6 @@ private
   end
 
   def remember_me_checked?
-    params[:remember_me] == '1'
+    params[:remember_me] == "1"
   end
 end

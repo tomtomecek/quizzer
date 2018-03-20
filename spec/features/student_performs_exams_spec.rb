@@ -39,13 +39,11 @@ feature "student performs an exams" do
   given!(:q3) { week1.questions.last }
 
   background do
-    clear_emails
     sign_in
     student = User.first
     enr = Fabricate(:enrollment, course: ruby, student: student, paid: false)
     Fabricate(:permission, student: student, quiz: week1, enrollment: enr)
   end
-  after { clear_emails }
 
   scenario "student checks course page and enters a course" do
     visit courses_path
@@ -88,8 +86,12 @@ feature "student performs an exams" do
 
     expect(page).to have_content "Score: 3 from 12 points"
     expect(page).to have_content "Sorry, you have to re-attempt the quiz."
-    within_exam_question(q1) { expect(page).to have_content "You earned 3 points" }
-    within_exam_question(q2) { expect(page).to have_content "One of the answers was wrong" }
+    within_exam_question(q1) do
+      expect(page).to have_content "You earned 3 points"
+    end
+    within_exam_question(q2) do
+      expect(page).to have_content "One of the answers was wrong"
+    end
   end
 end
 

@@ -8,7 +8,7 @@ class Enrollment < ActiveRecord::Base
   validates :honor_code, acceptance: true
   validates :student_id, uniqueness: {
                            scope: :course_id,
-                           message: 'You have already enrolled.'
+                           message: "You have already enrolled."
                          }
 
   def passed_exams

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-feature "admin checks on exams" do
-  scenario "admin finds exams and goes through the list" do
+feature "Admin checks exams" do
+  scenario "finds exams and goes through the list" do
     alice = Fabricate(:user)
     jake = Fabricate(:user)
     ruby = Fabricate(:course)

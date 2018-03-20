@@ -33,7 +33,7 @@ describe Exam do
     let(:exam) { Fabricate(:exam, quiz: quiz) }
     let(:gq1) { Fabricate(:gen_question, exam: exam, points: 2) }
     let(:gq2) { Fabricate(:gen_question, exam: exam, points: 3) }
-    before { Quiz.any_instance.stub(:total_score).and_return(5) }
+    before { allow_any_instance_of(Quiz).to receive(:total_score).and_return(5) }
 
     it "sets score to 0 if student has not answered anything" do
       Fabricate(:gen_correct, generated_question: gq1, student_marked: nil)
@@ -68,13 +68,13 @@ describe Exam do
     end
 
     it "sets passed to true" do
-      Exam.any_instance.stub(:calculated_score).and_return(5)
+      allow_any_instance_of(Exam).to receive(:calculated_score).and_return(5)
       exam.grade!
       expect(exam.reload.passed).to be true
     end
 
     it "sets passed to false" do
-      Exam.any_instance.stub(:calculated_score).and_return(2)
+      allow_any_instance_of(Exam).to receive(:calculated_score).and_return(2)
       exam.grade!
       expect(exam.reload.passed).to be false
     end

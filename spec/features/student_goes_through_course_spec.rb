@@ -9,8 +9,6 @@ feature "student goes through whole course" do
   given!(:q1)   { quiz1.questions.first }
   given!(:q2)   { quiz2.questions.first }
   given!(:q3)   { quiz3.questions.first }
-  background { clear_emails }
-  after { clear_emails }
 
   scenario "full course experience", :js, :vcr do
     sign_in

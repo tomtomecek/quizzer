@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "admin adds a quiz to a course" do
+feature "Admin adds a quiz to a course" do
   given!(:ruby) { Fabricate(:course, title: "Ruby course") }
   background do
     sign_in_admin
@@ -137,11 +137,11 @@ feature "admin adds a quiz to a course" do
       end
     end
   end
-end
 
-def fill_in_valid_quiz_attributes
-  fill_in "Title",       with: "Week 1 - Ruby basics"
-  fill_in "Description", with: "Ruby methods and iterations"
-  select "60 %", from: "quiz_passing_percentage"
-  uncheck "Published"
+  def fill_in_valid_quiz_attributes
+    fill_in "Title",       with: "Week 1 - Ruby basics"
+    fill_in "Description", with: "Ruby methods and iterations"
+    select "60 %", from: "quiz_passing_percentage"
+    uncheck "Published"
+  end
 end

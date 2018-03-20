@@ -1,7 +1,9 @@
 require 'spec_helper'
 
-feature "instructor publishes a course" do
-  given(:ruby) { Fabricate(:course, published: false, min_quiz_count: 3, title: "ruby") }
+feature "Instructor publishes a course" do
+  given(:ruby) do
+    Fabricate(:course, published: false, min_quiz_count: 3, title: "ruby")
+  end
   given(:kevin) { Fabricate(:instructor, activated: true) }
 
   scenario "successfull publish" do

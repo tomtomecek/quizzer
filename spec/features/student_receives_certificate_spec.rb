@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "student receives certificate" do
+feature "Student receives certificate" do
   given(:ruby) { Fabricate(:course, published: true, min_quiz_count: 3) }
   given!(:quiz1) { Fabricate(:quiz, course: ruby, published: true) }
   given!(:quiz2) { Fabricate(:quiz, course: ruby, published: true) }
@@ -8,11 +8,7 @@ feature "student receives certificate" do
   given(:q1) { quiz3.questions.first }
   given(:alice) { User.first }
   given(:cert) { Certificate.first }
-  background do
-    clear_emails
-    sign_in
-  end
-  after { clear_emails }
+  background { sign_in }
 
   scenario "via email", :js do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)
@@ -52,24 +48,24 @@ feature "student receives certificate" do
     expect(response_headers['Content-Disposition']).to include "inline; \
 filename=\"#{cert.file_name}.pdf\""
   end
-end
 
-def build_quizz(ruby)
-  Fabricate(:quiz, course: ruby, published: true) do
-    questions do
-      [
-        Fabricate(:question) do
-          answers do
-            Fabricate.times(3, :incorrect) <<
-              Fabricate(:correct, content: "Correct Answer")
+  def build_quizz(ruby)
+    Fabricate(:quiz, course: ruby, published: true) do
+      questions do
+        [
+          Fabricate(:question) do
+            answers do
+              Fabricate.times(3, :incorrect) <<
+                Fabricate(:correct, content: "Correct Answer")
+            end
           end
-        end
-      ]
+        ]
+      end
     end
   end
-end
 
-def course_completion_message
-  "You have successfully completed this course! We sent you email\
-  with instructions about your certification"
+  def course_completion_message
+    "You have successfully completed this course! We sent you email\
+    with instructions about your certification"
+  end
 end

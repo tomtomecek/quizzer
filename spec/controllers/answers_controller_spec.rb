@@ -42,7 +42,8 @@ describe AnswersController do
       end
 
       it "updates answers correctness" do
-        xhr :patch, :update, id: answer.id, answer: { content: "x", correct: true }
+        xhr :patch, :update, id: answer.id, answer: { content: "x",
+          correct: true }
         expect(answer.reload).to be_correct
       end
     end

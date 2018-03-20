@@ -1,4 +1,4 @@
-require 'carrierwave/test/matchers'
+require "carrierwave/test/matchers"
 
 describe ImageUploader do
   include CarrierWave::Test::Matchers
@@ -16,13 +16,13 @@ spec/support/images/ruby_on_rails.jpg")))
     uploader.remove!
   end
 
-  context 'the certificate version' do
+  context "the certificate version" do
     it "scales down a course image to be exactly 460 by 322 pixels" do
       expect(uploader.certificate).to be_no_larger_than(460, 322)
     end
   end
 
-  context 'the normal version' do
+  context "the normal version" do
     it "scale down a course image to fit within 667 by 320 pixels" do
       expect(uploader).to be_no_larger_than(667, 320)
     end

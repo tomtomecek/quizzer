@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "student authenticates successfully" do
+feature "Student authenticates successfully" do
   scenario "signs in - has no account" do
     visit root_path
     click_on "Sign in with GitHub"

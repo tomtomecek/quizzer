@@ -28,7 +28,6 @@ describe PasswordResetsController do
       let(:token) { admin.reload.password_reset_token }
       
       before { post :create, email: "admin@example.com" }
-      after { ActionMailer::Base.deliveries.clear }
 
       it { is_expected.to redirect_to confirm_password_reset_url }
 

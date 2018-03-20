@@ -18,7 +18,7 @@ class Admin::CoursesController < AdminController
   end
 
   def index
-    @courses = Course.order(:id)
+    @courses = Course.order(:created_at)
   end
 
   def show; end
@@ -30,7 +30,7 @@ class Admin::CoursesController < AdminController
       flash[:success] = "Successfully updated the course #{@course.title}"
       redirect_to admin_courses_url
     else
-      flash[:danger] = "These errors needs to be fixed:"
+      flash.now[:danger] = "These errors needs to be fixed:"
       render :edit
     end
   end

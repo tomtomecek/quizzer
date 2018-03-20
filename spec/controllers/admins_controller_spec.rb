@@ -47,7 +47,6 @@ describe AdminsController do
     end
 
     context "with valid data" do
-      after { ActionMailer::Base.deliveries.clear }
       let(:mail) { ActionMailer::Base.deliveries.last }
       let(:admin) { Admin.last }
 

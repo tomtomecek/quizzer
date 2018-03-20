@@ -1,6 +1,6 @@
 module AuthenticationMacros
   def sign_in
-    visit '/auth/github'
+    visit "/auth/github"
   end
 
   def sign_in_admin(admin = nil)

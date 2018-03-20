@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :permissions, foreign_key: "student_id"
   has_many :certificates, foreign_key: "student_id"
 
-  def self.from_omniauth(auth)    
+  def self.from_omniauth(auth)
     User.find_by_provider_and_uid(auth) || User.create_from_omniauth(auth)
   end
 

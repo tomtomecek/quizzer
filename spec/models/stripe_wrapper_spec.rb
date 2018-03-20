@@ -29,15 +29,15 @@ describe StripeWrapper do
       end
     end
   end
-end
 
-def tokenizer(card_number)
-  Stripe::Token.create(
-    card: {
-      number: card_number,
-      cvc: "314",
-      exp_month: 12,
-      exp_year: Time.now.year + 2
-    },
-  ).id
+  def tokenizer(card_number)
+    Stripe::Token.create(
+      card: {
+        number: card_number,
+        cvc: "314",
+        exp_month: 12,
+        exp_year: Time.now.year + 2
+      },
+    ).id
+  end
 end
