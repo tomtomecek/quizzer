@@ -8,11 +8,7 @@ feature "Student receives certificate" do
   given(:q1) { quiz3.questions.first }
   given(:alice) { User.first }
   given(:cert) { Certificate.first }
-  background do
-    clear_emails
-    sign_in
-  end
-  after { clear_emails }
+  background { sign_in }
 
   scenario "via email", :js do
     paid = Fabricate(:enrollment, paid: true, student: alice, course: ruby)

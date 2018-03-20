@@ -1,19 +1,17 @@
 require 'spec_helper'
 
-feature "Admin activates account" do
+feature "Admin activates account", :js do
   given(:kevin) { Fabricate(:instructor, activated: true) }
   given(:email) { "new_admin@email.com" }
   given(:admin) { Admin.last }
   given(:activation_path) { admin_activation_path(admin.activation_token) }
 
   background do
-    clear_emails
     sign_in_admin(kevin)
     create_admin_account(email: email)
   end
-  after { clear_emails }
 
-  scenario "receives email and activates the account", :js do
+  scenario "receives email and activates the account" do
     open_email(email)
     current_email.click_on activation_path
 
@@ -27,7 +25,7 @@ feature "Admin activates account" do
       current_email.click_link activation_path
     end
 
-    scenario "username errors", :js do
+    scenario "username errors" do
       Fabricate(:teaching_assistant, username: "brandon")
       submit_with(username: "", password: "strongPassword")
       expect(page).to have_content "This value is required."
@@ -35,7 +33,7 @@ feature "Admin activates account" do
       expect(page).to have_content "User Name has already been taken"
     end
 
-    scenario "password errors", :js do
+    scenario "password errors" do
       submit_with(username: "brandon", password: "123")
       validate_password_error_message
       submit_with(username: "brandon", password: "")

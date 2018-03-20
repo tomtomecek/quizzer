@@ -126,7 +126,6 @@ describe EnrollmentsController do
             paid: "1"
           }
         end
-        after { ActionMailer::Base.deliveries.clear }
 
         it "redirects to course show" do
           ajax_redirect = "window.location.replace('#{course_url(ruby)}');"

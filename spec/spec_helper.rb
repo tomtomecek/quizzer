@@ -38,6 +38,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.order = "random"
 
+  config.before(:each) do
+    ActionMailer::Base.deliveries.clear
+  end
+
   config.include AuthenticationMacros
   config.include ExpectationMacros, type: :feature
   config.include ModalMacros, type: :feature
