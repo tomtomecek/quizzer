@@ -9,7 +9,6 @@ class QuizzesController < AdminController
 
   def create
     @course = Course.find_by(slug: params[:course_id])
-
     @quiz = @course.quizzes.build(quiz_params)
 
     if @quiz.save
@@ -21,11 +20,9 @@ class QuizzesController < AdminController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @quiz.update(quiz_params)

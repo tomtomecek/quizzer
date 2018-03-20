@@ -1,6 +1,6 @@
 class AnswersController < AdminController
   include AnswerExceptions
-  
+
   def edit
     @answer = Answer.find(params[:id])
   end
@@ -16,7 +16,7 @@ class AnswersController < AdminController
       end
     end
   rescue ActiveRecord::RecordInvalid => e
-    flash.now[:danger] = "#{e.message}"
+    flash.now[:danger] = e.message
   end
 
   def destroy

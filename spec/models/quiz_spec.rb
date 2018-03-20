@@ -7,7 +7,7 @@ describe Quiz do
   it { is_expected.to validate_presence_of(:description) }
   it { is_expected.to validate_presence_of(:passing_percentage) }
   it { is_expected.to validate_presence_of(:questions).
-                      with_message('requires at least 1 question.') }
+                      with_message("requires at least 1 question.") }
   it { is_expected.to have_many(:exams) }
   it { is_expected.to have_many(:permissions) }
   it { is_expected.to have_many(:questions).

@@ -6,6 +6,6 @@ class Admin::ExamsController < AdminController
   def show
     @exam = Exam.find(params[:id])
     @quiz = @exam.quiz
-    render 'exams/show'
+    render "exams/show"
   end
 end
