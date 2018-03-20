@@ -19,7 +19,6 @@ Ruby on Rails application for building unique quizzes with admin/user interface,
 * Continuous Integration - Builds on Travis CI and CircleCI.
 * Continuous Deployment - from CircleCI to Heroku.
 
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -32,22 +31,20 @@ You need to be able to setup developer account with 3rd party services:
 * AWS    (Optional)
 * Stripe (Required only for student track)
 
-
 In order to run specs, you will need to install PhantomJS. Homebrew installation of PhantomJS:
 
-```
+```shell
 brew update
 brew install phantomjs
 ```
 
 And same way for PostgreSQL.
 
-
 ### Installing
 
 I originally used Ruby 2.1.5 and version was upgraded to 2.3.6, but any version before 2.4 should work without issues.
 
-```
+```shell
 git clone git@github.com:tomtomecek/quizzer.git && cd quizzer
 bundle install
 bundle exec rake db:create db:schema:load
@@ -56,15 +53,17 @@ figaro install
 
 If you want to seed some data.
 
-```
+```shell
 bundle exec rake db:seed
 ```
 
 ## Running the tests
 
-```
+```shell
 bundle exec rspec spec
 ```
+
+I also used [zeus](https://github.com/burke/zeus) to enhance local development.
 
 ## Deployment
 
@@ -83,6 +82,7 @@ See the setup of config.yml - [here](https://github.com/tomtomecek/quizzer/blob/
 * [Amazon S3](https://aws.amazon.com/s3/) - Storage of course files
 * [Mailgun](https://www.mailgun.com/) - Email provider
 * [Sidekiq](https://github.com/mperham/sidekiq) - For background jobs
+* [Parsley.js](http://parsleyjs.org/) - Frontend form validation
 * [Sentry](https://sentry.io/welcome/) - Production error monitoring
 * [Font Awesome](https://fontawesome.com/) - Icons used
 * [jQuery](https://jquery.com/) - Javascript framework used
@@ -90,13 +90,12 @@ See the setup of config.yml - [here](https://github.com/tomtomecek/quizzer/blob/
 * [RSpec](http://rspec.info/documentation/) - BDD test framework used
 * [Capybara](https://github.com/teamcapybara/capybara) - Acceptance test framework used
 
-
 ## Authors
 
-* **Tomas Tomecek** - [TomTomecek](https://github.com/tomtomecek)
+* **Tomas Tomecek** - [tomtomecek](https://github.com/tomtomecek)
 
 ## Acknowledgments
 
-* Huge thanks to Chris Lee and Kevin Wang
-* Thanks to Brandon Conway
-* Inspiration came from [Vienna.rb](https://www.meetup.com/vienna-rb/)
+* Huge thanks to Chris Lee and Kevin Wang - for inspiration, mentoring and knowledge
+* Thanks to Brandon Conway - for development advice and hunt on some bugs
+* Quiz inspiration came from [Vienna.rb](https://www.meetup.com/vienna-rb/)
