@@ -9,6 +9,17 @@
     = csrf_meta_tags
     = render 'shared/shim'
     = yield :head
+
+    - if Rails.env.prod?
+      -# <!-- Global site tag (gtag.js) - Google Analytics -->
+      %script(async src="https://www.googletagmanager.com/gtag/js?id=UA-126743631-1")
+      :javascript
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-126743631-1');
+
   %body
     - if logged_in_admin?
       = render 'shared/admin_header'
