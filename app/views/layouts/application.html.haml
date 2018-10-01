@@ -10,7 +10,7 @@
     = render 'shared/shim'
     = yield :head
 
-    - if Rails.env.prod?
+    - if Rails.env.staging?
       -# <!-- Global site tag (gtag.js) - Google Analytics -->
       %script(async src="https://www.googletagmanager.com/gtag/js?id=UA-126743631-1")
       :javascript
