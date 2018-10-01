@@ -80,8 +80,8 @@ See the setup of config.yml - [here](https://github.com/tomtomecek/quizzer/blob/
 * [Wicked PDF](https://github.com/mileszs/wicked_pdf) - PDF Generation with wkhtmltopdf
 * [Omniauth GitHub](https://github.com/omniauth/omniauth-github) - Student Sign up/in provider
 * [Stripe](https://stripe.com/) - Credit card payments processing
-* [LinkedIn](https://www.linkedin.com) - Certificate uploaded to
-* [Amazon S3](https://aws.amazon.com/s3/) - Storage of course files
+* [LinkedIn](https://www.linkedin.com) - Certificates uploaded to
+* [Amazon S3](https://aws.amazon.com/s3/) - Storage for course files
 * [Mailgun](https://www.mailgun.com/) - Email provider
 * [Sidekiq](https://github.com/mperham/sidekiq) - For background jobs
 * [Parsley.js](http://parsleyjs.org/) - Frontend form validation
